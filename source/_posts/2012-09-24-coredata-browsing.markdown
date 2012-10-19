@@ -20,4 +20,4 @@ P.S. [@tomhoag](https://twitter.com/tomhoag) suggested this [https://addons.mozi
 
 ## Update
 ###### (Monday, September 24 2012)
-Since the original post, I've discovered [Core Data Editor](http://itunes.apple.com/us/app/core-data-editor/id403025957?mt=12) which is really great and I recommend it.
+Since the original post, I've discovered [Core Data Editor](http://itunes.apple.com/us/app/core-data-editor/id403025957?mt=12) which is really great and I recommend it. However, the fscript approach allows one to perform predicate based fetch requests which is not something the Core Data Editor supports (at this time?) and is invaluable, so having both tools around is still handy.
