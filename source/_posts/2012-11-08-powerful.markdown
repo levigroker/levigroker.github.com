@@ -1,0 +1,36 @@
+---
+layout: post
+title: "Powerful, CocoaPods are!"
+date: 2012-11-08 10:38
+comments: false
+categories:
+---
+[CocoaPods](http://cocoapods.org), "The Objective-C Library Manager," is something I've been using now for a little while and really enjoying it for integrating third party frameworks and components into my projects. If you're not familiar with it already, I _highly_ recommend you look into it as it is really powerful and useful.
+
+### Installing pods for multiple targets
+
+My projects generally have at least two targets; the main target and a test target. When I initially setup CocoPods for my projects with a
+
+	$ pod install
+
+it does not configure the test target to use the `Pods.xcconfig` which specify all the integration points for the included pods. And, finding where to manually configure the use of the `xcconfig` file for the test target took me a bit of digging.
+
+You'll need to go into the project settings, on the info tab of the project (not the target) and expand each configuration in the "Configurations" area (just under "Deployment Target"). Then set each configuration to use the Pods configuration on any alternate targets (like my test target):
+
+{% img images/posts/2012-11-08-powerful/PodsxcconfigConfig.png 'XCode configuration of xcconfig usage on targets' 'XCode configuration of xcconfig usage on targets' %}
+
+From then on the alternate targets will inherit from the `Pods.xcconfig` configuration as they should.
+
+Similarly, some of the growing pains I've had with my use of CocoaPods have been related to making sure the configurations inherit from the `Pods.xcconfig` configuration, specifically custom header and library search paths. So if you get build errors related to not being able to find headers or libraries double check the target's header and library search path build settings and ensure the first element is `$(inhertied)`. In general, I've found the [CocoPods Wiki](https://github.com/CocoaPods/CocoaPods/wiki) is a good place to start reading up, should you encounter issues.
+
+### Using a Fork as a Pod
+
+Using "off the shelf" pods is as easy as the docs say... you simply search for the pod you want at [http://cocoapods.org](http://cocoapods.org), add a dependency in the `Podfile` and then run `pod update`. I've found, however, that sometimes I want to fork a project that I'm using as a pod so I can make changes. But how then to use the fork as a pod? It's not hard, actually.
+
+I ran into [this answer](http://stackoverflow.com/a/12393865/397210) which pointed me to the [CocoPods dependency declaration wiki entry](https://github.com/CocoaPods/CocoaPods/wiki/Dependency-declaration-options). Basically, all that needs to be done is to explicitly specify the git repository to use for the pod, instead of letting it use the default repository.
+
+I've had great luck with this approach for my extraction of the [RestKit](http://restkit.org) ObjectMapping functionality (see my [RestKitObjectMapping](https://github.com/levigroker/RestKitObjectMapping) fork). All I need to do now, to include this pod in my project is to add this line to my `Podspec` file:
+
+	pod 'RestKitObjectMapping', :git => 'https://github.com/levigroker/RestKitObjectMapping.git'
+
+Indeed, very powerful.
