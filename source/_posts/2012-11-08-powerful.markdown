@@ -5,7 +5,7 @@ date: 2012-11-08 10:38
 comments: false
 categories:
 ---
-[CocoaPods](http://cocoapods.org), "The Objective-C Library Manager," is something I've been using now for a little while and really enjoying it for integrating third party frameworks and components into my projects. If you're not familiar with it already, I _highly_ recommend you look into it as it is really powerful and useful.
+[CocoaPods](http://cocoapods.org), "The Objective-C Library Manager," is something I've been using now for a while and really enjoying it for integrating third party frameworks and components into my projects. If you're not familiar with it already, I _highly_ recommend you look into it as it is really powerful and useful.
 
 ### Installing pods for multiple targets
 
