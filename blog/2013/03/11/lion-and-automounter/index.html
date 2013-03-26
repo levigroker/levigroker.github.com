@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Lion &amp; Automounter - grokin.gs</title>
+  <meta name="author" content="Levi Brown">
+
+  
+  <meta name="description" content="Mounting a remote filesystem via the network is something which Unix has been doing since,
+well, the dawn of Unix. So, naturally, when trying to make &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://levigroker.github.com/blog/2013/03/11/lion-and-automounter">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<!-- Pocket Publisher site verification -->
+<meta name="pocket-site-verification" content="7b4a73e80c2e1f52cc7c9c3fe4d0b7" />
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39097058-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">grokin.gs</a></h1>
+  
+    <h2>A collection of understandings.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:levigroker.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Lion &amp; Automounter</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-11T11:05:00-06:00" pubdate data-updated="true">Monday, March 11 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Mounting a remote filesystem via the network is something which Unix has been doing since,
+well, the dawn of Unix. So, naturally, when trying to make use of large amounts of network
+storage on a NAS from a Mac OS X based machine, one would assume that mounting the network
+storage and having the mountpoint be maintained automatically should be a simple Unix
+configuration. And there you&#8217;d be partly correct&#8230;</p>
+
+<p>Darwin does make use of the <code>automount</code> system to configure and maintain mountpoints, and
+one can setup entries in the <code>/etc/fstab</code> to mount remote filesystems using various
+protocols (NFS, SMB, AFP, etc.), and various posts about doing this have been around for
+<a href="http://web.archive.org/web/20090831103644/http://blogs.sun.com/lowbit/entry/easy_afp_autmount_on_os">a long time</a>
+. However, Mac OSX Lion <a href="https://discussions.apple.com/thread/3221944">seems to have broken this</a>
+in such a way that the mount points are inaccessible (incorrect permissions) to all but
+the <code>root</code> user.</p>
+
+<p>Over the weekend I struggled with this for too long, and ultimately found a solution,
+albeit a bit of a hack. Roll up your sleeves, get a new cup of tea, here we go&#8230;</p>
+
+<h3>/etc/fstab</h3>
+
+<p>As root, edit your <code>/etc/fstab</code> and add the mount point you want.
+Note: <code>/etc/fstab</code> did not exist by default. No need to worry, just create it. The <em>magic</em>
+syntax is:</p>
+
+<pre><code>&lt;servername&gt;:/&lt;path&gt; &lt;mount_point&gt; url auto,url==afp://&lt;username&gt;:&lt;password&gt;@&lt;servername&gt;/&lt;path&gt; 0 0
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>nas.grokers.net:/media /Network/media url auto,url==afp://levi:foopass@nas.grokers.net/media 0 0
+</code></pre>
+
+<p>That sets up a mount point at <code>/Network/media</code> which points to the AFP share <code>nas.grokers.net/media</code></p>
+
+<p>If you do this, then tell <code>automount</code> to reload with <code>automount -cv</code> you&#8217;ll be able to cd into
+<code>/Network/media</code> and see the remote filesystem, but only as root (in Lion, at least).</p>
+
+<p>As an aside, it pains me to embed a password in the filesystem like this. A long time ago,
+I spent a lot of effort trying to figure out a way to dynamically load the password from
+the Keychain instead of embedding it here. I researched how to use executable automount
+configurations so I could fetch the password using <code>/usr/bin/security</code> but ultimately
+could never get it to work, so I gave up. If you&#8217;ve a way to do this, please <a href="mailto:levigroker@gmail.com">let me know</a>.</p>
+
+<h3>root-only permissions work-around</h3>
+
+<p>To avoid the root-only permissions on the mount point, it would appear a <a href="http://forums.plexapp.com/index.php/topic/14201-howto-automount-afpsmb-shares-using-autofs/?p=202429">solution</a>
+is to unmount the mountpoint after <code>automount</code> loads the configuration in <code>/etc/fstab</code>.</p>
+
+<p>I tried many different approaches to unmount the mountpoint using a <code>launchd</code> <code>/Library/LaunchAgent</code>
+and even a user LaunchAgent, but through many attempts none of them seemed to take place
+<em>after</em> <code>automount</code> had loaded the config, and thus the mountpoint was still root-only
+accessible.</p>
+
+<p>So, an AppleScript application as a Login Item seems to be the only way, but we don&#8217;t have
+to embed our password (yet again) in the applescript. Instead, I created a shell script to
+do the deed:</p>
+
+<pre><code>#!/bin/bash
+diskutil unmount /Network/media &gt; /dev/null 2&gt;&amp;1
+exit 0
+</code></pre>
+
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper.sh</code> but it doesn&#8217;t matter where you put it)</p>
+
+<p>Then add a line to the <code>sudoers</code> file so the script will run as <code>root</code> without the need
+for a password:</p>
+
+<p><code>$ sudo visudo</code></p>
+
+<pre><code>levi ALL = NOPASSWD: /Users/levi/Library/Automation/nas_mount_helper.sh
+</code></pre>
+
+<p>Now, to run this script as a Login Item, I created an AppleScript application using the
+AppleScript editor app. The contents of the applescript is pretty basic:</p>
+
+<pre><code>do shell script "sudo /Users/levi/Library/Automation/nas_mount_helper.sh"
+</code></pre>
+
+<p>Save the script as an application, and use the &#8220;Users &amp; Groups&#8221; System Preferences to add
+it as a Login Item</p>
+
+<p>Almost there&#8230;</p>
+
+<p>Unfortunately, this didn&#8217;t quite do it. Upon login the mount couldn&#8217;t be navigated to via
+the Finder because of some error about the original not being found, so&#8230;</p>
+
+<p>Another shell script was needed to force the mount.</p>
+
+<pre><code>#!/bin/bash
+cd /Network/media
+ls -la
+exit 0
+</code></pre>
+
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper2.sh</code> but it doesn&#8217;t matter where you put it)</p>
+
+<p>This one we want to run as ourself, so no <code>sudoers</code> entry is needed.</p>
+
+<p>Add an additional line to the applescript to run this after we unmount the share:</p>
+
+<pre><code>do shell script "sudo /Users/levi/Library/Automation/nas_mount_helper.sh"
+do shell script "/Users/levi/Library/Automation/nas_mount_helper2.sh"
+</code></pre>
+
+<h3>Extra Credit</h3>
+
+<p>Finally, to prevent the AppleScript application from being noticeable (showing up in the dock, etc.),
+add the <code>LSUIElement</code> key to the <code>Info.plist</code> of the generated AppleScript application,
+by contextually clicking on the app from the Finder, choosing &#8220;Show Package Contents&#8221;,
+browse to <code>Contents/Info.plist</code>, and then edit the Info.plist to add the element:</p>
+
+<pre><code>&lt;plist version="1.0"&gt;
+  &lt;dict&gt;
+    ...
+    &lt;key&gt;LSUIElement&lt;/key&gt;
+    &lt;string&gt;1&lt;/string&gt;
+    ...
+  &lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+
+<p>Not all that elegant, unfortunately, but a workaround at least.</p>
+
+<h3>Thanks</h3>
+
+<p>Thanks to <a href="https://twitter.com/signed8bit">@signed8bit</a> for the moral support, and the wayback-machine.
+Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a> for the unmount workaround idea.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Levi Brown</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-11T11:05:00-06:00" pubdate data-updated="true">Monday, March 11 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2013/03/11/lion-and-automounter/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2013/03/11/lion-and-automounter/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/12/hashbuilder/" title="Previous Post: HashBuilder">&laquo; HashBuilder</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/11/lion-and-automounter/">Lion &amp; Automounter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/12/hashbuilder/">HashBuilder</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/16/orientationrespectfulnavigationcontroller/">Orientation Respectful UINavigationController</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods are!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/25/the-shadow-knows/">The Shadow Knows</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/levigroker">@levigroker</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'levigroker',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("levigroker", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/levigroker" class="twitter-follow-button" data-show-count="false">Follow @levigroker</a>
+  
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/levigroker?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Levi Brown -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

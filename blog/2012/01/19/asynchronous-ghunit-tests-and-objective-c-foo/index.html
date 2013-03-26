@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Asynchronous GHUnit Tests &amp; Objective C Foo! - grokin.gs</title>
+  <meta name="author" content="Levi Brown">
+
+  
+  <meta name="description" content="GHUnit is quite useful for running and reporting tests (unit or otherwise) for iOS projects, and I&#8217;ve been using it for a while with good &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://levigroker.github.com/blog/2012/01/19/asynchronous-ghunit-tests-and-objective-c-foo">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<!-- Pocket Publisher site verification -->
+<meta name="pocket-site-verification" content="7b4a73e80c2e1f52cc7c9c3fe4d0b7" />
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39097058-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">grokin.gs</a></h1>
+  
+    <h2>A collection of understandings.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:levigroker.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Asynchronous GHUnit Tests &amp; Objective C Foo!</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T17:33:00-07:00" pubdate data-updated="true">Thursday, January 19 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://github.com/gabriel/gh-unit">GHUnit</a> is quite useful for running and reporting tests (unit or otherwise) for iOS projects, and I&#8217;ve been using it for a while with good results. Recently, however, I found as I wrote more and more integration-style tests with a remote HTTP service I found the code getting to be a pain to write and maintain.
+There were two reasons for this:</p>
+
+<h4>GHAssert variants fail with an Exception, and therefore other tests do not continue to execute.</h4>
+
+<p>This was a real drag, since the assert macros are pretty handy, but I want all my tests to run, even if some fail (<em>gasp</em> I know!).</p>
+
+<p>So, I ended up replacing the GHAsserts with a simple conditional, which doesn&#8217;t feel as clean, but navigates around the issue.</p>
+
+<h4>Selector names became copy and paste heavy.</h4>
+
+<p>Since I&#8217;m making notification calls like <code>[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(testAsynchronousOperation)];</code> from within the same method it was additional grunt work to copy the selector name to all the places I needed a reference to the selector.</p>
+
+<p>I thought of adding a <code>SEL mySelector = @selector(foo);</code> to each method, which would cut down on the copy &amp; pasting, but that just didn&#8217;t seem clean to me.</p>
+
+<p>I discovered there is an Objective C variable like <code>self</code> called <code>_cmd</code><a href="http://www.google.com/search?client=safari&amp;rls=en&amp;q=objective+c+_cmd&amp;ie=UTF-8&amp;oe=UTF-8">*</a> which is a reference to the current selector(!). That&#8217;s cool, and simplifies code like my testing code a lot.</p>
+
+<h4>Sample</h4>
+
+<p>For the specific kinds of test cases I was writing, here&#8217;s an example which shows both of these issues resolved:</p>
+
+<div><script src='https://gist.github.com/1643797.js'></script>
+<noscript><pre><code>#import &lt;GHUnitIOS/GHUnit.h&gt; 
+
+@interface RemoteDataServiceTest : GHAsyncTestCase { }
+@end
+
+@implementation RemoteDataServiceTest
+
+- (BOOL)shouldRunOnMainThread
+{
+    // By default NO, but if you have a UI test or test dependent on running on the main thread return YES.
+    // Also an async test that calls back on the main thread, you'll probably want to return YES.
+    return NO;
+}
+- (void)testAsynchronousOperation
+{
+    // Call prepare to setup the asynchronous action.
+    // This helps in cases where the action is synchronous and the
+    // action occurs before the wait is actually called.
+    [self prepare];
+    
+    [RemoteDataService doNiftyStuffRemotelyWithCompletedBlock:^(id result){
+        if (!result)
+        {
+            GHTestLog(@&quot;result from remote service was unexpectedly nil.&quot;);
+            [self notify:kGHUnitWaitStatusFailure forSelector:_cmd];
+            return;
+        }
+        GHTestLog(@&quot;We got back: %@&quot;, result);
+        [self notify:kGHUnitWaitStatusSuccess forSelector:_cmd];
+    } errorBlock:^(NSError *error){
+        GHTestLog(@&quot;Error while doing nifty stuff: %@&quot;, [error localizedDescription]);
+        [self notify:kGHUnitWaitStatusFailure forSelector:_cmd];
+    }];
+    
+    // Wait until notify called for timeout (seconds); If notify is not called with kGHUnitWaitStatusSuccess then
+    // we will throw an error.
+    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30.0];
+}</code></pre></noscript></div>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Levi Brown</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T17:33:00-07:00" pubdate data-updated="true">Thursday, January 19 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2012/01/19/asynchronous-ghunit-tests-and-objective-c-foo/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2012/01/19/asynchronous-ghunit-tests-and-objective-c-foo/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/01/06/ongoing-resources-for-ios-knowledge/" title="Previous Post: Ongoing Resources for iOS Knowledge">&laquo; Ongoing Resources for iOS Knowledge</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/01/24/using-nsurlprotocol-for-injecting-test-data/" title="Next Post: Using NSURLProtocol for Injecting Test Data">Using NSURLProtocol for Injecting Test Data &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/03/11/lion-and-automounter/">Lion &amp; Automounter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/12/hashbuilder/">HashBuilder</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/16/orientationrespectfulnavigationcontroller/">Orientation Respectful UINavigationController</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods are!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/25/the-shadow-knows/">The Shadow Knows</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/levigroker">@levigroker</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'levigroker',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("levigroker", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/levigroker" class="twitter-follow-button" data-show-count="false">Follow @levigroker</a>
+  
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/levigroker?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Levi Brown -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
