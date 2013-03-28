@@ -1,0 +1,18 @@
+<div class="article_sharing">
+  {% if site.twitter_tweet_button %}
+  <p>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="{{ site.url }}{{ page.url }}" data-via="{{ site.twitter_user }}" data-counturl="{{ site.url }}{{ page.url }}" >Tweet</a>
+  </p>
+  {% endif %}
+  {% if site.google_plus_one %}
+  <p>
+  <div class="g-plusone" data-size="{{ site.google_plus_one_size }}"></div>
+  </p>
+  {% endif %}
+  {% if site.facebook_like %}
+  <p>
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  </p>
+  {% endif %}
+  {% include custom/pocket_sharing.html %}
+</div>
