@@ -5,11 +5,13 @@ single: true
 
 <div>
 <article class="hentry" role="article">
-{% unless page.no_header %}
-  {% unless page.sharing == false %}
-    {% include custom/article_sharing.html %}
+  <!-- Levi (added for page sharing at top) -->
+  {% unless page.no_header %}
+    {% unless page.sharing == false %}
+      {% include custom/article_sharing.html %}
+    {% endunless %}
   {% endunless %}
-{% endunless %}
+  <!-- END Levi -->
   {% include article.html %}
   <footer>
     <p class="meta">
@@ -17,7 +19,12 @@ single: true
       {% include post/date.html %}{% if updated %}{{ updated }}{% else %}{{ time }}{% endif %}
       {% include post/categories.html %}
     </p>
-    <div class="sharing"></div>
+    <!-- Levi (removed)
+    {% unless page.sharing == false %}
+      {% include post/sharing.html %}
+    {% endunless %}
+    -->
+    <div class="sharing"></div> <!-- Levi (added for page sharing at top) -->
     <p class="meta">
       {% if page.previous.url %}
         <a class="basic-alignment left" href="{{page.previous.url}}" title="Previous Post: {{page.previous.title}}">&laquo; {{page.previous.title}}</a>
