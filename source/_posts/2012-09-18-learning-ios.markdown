@@ -36,7 +36,7 @@ Check out [Ray Wenderlinch](http://www.raywenderlich.com)'s site for some great 
 
 A _great_ place to go for answers is [StackOverflow](http://stackoverflow.com/). Search before you post... it's probably been asked (and answered) already.
 
-Lot's to know
+Lots to know
 -------------
 There is a difference between intelligence and knowledge. Do not sell yourself short.
 
