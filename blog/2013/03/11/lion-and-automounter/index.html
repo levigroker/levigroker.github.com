@@ -25,7 +25,7 @@ well, the dawn of Unix. So, naturally, when trying to make &hellip;">
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -64,7 +64,7 @@ well, the dawn of Unix. So, naturally, when trying to make &hellip;">
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:levigroker.github.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -82,26 +82,6 @@ well, the dawn of Unix. So, naturally, when trying to make &hellip;">
     <div id="content">
       <div>
 <article class="hentry" role="article">
-
-  
-    <div class="article_sharing">
-  
-  <p>
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2013/03/11/lion-and-automounter/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2013/03/11/lion-and-automounter/" >Tweet</a>
-  </p>
-  
-  
-  <p>
-  <div class="g-plusone" data-size="medium"></div>
-  </p>
-  
-  
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-<script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-</div>
-
-  
-
   
   <header>
     
@@ -132,7 +112,7 @@ well, the dawn of Unix. So, naturally, when trying to make &hellip;">
 well, the dawn of Unix. So, naturally, when trying to make use of large amounts of network
 storage on a NAS from a Mac OS X based machine, one would assume that mounting the network
 storage and having the mountpoint be maintained automatically should be a simple Unix
-configuration. And there you&#8217;d be partly correct&#8230;</p>
+configuration. And there you&rsquo;d be partly correct&hellip;</p>
 
 <p>Darwin does make use of the <code>automount</code> system to configure and maintain mountpoints, and
 one can setup entries in the <code>/etc/fstab</code> to mount remote filesystems using various
@@ -143,7 +123,7 @@ in such a way that the mount points are inaccessible (incorrect permissions) to 
 the <code>root</code> user.</p>
 
 <p>Over the weekend I struggled with this for too long, and ultimately found a solution,
-albeit a bit of a hack. Roll up your sleeves, get a new cup of tea, here we go&#8230;</p>
+albeit a bit of a hack. Roll up your sleeves, get a new cup of tea, here we go&hellip;</p>
 
 <h3>/etc/fstab</h3>
 
@@ -161,14 +141,14 @@ syntax is:</p>
 
 <p>That sets up a mount point at <code>/Network/media</code> which points to the AFP share <code>nas.grokers.net/media</code></p>
 
-<p>If you do this, then tell <code>automount</code> to reload with <code>automount -cv</code> you&#8217;ll be able to cd into
+<p>If you do this, then tell <code>automount</code> to reload with <code>automount -cv</code> you&rsquo;ll be able to cd into
 <code>/Network/media</code> and see the remote filesystem, but only as root (in Lion, at least).</p>
 
 <p>As an aside, it pains me to embed a password in the filesystem like this. A long time ago,
 I spent a lot of effort trying to figure out a way to dynamically load the password from
 the Keychain instead of embedding it here. I researched how to use executable automount
 configurations so I could fetch the password using <code>/usr/bin/security</code> but ultimately
-could never get it to work, so I gave up. If you&#8217;ve a way to do this, please <a href="mailto:levigroker@gmail.com">let me know</a>.</p>
+could never get it to work, so I gave up. If you&rsquo;ve a way to do this, please <a href="mailto:levigroker@gmail.com">let me know</a>.</p>
 
 <h3>root-only permissions work-around</h3>
 
@@ -180,7 +160,7 @@ and even a user LaunchAgent, but through many attempts none of them seemed to ta
 <em>after</em> <code>automount</code> had loaded the config, and thus the mountpoint was still root-only
 accessible.</p>
 
-<p>So, an AppleScript application as a Login Item seems to be the only way, but we don&#8217;t have
+<p>So, an AppleScript application as a Login Item seems to be the only way, but we don&rsquo;t have
 to embed our password (yet again) in the applescript. Instead, I created a shell script to
 do the deed:</p>
 
@@ -189,7 +169,7 @@ diskutil unmount /Network/media &gt; /dev/null 2&gt;&amp;1
 exit 0
 </code></pre>
 
-<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper.sh</code> but it doesn&#8217;t matter where you put it)</p>
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper.sh</code> but it doesn&rsquo;t matter where you put it)</p>
 
 <p>Then add a line to the <code>sudoers</code> file so the script will run as <code>root</code> without the need
 for a password:</p>
@@ -205,13 +185,13 @@ AppleScript editor app. The contents of the applescript is pretty basic:</p>
 <pre><code>do shell script "sudo /Users/levi/Library/Automation/nas_mount_helper.sh"
 </code></pre>
 
-<p>Save the script as an application, and use the &#8220;Users &amp; Groups&#8221; System Preferences to add
+<p>Save the script as an application, and use the &ldquo;Users &amp; Groups&rdquo; System Preferences to add
 it as a Login Item</p>
 
-<p>Almost there&#8230;</p>
+<p>Almost there&hellip;</p>
 
-<p>Unfortunately, this didn&#8217;t quite do it. Upon login the mount couldn&#8217;t be navigated to via
-the Finder because of some error about the original not being found, so&#8230;</p>
+<p>Unfortunately, this didn&rsquo;t quite do it. Upon login the mount couldn&rsquo;t be navigated to via
+the Finder because of some error about the original not being found, so&hellip;</p>
 
 <p>Another shell script was needed to force the mount.</p>
 
@@ -221,7 +201,7 @@ ls -la
 exit 0
 </code></pre>
 
-<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper2.sh</code> but it doesn&#8217;t matter where you put it)</p>
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper2.sh</code> but it doesn&rsquo;t matter where you put it)</p>
 
 <p>This one we want to run as ourself, so no <code>sudoers</code> entry is needed.</p>
 
@@ -235,7 +215,7 @@ do shell script "/Users/levi/Library/Automation/nas_mount_helper2.sh"
 
 <p>Finally, to prevent the AppleScript application from being noticeable (showing up in the dock, etc.),
 add the <code>LSUIElement</code> key to the <code>Info.plist</code> of the generated AppleScript application,
-by contextually clicking on the app from the Finder, choosing &#8220;Show Package Contents&#8221;,
+by contextually clicking on the app from the Finder, choosing &ldquo;Show Package Contents&rdquo;,
 browse to <code>Contents/Info.plist</code>, and then edit the Info.plist to add the element:</p>
 
 <pre><code>&lt;plist version="1.0"&gt;
@@ -281,7 +261,18 @@ Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a
 
 
     </p>
-    <div class="sharing"></div>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2013/03/11/lion-and-automounter/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2013/03/11/lion-and-automounter/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
     <p class="meta">
       
         <a class="basic-alignment left" href="/blog/2013/02/12/hashbuilder/" title="Previous Post: HashBuilder">&laquo; HashBuilder</a>
@@ -312,7 +303,7 @@ Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a
       </li>
     
       <li class="post">
-        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods are!</a>
+        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods Are!</a>
       </li>
     
       <li class="post">
@@ -368,11 +359,10 @@ Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a
   
 </section>
 
-<script src='https://d2zh9g63fcvyrq.cloudfront.net/adn.js'></script>
 
 <section>
-<a href="https://alpha.app.net/levigroker" class='adn-button' rel='me' data-type='follow' data-width='220' data-height='38' data-user-id="@levigroker">@levigroker on App.net</a>
-</section>
+<a href='https://alpha.app.net/levigroker' class='adn-button' target='_blank' data-type='follow' data-width='295' data-height='20' data-user-id='@levigroker' data-show-username='1' rel='me'>Follow me on App.net</a>
+<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script></section>
 
 
 
@@ -394,7 +384,7 @@ Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Levi Brown -
+  Copyright &copy; 2014 - Levi Brown -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
@@ -420,7 +410,7 @@ Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

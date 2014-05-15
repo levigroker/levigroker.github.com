@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2013-04-29T16:33:12-06:00</updated>
+  <updated>2014-05-15T16:04:50-06:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -22,7 +22,7 @@
 well, the dawn of Unix. So, naturally, when trying to make use of large amounts of network
 storage on a NAS from a Mac OS X based machine, one would assume that mounting the network
 storage and having the mountpoint be maintained automatically should be a simple Unix
-configuration. And there you&#8217;d be partly correct&#8230;</p>
+configuration. And there you&rsquo;d be partly correct&hellip;</p>
 
 <p>Darwin does make use of the <code>automount</code> system to configure and maintain mountpoints, and
 one can setup entries in the <code>/etc/fstab</code> to mount remote filesystems using various
@@ -33,7 +33,7 @@ in such a way that the mount points are inaccessible (incorrect permissions) to 
 the <code>root</code> user.</p>
 
 <p>Over the weekend I struggled with this for too long, and ultimately found a solution,
-albeit a bit of a hack. Roll up your sleeves, get a new cup of tea, here we go&#8230;</p>
+albeit a bit of a hack. Roll up your sleeves, get a new cup of tea, here we go&hellip;</p>
 
 <h3>/etc/fstab</h3>
 
@@ -51,14 +51,14 @@ syntax is:</p>
 
 <p>That sets up a mount point at <code>/Network/media</code> which points to the AFP share <code>nas.grokers.net/media</code></p>
 
-<p>If you do this, then tell <code>automount</code> to reload with <code>automount -cv</code> you&#8217;ll be able to cd into
+<p>If you do this, then tell <code>automount</code> to reload with <code>automount -cv</code> you&rsquo;ll be able to cd into
 <code>/Network/media</code> and see the remote filesystem, but only as root (in Lion, at least).</p>
 
 <p>As an aside, it pains me to embed a password in the filesystem like this. A long time ago,
 I spent a lot of effort trying to figure out a way to dynamically load the password from
 the Keychain instead of embedding it here. I researched how to use executable automount
 configurations so I could fetch the password using <code>/usr/bin/security</code> but ultimately
-could never get it to work, so I gave up. If you&#8217;ve a way to do this, please <a href="mailto:levigroker@gmail.com">let me know</a>.</p>
+could never get it to work, so I gave up. If you&rsquo;ve a way to do this, please <a href="mailto:levigroker@gmail.com">let me know</a>.</p>
 
 <h3>root-only permissions work-around</h3>
 
@@ -70,7 +70,7 @@ and even a user LaunchAgent, but through many attempts none of them seemed to ta
 <em>after</em> <code>automount</code> had loaded the config, and thus the mountpoint was still root-only
 accessible.</p>
 
-<p>So, an AppleScript application as a Login Item seems to be the only way, but we don&#8217;t have
+<p>So, an AppleScript application as a Login Item seems to be the only way, but we don&rsquo;t have
 to embed our password (yet again) in the applescript. Instead, I created a shell script to
 do the deed:</p>
 
@@ -79,7 +79,7 @@ diskutil unmount /Network/media &gt; /dev/null 2&gt;&amp;1
 exit 0
 </code></pre>
 
-<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper.sh</code> but it doesn&#8217;t matter where you put it)</p>
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper.sh</code> but it doesn&rsquo;t matter where you put it)</p>
 
 <p>Then add a line to the <code>sudoers</code> file so the script will run as <code>root</code> without the need
 for a password:</p>
@@ -95,13 +95,13 @@ AppleScript editor app. The contents of the applescript is pretty basic:</p>
 <pre><code>do shell script "sudo /Users/levi/Library/Automation/nas_mount_helper.sh"
 </code></pre>
 
-<p>Save the script as an application, and use the &#8220;Users &amp; Groups&#8221; System Preferences to add
+<p>Save the script as an application, and use the &ldquo;Users &amp; Groups&rdquo; System Preferences to add
 it as a Login Item</p>
 
-<p>Almost there&#8230;</p>
+<p>Almost there&hellip;</p>
 
-<p>Unfortunately, this didn&#8217;t quite do it. Upon login the mount couldn&#8217;t be navigated to via
-the Finder because of some error about the original not being found, so&#8230;</p>
+<p>Unfortunately, this didn&rsquo;t quite do it. Upon login the mount couldn&rsquo;t be navigated to via
+the Finder because of some error about the original not being found, so&hellip;</p>
 
 <p>Another shell script was needed to force the mount.</p>
 
@@ -111,7 +111,7 @@ ls -la
 exit 0
 </code></pre>
 
-<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper2.sh</code> but it doesn&#8217;t matter where you put it)</p>
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper2.sh</code> but it doesn&rsquo;t matter where you put it)</p>
 
 <p>This one we want to run as ourself, so no <code>sudoers</code> entry is needed.</p>
 
@@ -125,7 +125,7 @@ do shell script "/Users/levi/Library/Automation/nas_mount_helper2.sh"
 
 <p>Finally, to prevent the AppleScript application from being noticeable (showing up in the dock, etc.),
 add the <code>LSUIElement</code> key to the <code>Info.plist</code> of the generated AppleScript application,
-by contextually clicking on the app from the Finder, choosing &#8220;Show Package Contents&#8221;,
+by contextually clicking on the app from the Finder, choosing &ldquo;Show Package Contents&rdquo;,
 browse to <code>Contents/Info.plist</code>, and then edit the Info.plist to add the element:</p>
 
 <pre><code>&lt;plist version="1.0"&gt;
@@ -153,14 +153,14 @@ Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a
     <updated>2013-02-12T17:48:00-07:00</updated>
     <id>http://levigroker.github.com/blog/2013/02/12/hashbuilder</id>
     <content type="html"><![CDATA[<p>Creating custom data objects as subclasses of NSObject is something which tends to happen
-quite often, and making those objects &#8220;good citizens&#8221; which can be reliably placed into
+quite often, and making those objects &ldquo;good citizens&rdquo; which can be reliably placed into
 NS collections (<code>NSDictionary</code>, <code>NSSet</code>, <code>NSArray</code>, etc.) means taking a few extra steps.
-One of these steps is to override <code>NSObject</code>&#8217;s <code>- (BOOL)isEqual:(id)object</code> method, and,
+One of these steps is to override <code>NSObject</code>&rsquo;s <code>- (BOOL)isEqual:(id)object</code> method, and,
 of course if you do that, you should (read: <em>must</em>) also override <code>- (NSUInteger)hash</code>.</p>
 
 <p>Providing a good hash value from your overridden <code>- (NSUInteger)hash</code> method is a deep
 topic, luckily we can stand on the backs of giants, and use knowledge and techniques
-which follow &#8220;known good&#8221; practices. With that in mind, I created a utility, HashBuilder,
+which follow &ldquo;known good&rdquo; practices. With that in mind, I created a utility, HashBuilder,
 which makes generating a suitable hash value trivial.</p>
 
 <p><a href="https://github.com/levigroker/HashBuilder">HashBuilder</a> can be used to build a hash
@@ -170,7 +170,7 @@ returned from an override to the <code>NSObject</code> <code>- (NSUInteger)hash<
 
 <h3>Documentation</h3>
 
-<p>To use, create a HashBuilder object, contribute to it, then query the &#8216;builtHash&#8217;
+<p>To use, create a HashBuilder object, contribute to it, then query the &lsquo;builtHash&rsquo;
 property for the resulting hash.</p>
 
 <pre><code>- (NSUInteger)hash
@@ -211,7 +211,7 @@ NSUInteger hash2 = builder2.builtHash;
 
 <h3>Installing</h3>
 
-<p>If you&#8217;re using <a href="http://cocopods.org">CocoPods</a> it&#8217;s as simple as adding this to your <code>Podfile</code>:</p>
+<p>If you&rsquo;re using <a href="http://cocopods.org">CocoPods</a> it&rsquo;s as simple as adding this to your <code>Podfile</code>:</p>
 
 <pre><code>pod 'HashBuilder', '~&gt; 1.0'
 </code></pre>
@@ -227,16 +227,16 @@ NSUInteger hash2 = builder2.builtHash;
     <id>http://levigroker.github.com/blog/2012/11/16/orientationrespectfulnavigationcontroller</id>
     <content type="html"><![CDATA[<p>While working on a project for iOS 6 I ran into an interesting issue with rotations.</p>
 
-<p>I wanted one of my views to rotate, but not others, and since <code>UIViewController</code>&#8217;s <code>shouldAutorotateToInterfaceOrientation:</code> is deprecated in iOS 6 and the docs point at overriding <code>shouldAutorotate</code>, I swapped them out. But&#8230; <code>shouldAutorotate</code> didn&#8217;t get called. Hrm? A little poking around and I see this in the <a href="http://developer.apple.com/library/ios/#releasenotes/General/RN-iOSSDK-6_0/_index.html">iOS 6 release notes</a>:</p>
+<p>I wanted one of my views to rotate, but not others, and since <code>UIViewController</code>&rsquo;s <code>shouldAutorotateToInterfaceOrientation:</code> is deprecated in iOS 6 and the docs point at overriding <code>shouldAutorotate</code>, I swapped them out. But&hellip; <code>shouldAutorotate</code> didn&rsquo;t get called. Hrm? A little poking around and I see this in the <a href="http://developer.apple.com/library/ios/#releasenotes/General/RN-iOSSDK-6_0/_index.html">iOS 6 release notes</a>:</p>
 
 <blockquote><p>Now, iOS containers (such as UINavigationController) do not consult their children to
 determine whether they should autorotate. By default, an app and a view controller’s
 supported interface orientations are set to UIInterfaceOrientationMaskAll for the iPad
 idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></blockquote>
 
-<p>So, because my views are &#8220;underneath&#8221; a <code>UINavigationController</code> their <code>shouldAutorotate</code> methods are not getting called, only the parent <code>UINavigationController</code> is queried. That seems like an odd behavior to me, but it&#8217;s easy enough to remedy. A subclass of <code>UINavigationController</code> which respects the desired behavior of the top view controller is all that&#8217;s needed.</p>
+<p>So, because my views are &ldquo;underneath&rdquo; a <code>UINavigationController</code> their <code>shouldAutorotate</code> methods are not getting called, only the parent <code>UINavigationController</code> is queried. That seems like an odd behavior to me, but it&rsquo;s easy enough to remedy. A subclass of <code>UINavigationController</code> which respects the desired behavior of the top view controller is all that&rsquo;s needed.</p>
 
-<p>This UINavigationController subclass will query it&#8217;s topmost view controller for desired rotation behavior, unlike the default implementation:</p>
+<p>This UINavigationController subclass will query it&rsquo;s topmost view controller for desired rotation behavior, unlike the default implementation:</p>
 
 <div><script src='https://gist.github.com/4090689.js'></script>
 <noscript><pre><code>//
@@ -250,7 +250,7 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
 //
 
 /*
- This NavigationController will query it's topmost view controller for desired rotation behavior,
+ This NavigationController will query it&#39;s topmost view controller for desired rotation behavior,
  unlike the default implementation.
 
  From the iOS 6 release notes:
@@ -274,16 +274,16 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
 
 <p><img src="images/posts/2012-11-16-orientationrespectfulnavigationcontroller/IBClassConfig.png" title="XCode configuration for UINavigationController class override" alt="XCode configuration for UINavigationController class override"></p>
 
-<p>NOTE: I&#8217;m by no means the first to figure this out. StackOverflow <a href="http://stackoverflow.com/questions/12520030/how-to-force-a-uiviewcontroller-to-portait-orientation-in-ios-6">has</a> <a href="http://stackoverflow.com/q/12777474/397210">several</a>  <a href="http://stackoverflow.com/a/12996924/397210">posts</a> which illustrate the problem and solution.</p>
+<p>NOTE: I&rsquo;m by no means the first to figure this out. StackOverflow <a href="http://stackoverflow.com/questions/12520030/how-to-force-a-uiviewcontroller-to-portait-orientation-in-ios-6">has</a> <a href="http://stackoverflow.com/q/12777474/397210">several</a>  <a href="http://stackoverflow.com/a/12996924/397210">posts</a> which illustrate the problem and solution.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Powerful, CocoaPods are!]]></title>
+    <title type="html"><![CDATA[Powerful, CocoaPods Are!]]></title>
     <link href="http://levigroker.github.com/blog/2012/11/08/powerful/"/>
     <updated>2012-11-08T10:38:00-07:00</updated>
     <id>http://levigroker.github.com/blog/2012/11/08/powerful</id>
-    <content type="html"><![CDATA[<p><a href="http://cocoapods.org">CocoaPods</a>, &#8220;The Objective-C Library Manager,&#8221; is something I&#8217;ve been using now for a while and really enjoying it for integrating third party frameworks and components into my projects. If you&#8217;re not familiar with it already, I <em>highly</em> recommend you look into it as it is really powerful and useful.</p>
+    <content type="html"><![CDATA[<p><a href="http://cocoapods.org">CocoaPods</a>, &ldquo;The Objective-C Library Manager,&rdquo; is something I&rsquo;ve been using now for a while and really enjoying it for integrating third party frameworks and components into my projects. If you&rsquo;re not familiar with it already, I <em>highly</em> recommend you look into it as it is really powerful and useful.</p>
 
 <h3>Installing pods for multiple targets</h3>
 
@@ -294,21 +294,21 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
 
 <p>it does not configure the test target to use the <code>Pods.xcconfig</code> which specify all the integration points for the included pods. And, finding where to manually configure the use of the <code>xcconfig</code> file for the test target took me a bit of digging.</p>
 
-<p>You&#8217;ll need to go into the project settings, on the info tab of the project (not the target) and expand each configuration in the &#8220;Configurations&#8221; area (just under &#8220;Deployment Target&#8221;). Then set each configuration to use the Pods configuration on any alternate targets (like my test target):</p>
+<p>You&rsquo;ll need to go into the project settings, on the info tab of the project (not the target) and expand each configuration in the &ldquo;Configurations&rdquo; area (just under &ldquo;Deployment Target&rdquo;). Then set each configuration to use the Pods configuration on any alternate targets (like my test target):</p>
 
 <p><img src="images/posts/2012-11-08-powerful/PodsxcconfigConfig.png" title="XCode configuration of xcconfig usage on targets" alt="XCode configuration of xcconfig usage on targets"></p>
 
 <p>From then on the alternate targets will inherit from the <code>Pods.xcconfig</code> configuration as they should.</p>
 
-<p>Similarly, some of the growing pains I&#8217;ve had with my use of CocoaPods have been related to making sure the configurations inherit from the <code>Pods.xcconfig</code> configuration, specifically custom header and library search paths. So if you get build errors related to not being able to find headers or libraries double check the target&#8217;s header and library search path build settings and ensure the first element is <code>$(inhertied)</code>. In general, I&#8217;ve found the <a href="https://github.com/CocoaPods/CocoaPods/wiki">CocoPods Wiki</a> is a good place to start reading up, should you encounter issues.</p>
+<p>Similarly, some of the growing pains I&rsquo;ve had with my use of CocoaPods have been related to making sure the configurations inherit from the <code>Pods.xcconfig</code> configuration, specifically custom header and library search paths. So if you get build errors related to not being able to find headers or libraries double check the target&rsquo;s header and library search path build settings and ensure the first element is <code>$(inhertied)</code>. In general, I&rsquo;ve found the <a href="https://github.com/CocoaPods/CocoaPods/wiki">CocoPods Wiki</a> is a good place to start reading up, should you encounter issues.</p>
 
 <h3>Using a Fork as a Pod</h3>
 
-<p>Using &#8220;off the shelf&#8221; pods is as easy as the docs say&#8230; you simply search for the pod you want at <a href="http://cocoapods.org">http://cocoapods.org</a>, add a dependency in the <code>Podfile</code> and then run <code>pod update</code>. I&#8217;ve found, however, that sometimes I want to fork a project that I&#8217;m using as a pod so I can make changes. But how then to use the fork as a pod? It&#8217;s not hard, actually.</p>
+<p>Using &ldquo;off the shelf&rdquo; pods is as easy as the docs say&hellip; you simply search for the pod you want at <a href="http://cocoapods.org">http://cocoapods.org</a>, add a dependency in the <code>Podfile</code> and then run <code>pod update</code>. I&rsquo;ve found, however, that sometimes I want to fork a project that I&rsquo;m using as a pod so I can make changes. But how then to use the fork as a pod? It&rsquo;s not hard, actually.</p>
 
 <p>I ran into <a href="http://stackoverflow.com/a/12393865/397210">this answer</a> which pointed me to the <a href="https://github.com/CocoaPods/CocoaPods/wiki/Dependency-declaration-options">CocoPods dependency declaration wiki entry</a>. Basically, all that needs to be done is to explicitly specify the git repository to use for the pod, instead of letting it use the default repository.</p>
 
-<p>I&#8217;ve had great luck with this approach for my extraction of the <a href="http://restkit.org">RestKit</a> ObjectMapping functionality (see my <a href="https://github.com/levigroker/RestKitObjectMapping">RestKitObjectMapping</a> fork). All I need to do now, to include this pod in my project is to add this line to my <code>Podspec</code> file:</p>
+<p>I&rsquo;ve had great luck with this approach for my extraction of the <a href="http://restkit.org">RestKit</a> ObjectMapping functionality (see my <a href="https://github.com/levigroker/RestKitObjectMapping">RestKitObjectMapping</a> fork). All I need to do now, to include this pod in my project is to add this line to my <code>Podspec</code> file:</p>
 
 <pre><code>pod 'RestKitObjectMapping', :git =&gt; 'https://github.com/levigroker/RestKitObjectMapping.git'
 </code></pre>
@@ -322,9 +322,9 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
     <link href="http://levigroker.github.com/blog/2012/10/25/the-shadow-knows/"/>
     <updated>2012-10-25T16:46:00-06:00</updated>
     <id>http://levigroker.github.com/blog/2012/10/25/the-shadow-knows</id>
-    <content type="html"><![CDATA[<p>Adding drop shadows is a nice little UI touch which brings depth, and I like them, assuming they&#8217;re done subtlety.</p>
+    <content type="html"><![CDATA[<p>Adding drop shadows is a nice little UI touch which brings depth, and I like them, assuming they&rsquo;re done subtlety.</p>
 
-<p>That said, I&#8217;ve been playing around with them a bit and have a couple of things to share.</p>
+<p>That said, I&rsquo;ve been playing around with them a bit and have a couple of things to share.</p>
 
 <ul>
 <li>If your shadow is to be placed on a rectangular layer, use <code>layer.shadowPath</code> to increase performance.</li>
@@ -333,7 +333,7 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
 
 <p>TIP: To easily create the rectangular path: <code>layer.shadowPath = [UIBezierPath bezierPathWithRect:layer.bounds].CGPath;</code></p>
 
-<p>See <a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CALayer_class/Introduction/Introduction.html#//apple_ref/occ/instp/CALayer/shadowPath">Apple&#8217;s CALayer documentation</a> where they say:</p>
+<p>See <a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CALayer_class/Introduction/Introduction.html#//apple_ref/occ/instp/CALayer/shadowPath">Apple&rsquo;s CALayer documentation</a> where they say:</p>
 
 <blockquote><p>If the value in this property is non-nil, the shadow is created using the specified path instead of the layer’s composited alpha channel. The path defines the outline of the shadow. It is filled using the non-zero winding rule and the current shadow color, opacity, and blur radius.</p>
 
@@ -345,9 +345,9 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
 </ul>
 
 
-<p>So, to recap&#8230; drop shadows can add some really nice, subtle, depth and need not be an overt performance hit.</p>
+<p>So, to recap&hellip; drop shadows can add some really nice, subtle, depth and need not be an overt performance hit.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -365,7 +365,7 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
     <link href="http://levigroker.github.com/blog/2012/09/07/elegant-json-pretty-print-for-bbedit/"/>
     <updated>2012-09-07T10:52:00-06:00</updated>
     <id>http://levigroker.github.com/blog/2012/09/07/elegant-json-pretty-print-for-bbedit</id>
-    <content type="html"><![CDATA[<p>Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&#8217;t have anything (that I&#8217;ve found) which supports pretty printing JSON by default.</p>
+    <content type="html"><![CDATA[<p>Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&rsquo;t have anything (that I&rsquo;ve found) which supports pretty printing JSON by default.</p>
 
 <p>A while ago I found this post <a href="http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit">http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit</a> which worked great, but I ran into <a href="http://coderwall.com/p/g1cm2g">this elegant little snippet</a>. Inspired, I created a much simpler Text Filter for BBEdit:</p>
 
@@ -375,7 +375,7 @@ python -m json.tool
 </code></pre></noscript></div>
 
 
-<p>(drop this file in your <code>~/Library/Application Support/BBEdit/Text Filters</code> directory and then you can select it from BBEdit&#8217;s Text->Apply Text Filter menu.</p>
+<p>(drop this file in your <code>~/Library/Application Support/BBEdit/Text Filters</code> directory and then you can select it from BBEdit&rsquo;s Text->Apply Text Filter menu.</p>
 
 <h2>Update</h2>
 
@@ -393,7 +393,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Give me back my ~/Library (!)]]></title>
+    <title type="html"><![CDATA[Give Me Back My ~/Library (!)]]></title>
     <link href="http://levigroker.github.com/blog/2012/09/07/give-me-back-my-%7E-slash-library/"/>
     <updated>2012-09-07T10:39:00-06:00</updated>
     <id>http://levigroker.github.com/blog/2012/09/07/give-me-back-my-~-slash-library</id>
@@ -421,7 +421,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
 </code></pre></noscript></div>
 
 
-<p>As an aside, I&#8217;ll take this space to plug <a href="http://www.peterborgapps.com/lingon/">Lingon</a> (I have no affiliation), which is a nice GUI tool for managing LaunchAgents and saves you from editing XML and dropping to the command line to talk to <code>launchd</code>.</p>
+<p>As an aside, I&rsquo;ll take this space to plug <a href="http://www.peterborgapps.com/lingon/">Lingon</a> (I have no affiliation), which is a nice GUI tool for managing LaunchAgents and saves you from editing XML and dropping to the command line to talk to <code>launchd</code>.</p>
 ]]></content>
   </entry>
   
@@ -430,7 +430,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
     <link href="http://levigroker.github.com/blog/2012/05/07/override-deprecated-api-warning/"/>
     <updated>2012-05-07T15:58:00-06:00</updated>
     <id>http://levigroker.github.com/blog/2012/05/07/override-deprecated-api-warning</id>
-    <content type="html"><![CDATA[<p>Sometimes I need to make a call to a deprecated API (for DEBUG builds only, of course) and don&#8217;t want to see the warning. This little preprocessor tip will hide that warning:</p>
+    <content type="html"><![CDATA[<p>Sometimes I need to make a call to a deprecated API (for DEBUG builds only, of course) and don&rsquo;t want to see the warning. This little preprocessor tip will hide that warning:</p>
 
 <div><script src='https://gist.github.com/2630702.js'></script>
 <noscript><pre><code>#ifdef DEBUG
@@ -449,7 +449,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
     <link href="http://levigroker.github.com/blog/2012/03/15/coredata-browsing/"/>
     <updated>2012-03-15T17:01:00-06:00</updated>
     <id>http://levigroker.github.com/blog/2012/03/15/coredata-browsing</id>
-    <content type="html"><![CDATA[<p>Found a handy tool for browsing core data on the simulator. It&#8217;s not very polished, but it allows you to perform fetch requests with predicates and get back results, which helps immensely when trying to understand what&#8217;s happening inside your app&#8217;s data at runtime.
+    <content type="html"><![CDATA[<p>Found a handy tool for browsing core data on the simulator. It&rsquo;s not very polished, but it allows you to perform fetch requests with predicates and get back results, which helps immensely when trying to understand what&rsquo;s happening inside your app&rsquo;s data at runtime.
 Check it out:</p>
 
 <p><a href="http://atastypixel.com/blog/browsing-core-data-databases-using-f-script">http://atastypixel.com/blog/browsing-core-data-databases-using-f-script/</a></p>
@@ -460,13 +460,13 @@ Check it out:</p>
 
 <p>Happy CoreData spelunking!</p>
 
-<p>P.S. <a href="https://twitter.com/tomhoag">@tomhoag</a> suggested this <a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager">https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/</a> as well&#8230; looks handy!</p>
+<p>P.S. <a href="https://twitter.com/tomhoag">@tomhoag</a> suggested this <a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager">https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/</a> as well&hellip; looks handy!</p>
 
 <h2>Update</h2>
 
 <h6>(Monday, September 24 2012)</h6>
 
-<p>Since the original post, I&#8217;ve discovered <a href="http://itunes.apple.com/us/app/core-data-editor/id403025957?mt=12">Core Data Editor</a> which is really great and I recommend it. However, the fscript approach allows one to perform predicate based fetch requests which is not something the Core Data Editor supports (at this time?) and is invaluable, so having both tools around is still handy.</p>
+<p>Since the original post, I&rsquo;ve discovered <a href="http://itunes.apple.com/us/app/core-data-editor/id403025957?mt=12">Core Data Editor</a> which is really great and I recommend it. However, the fscript approach allows one to perform predicate based fetch requests which is not something the Core Data Editor supports (at this time?) and is invaluable, so having both tools around is still handy.</p>
 ]]></content>
   </entry>
   
@@ -484,26 +484,26 @@ Check it out:</p>
     <link href="http://levigroker.github.com/blog/2012/01/19/asynchronous-ghunit-tests-and-objective-c-foo/"/>
     <updated>2012-01-19T17:33:00-07:00</updated>
     <id>http://levigroker.github.com/blog/2012/01/19/asynchronous-ghunit-tests-and-objective-c-foo</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/gabriel/gh-unit">GHUnit</a> is quite useful for running and reporting tests (unit or otherwise) for iOS projects, and I&#8217;ve been using it for a while with good results. Recently, however, I found as I wrote more and more integration-style tests with a remote HTTP service I found the code getting to be a pain to write and maintain.
+    <content type="html"><![CDATA[<p><a href="https://github.com/gabriel/gh-unit">GHUnit</a> is quite useful for running and reporting tests (unit or otherwise) for iOS projects, and I&rsquo;ve been using it for a while with good results. Recently, however, I found as I wrote more and more integration-style tests with a remote HTTP service I found the code getting to be a pain to write and maintain.
 There were two reasons for this:</p>
 
 <h4>GHAssert variants fail with an Exception, and therefore other tests do not continue to execute.</h4>
 
 <p>This was a real drag, since the assert macros are pretty handy, but I want all my tests to run, even if some fail (<em>gasp</em> I know!).</p>
 
-<p>So, I ended up replacing the GHAsserts with a simple conditional, which doesn&#8217;t feel as clean, but navigates around the issue.</p>
+<p>So, I ended up replacing the GHAsserts with a simple conditional, which doesn&rsquo;t feel as clean, but navigates around the issue.</p>
 
 <h4>Selector names became copy and paste heavy.</h4>
 
-<p>Since I&#8217;m making notification calls like <code>[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(testAsynchronousOperation)];</code> from within the same method it was additional grunt work to copy the selector name to all the places I needed a reference to the selector.</p>
+<p>Since I&rsquo;m making notification calls like <code>[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(testAsynchronousOperation)];</code> from within the same method it was additional grunt work to copy the selector name to all the places I needed a reference to the selector.</p>
 
-<p>I thought of adding a <code>SEL mySelector = @selector(foo);</code> to each method, which would cut down on the copy &amp; pasting, but that just didn&#8217;t seem clean to me.</p>
+<p>I thought of adding a <code>SEL mySelector = @selector(foo);</code> to each method, which would cut down on the copy &amp; pasting, but that just didn&rsquo;t seem clean to me.</p>
 
-<p>I discovered there is an Objective C variable like <code>self</code> called <code>_cmd</code><a href="http://www.google.com/search?client=safari&amp;rls=en&amp;q=objective+c+_cmd&amp;ie=UTF-8&amp;oe=UTF-8">*</a> which is a reference to the current selector(!). That&#8217;s cool, and simplifies code like my testing code a lot.</p>
+<p>I discovered there is an Objective C variable like <code>self</code> called <code>_cmd</code><a href="http://www.google.com/search?client=safari&amp;rls=en&amp;q=objective+c+_cmd&amp;ie=UTF-8&amp;oe=UTF-8">*</a> which is a reference to the current selector(!). That&rsquo;s cool, and simplifies code like my testing code a lot.</p>
 
 <h4>Sample</h4>
 
-<p>For the specific kinds of test cases I was writing, here&#8217;s an example which shows both of these issues resolved:</p>
+<p>For the specific kinds of test cases I was writing, here&rsquo;s an example which shows both of these issues resolved:</p>
 
 <div><script src='https://gist.github.com/1643797.js'></script>
 <noscript><pre><code>#import &lt;GHUnitIOS/GHUnit.h&gt; 
@@ -516,7 +516,7 @@ There were two reasons for this:</p>
 - (BOOL)shouldRunOnMainThread
 {
     // By default NO, but if you have a UI test or test dependent on running on the main thread return YES.
-    // Also an async test that calls back on the main thread, you'll probably want to return YES.
+    // Also an async test that calls back on the main thread, you&#39;ll probably want to return YES.
     return NO;
 }
 - (void)testAsynchronousOperation
@@ -553,9 +553,9 @@ There were two reasons for this:</p>
     <link href="http://levigroker.github.com/blog/2012/01/06/ongoing-resources-for-ios-knowledge/"/>
     <updated>2012-01-06T17:47:00-07:00</updated>
     <id>http://levigroker.github.com/blog/2012/01/06/ongoing-resources-for-ios-knowledge</id>
-    <content type="html"><![CDATA[<p>Since my last post on <a href="blog/2011/12/09/learning-ios/">learning iOS</a> I&#8217;ve been asked about the <em>Continuous</em> section and what resources/people/blogs etc. I recommend following.</p>
+    <content type="html"><![CDATA[<p>Since my last post on <a href="blog/2011/12/09/learning-ios/">learning iOS</a> I&rsquo;ve been asked about the <em>Continuous</em> section and what resources/people/blogs etc. I recommend following.</p>
 
-<p>To be clear, there&#8217;s no way to even scratch the surface for all the really great people in this community who should be paid attention to (I continuously find new great people and welcome introductions too!), so please don&#8217;t take this as a comprehensive list, but just a place to start&#8230; Also, it&#8217;s a good idea to keep up on Apple related news, but that&#8217;s a different beastie altogether.</p>
+<p>To be clear, there&rsquo;s no way to even scratch the surface for all the really great people in this community who should be paid attention to (I continuously find new great people and welcome introductions too!), so please don&rsquo;t take this as a comprehensive list, but just a place to start&hellip; Also, it&rsquo;s a good idea to keep up on Apple related news, but that&rsquo;s a different beastie altogether.</p>
 
 <h3>Blogs (in no particular order)</h3>
 
@@ -604,15 +604,15 @@ There were two reasons for this:</p>
     <link href="http://levigroker.github.com/blog/2011/12/09/learning-ios/"/>
     <updated>2011-12-09T17:01:00-07:00</updated>
     <id>http://levigroker.github.com/blog/2011/12/09/learning-ios</id>
-    <content type="html"><![CDATA[<p>I&#8217;ve recently been asked a couple times about resources for developers who want to get into iOS development. I don&#8217;t pretend to be an expert, and am constantly learning myself, but these resources are ones I find useful, believe would be good for people just starting, and should certainly get you started. There&#8217;s <em>lots</em> of information out there, so don&#8217;t get too overwhelmed.</p>
+    <content type="html"><![CDATA[<p>I&rsquo;ve recently been asked a couple times about resources for developers who want to get into iOS development. I don&rsquo;t pretend to be an expert, and am constantly learning myself, but these resources are ones I find useful, believe would be good for people just starting, and should certainly get you started. There&rsquo;s <em>lots</em> of information out there, so don&rsquo;t get too overwhelmed.</p>
 
 <h2>The First Place</h2>
 
-<p>I&#8217;d start is with a <a href="http://www.amazon.com/iPhone-Programming-Ranch-Guide-Guides/dp/0321706242/ref=pd_sim_b_5" title="">good book</a>. Aaron Hillegass is <em>the</em> goto guy for learning Cocoa and Objective C.</p>
+<p>I&rsquo;d start is with a <a href="http://www.amazon.com/iPhone-Programming-Ranch-Guide-Guides/dp/0321706242/ref=pd_sim_b_5" title="">good book</a>. Aaron Hillegass is <em>the</em> goto guy for learning Cocoa and Objective C.</p>
 
-<p>Second, Apple&#8217;s documentation is quite good and will be your constant companion. Use the Documentation tab of the Xcode Organizer to search and browse the docs. There are many many sample code projects on various topics.</p>
+<p>Second, Apple&rsquo;s documentation is quite good and will be your constant companion. Use the Documentation tab of the Xcode Organizer to search and browse the docs. There are many many sample code projects on various topics.</p>
 
-<p>The <a href="http://developer.apple.com/library/ios/navigation/" title="">docs are also online</a>&#8230; some good starting places are:</p>
+<p>The <a href="http://developer.apple.com/library/ios/navigation/" title="">docs are also online</a>&hellip; some good starting places are:</p>
 
 <ul>
 <li><a href="http://developer.apple.com/library/ios/navigation/#section=Resource%20Types&amp;topic=Getting%20Started">Getting Started</a></li>
@@ -620,25 +620,25 @@ There were two reasons for this:</p>
 </ul>
 
 
-<p>View Controllers are the &#8220;main entry point&#8221; when using UIKit. It is important to understand them&#8230; many iOS devs do not (I was making fatal mistakes for my first year!). Read Apple&#8217;s <a href="http://developer.apple.com/library/ios/#featuredarticles/ViewControllerPGforiPhoneOS/Introduction/Introduction.html">View Controller Programming Guide</a> until it makes sense. Paying particular heed to the view hierarchy and view controller hierarchy concepts.</p>
+<p>View Controllers are the &ldquo;main entry point&rdquo; when using UIKit. It is important to understand them&hellip; many iOS devs do not (I was making fatal mistakes for my first year!). Read Apple&rsquo;s <a href="http://developer.apple.com/library/ios/#featuredarticles/ViewControllerPGforiPhoneOS/Introduction/Introduction.html">View Controller Programming Guide</a> until it makes sense. Paying particular heed to the view hierarchy and view controller hierarchy concepts.</p>
 
 <h2>Attend a Conference/Course</h2>
 
-<p>If you&#8217;re at all like me, you&#8217;ll most likely come away inspired and energized to build cool stuff. I&#8217;ve been to two <a href="http://360idev.com/" title="">360iDev</a>&#8217;s now and loved them both. Highly recommend.</p>
+<p>If you&rsquo;re at all like me, you&rsquo;ll most likely come away inspired and energized to build cool stuff. I&rsquo;ve been to two <a href="http://360idev.com/" title="">360iDev</a>&rsquo;s now and loved them both. Highly recommend.</p>
 
 <p>The <a href="http://pragmaticstudio.com/iphone">Pragmatic Studio</a> just announced a session which looks promising.</p>
 
 <h2>Continuous</h2>
 
-<p>Follow people on Twitter who talk about iOS and Cocoa. There&#8217;s a lot of people out there with a lot of experience.</p>
+<p>Follow people on Twitter who talk about iOS and Cocoa. There&rsquo;s a lot of people out there with a lot of experience.</p>
 
 <p>This should lead you to some great blog posts and open source projects which will help you learn and grow, as they continue to do for me.</p>
 
-<p>Check out <a href="http://www.raywenderlich.com">Ray Wenderlinch</a>&#8217;s site for some great intro to intermediate tutorials to get you going.</p>
+<p>Check out <a href="http://www.raywenderlich.com">Ray Wenderlinch</a>&rsquo;s site for some great intro to intermediate tutorials to get you going.</p>
 
-<p>A <em>great</em> place to go for answers is <a href="http://stackoverflow.com/">StackOverflow</a>. Search before you post&#8230; it&#8217;s probably been asked (and answered) already.</p>
+<p>A <em>great</em> place to go for answers is <a href="http://stackoverflow.com/">StackOverflow</a>. Search before you post&hellip; it&rsquo;s probably been asked (and answered) already.</p>
 
-<h2>Lot&#8217;s to know</h2>
+<h2>Lots to know</h2>
 
 <p>There is a difference between intelligence and knowledge. Do not sell yourself short.</p>
 
@@ -655,14 +655,14 @@ There were two reasons for this:</p>
     <id>http://levigroker.github.com/blog/2011/12/05/ranged-random-numbers-in-objective-c</id>
     <content type="html"><![CDATA[<p>Sounds pretty basic, and it is, but like many things there are lots of ways to do it. This is my new favorite:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">u_int32_t</span> <span class="n">arc4random_uniform</span><span class="p">(</span><span class="n">u_int32_t</span> <span class="cm">/*upper_bound*/</span><span class="p">)</span> <span class="n">__OSX_AVAILABLE_STARTING</span><span class="p">(</span><span class="n">__MAC_10_7</span><span class="p">,</span> <span class="n">__IPHONE_4_3</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Based on <a href="http://stackoverflow.com/a/7082580/397210">discussions on StackOverflow</a> and my own testing.</p>
 
-<p>This assumes you&#8217;re on iOS 4.3 or later, however.</p>
+<p>This assumes you&rsquo;re on iOS 4.3 or later, however.</p>
 ]]></content>
   </entry>
   
@@ -673,7 +673,7 @@ There were two reasons for this:</p>
     <id>http://levigroker.github.com/blog/2011/11/07/anonymous-ftp-on-lion</id>
     <content type="html"><![CDATA[<h2>Start:</h2>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo dscl . -create /Users/ftp
@@ -684,7 +684,7 @@ There were two reasons for this:</p>
 
 <h2>Stop:</h2>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo launchctl unload -w /System/Library/LaunchDaemons/ftp.plist
 </span><span class='line'>sudo dscl . -delete /Users/ftp

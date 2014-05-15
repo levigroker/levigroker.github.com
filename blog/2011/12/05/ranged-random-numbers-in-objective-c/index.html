@@ -25,7 +25,7 @@ u_int32_t arc4random_uniform( &hellip;">
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -64,7 +64,7 @@ u_int32_t arc4random_uniform( &hellip;">
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:levigroker.github.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -82,26 +82,6 @@ u_int32_t arc4random_uniform( &hellip;">
     <div id="content">
       <div>
 <article class="hentry" role="article">
-
-  
-    <div class="article_sharing">
-  
-  <p>
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2011/12/05/ranged-random-numbers-in-objective-c/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2011/12/05/ranged-random-numbers-in-objective-c/" >Tweet</a>
-  </p>
-  
-  
-  <p>
-  <div class="g-plusone" data-size="medium"></div>
-  </p>
-  
-  
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-<script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-</div>
-
-  
-
   
   <header>
     
@@ -130,14 +110,14 @@ u_int32_t arc4random_uniform( &hellip;">
 
 <div class="entry-content"><p>Sounds pretty basic, and it is, but like many things there are lots of ways to do it. This is my new favorite:</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">u_int32_t</span> <span class="n">arc4random_uniform</span><span class="p">(</span><span class="n">u_int32_t</span> <span class="cm">/*upper_bound*/</span><span class="p">)</span> <span class="n">__OSX_AVAILABLE_STARTING</span><span class="p">(</span><span class="n">__MAC_10_7</span><span class="p">,</span> <span class="n">__IPHONE_4_3</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Based on <a href="http://stackoverflow.com/a/7082580/397210">discussions on StackOverflow</a> and my own testing.</p>
 
-<p>This assumes you&#8217;re on iOS 4.3 or later, however.</p>
+<p>This assumes you&rsquo;re on iOS 4.3 or later, however.</p>
 </div>
 
 
@@ -165,7 +145,18 @@ u_int32_t arc4random_uniform( &hellip;">
 
 
     </p>
-    <div class="sharing"></div>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2011/12/05/ranged-random-numbers-in-objective-c/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2011/12/05/ranged-random-numbers-in-objective-c/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
     <p class="meta">
       
         <a class="basic-alignment left" href="/blog/2011/11/07/anonymous-ftp-on-lion/" title="Previous Post: Anonymous FTP on Lion">&laquo; Anonymous FTP on Lion</a>
@@ -198,7 +189,7 @@ u_int32_t arc4random_uniform( &hellip;">
       </li>
     
       <li class="post">
-        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods are!</a>
+        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods Are!</a>
       </li>
     
       <li class="post">
@@ -254,11 +245,10 @@ u_int32_t arc4random_uniform( &hellip;">
   
 </section>
 
-<script src='https://d2zh9g63fcvyrq.cloudfront.net/adn.js'></script>
 
 <section>
-<a href="https://alpha.app.net/levigroker" class='adn-button' rel='me' data-type='follow' data-width='220' data-height='38' data-user-id="@levigroker">@levigroker on App.net</a>
-</section>
+<a href='https://alpha.app.net/levigroker' class='adn-button' target='_blank' data-type='follow' data-width='295' data-height='20' data-user-id='@levigroker' data-show-username='1' rel='me'>Follow me on App.net</a>
+<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script></section>
 
 
 
@@ -280,7 +270,7 @@ u_int32_t arc4random_uniform( &hellip;">
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Levi Brown -
+  Copyright &copy; 2014 - Levi Brown -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
@@ -306,7 +296,7 @@ u_int32_t arc4random_uniform( &hellip;">
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

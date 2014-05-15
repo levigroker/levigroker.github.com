@@ -9,7 +9,7 @@
   <meta name="author" content="Levi Brown">
 
   
-  <meta name="description" content="Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&#8217;t have anything ( &hellip;">
+  <meta name="description" content="Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&rsquo;t have anything ( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +24,7 @@
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -63,7 +63,7 @@
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:levigroker.github.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -81,26 +81,6 @@
     <div id="content">
       <div>
 <article class="hentry" role="article">
-
-  
-    <div class="article_sharing">
-  
-  <p>
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2012/09/07/elegant-json-pretty-print-for-bbedit/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2012/09/07/elegant-json-pretty-print-for-bbedit/" >Tweet</a>
-  </p>
-  
-  
-  <p>
-  <div class="g-plusone" data-size="medium"></div>
-  </p>
-  
-  
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-<script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-</div>
-
-  
-
   
   <header>
     
@@ -127,7 +107,7 @@
   </header>
 
 
-<div class="entry-content"><p>Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&#8217;t have anything (that I&#8217;ve found) which supports pretty printing JSON by default.</p>
+<div class="entry-content"><p>Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&rsquo;t have anything (that I&rsquo;ve found) which supports pretty printing JSON by default.</p>
 
 <p>A while ago I found this post <a href="http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit">http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit</a> which worked great, but I ran into <a href="http://coderwall.com/p/g1cm2g">this elegant little snippet</a>. Inspired, I created a much simpler Text Filter for BBEdit:</p>
 
@@ -137,7 +117,7 @@ python -m json.tool
 </code></pre></noscript></div>
 
 
-<p>(drop this file in your <code>~/Library/Application Support/BBEdit/Text Filters</code> directory and then you can select it from BBEdit&#8217;s Text->Apply Text Filter menu.</p>
+<p>(drop this file in your <code>~/Library/Application Support/BBEdit/Text Filters</code> directory and then you can select it from BBEdit&rsquo;s Text->Apply Text Filter menu.</p>
 
 <h2>Update</h2>
 
@@ -178,7 +158,18 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
 
 
     </p>
-    <div class="sharing"></div>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2012/09/07/elegant-json-pretty-print-for-bbedit/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2012/09/07/elegant-json-pretty-print-for-bbedit/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
     <p class="meta">
       
         <a class="basic-alignment left" href="/blog/2012/09/07/give-me-back-my-%7E-slash-library/" title="Previous Post: Give me back my ~/Library (!)">&laquo; Give me back my ~/Library (!)</a>
@@ -211,7 +202,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
       </li>
     
       <li class="post">
-        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods are!</a>
+        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods Are!</a>
       </li>
     
       <li class="post">
@@ -267,11 +258,10 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
   
 </section>
 
-<script src='https://d2zh9g63fcvyrq.cloudfront.net/adn.js'></script>
 
 <section>
-<a href="https://alpha.app.net/levigroker" class='adn-button' rel='me' data-type='follow' data-width='220' data-height='38' data-user-id="@levigroker">@levigroker on App.net</a>
-</section>
+<a href='https://alpha.app.net/levigroker' class='adn-button' target='_blank' data-type='follow' data-width='295' data-height='20' data-user-id='@levigroker' data-show-username='1' rel='me'>Follow me on App.net</a>
+<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script></section>
 
 
 
@@ -293,7 +283,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Levi Brown -
+  Copyright &copy; 2014 - Levi Brown -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
@@ -319,7 +309,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

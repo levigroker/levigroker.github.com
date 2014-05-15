@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Powerful, CocoaPods are! - grokin.gs</title>
+  <title>Powerful, CocoaPods Are! - grokin.gs</title>
   <meta name="author" content="Levi Brown">
 
   
-  <meta name="description" content="CocoaPods, &#8220;The Objective-C Library Manager,&#8221; is something I&#8217;ve been using now for a while and really enjoying it for integrating &hellip;">
+  <meta name="description" content="CocoaPods, &ldquo;The Objective-C Library Manager,&rdquo; is something I&rsquo;ve been using now for a while and really enjoying it for integrating &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +24,7 @@
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -63,7 +63,7 @@
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:levigroker.github.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -81,26 +81,6 @@
     <div id="content">
       <div>
 <article class="hentry" role="article">
-
-  
-    <div class="article_sharing">
-  
-  <p>
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2012/11/08/powerful/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2012/11/08/powerful/" >Tweet</a>
-  </p>
-  
-  
-  <p>
-  <div class="g-plusone" data-size="medium"></div>
-  </p>
-  
-  
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-<script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-</div>
-
-  
-
   
   <header>
     
@@ -127,7 +107,7 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://cocoapods.org">CocoaPods</a>, &#8220;The Objective-C Library Manager,&#8221; is something I&#8217;ve been using now for a while and really enjoying it for integrating third party frameworks and components into my projects. If you&#8217;re not familiar with it already, I <em>highly</em> recommend you look into it as it is really powerful and useful.</p>
+<div class="entry-content"><p><a href="http://cocoapods.org">CocoaPods</a>, &ldquo;The Objective-C Library Manager,&rdquo; is something I&rsquo;ve been using now for a while and really enjoying it for integrating third party frameworks and components into my projects. If you&rsquo;re not familiar with it already, I <em>highly</em> recommend you look into it as it is really powerful and useful.</p>
 
 <h3>Installing pods for multiple targets</h3>
 
@@ -138,21 +118,21 @@
 
 <p>it does not configure the test target to use the <code>Pods.xcconfig</code> which specify all the integration points for the included pods. And, finding where to manually configure the use of the <code>xcconfig</code> file for the test target took me a bit of digging.</p>
 
-<p>You&#8217;ll need to go into the project settings, on the info tab of the project (not the target) and expand each configuration in the &#8220;Configurations&#8221; area (just under &#8220;Deployment Target&#8221;). Then set each configuration to use the Pods configuration on any alternate targets (like my test target):</p>
+<p>You&rsquo;ll need to go into the project settings, on the info tab of the project (not the target) and expand each configuration in the &ldquo;Configurations&rdquo; area (just under &ldquo;Deployment Target&rdquo;). Then set each configuration to use the Pods configuration on any alternate targets (like my test target):</p>
 
 <p><img src="images/posts/2012-11-08-powerful/PodsxcconfigConfig.png" title="XCode configuration of xcconfig usage on targets" alt="XCode configuration of xcconfig usage on targets"></p>
 
 <p>From then on the alternate targets will inherit from the <code>Pods.xcconfig</code> configuration as they should.</p>
 
-<p>Similarly, some of the growing pains I&#8217;ve had with my use of CocoaPods have been related to making sure the configurations inherit from the <code>Pods.xcconfig</code> configuration, specifically custom header and library search paths. So if you get build errors related to not being able to find headers or libraries double check the target&#8217;s header and library search path build settings and ensure the first element is <code>$(inhertied)</code>. In general, I&#8217;ve found the <a href="https://github.com/CocoaPods/CocoaPods/wiki">CocoPods Wiki</a> is a good place to start reading up, should you encounter issues.</p>
+<p>Similarly, some of the growing pains I&rsquo;ve had with my use of CocoaPods have been related to making sure the configurations inherit from the <code>Pods.xcconfig</code> configuration, specifically custom header and library search paths. So if you get build errors related to not being able to find headers or libraries double check the target&rsquo;s header and library search path build settings and ensure the first element is <code>$(inhertied)</code>. In general, I&rsquo;ve found the <a href="https://github.com/CocoaPods/CocoaPods/wiki">CocoPods Wiki</a> is a good place to start reading up, should you encounter issues.</p>
 
 <h3>Using a Fork as a Pod</h3>
 
-<p>Using &#8220;off the shelf&#8221; pods is as easy as the docs say&#8230; you simply search for the pod you want at <a href="http://cocoapods.org">http://cocoapods.org</a>, add a dependency in the <code>Podfile</code> and then run <code>pod update</code>. I&#8217;ve found, however, that sometimes I want to fork a project that I&#8217;m using as a pod so I can make changes. But how then to use the fork as a pod? It&#8217;s not hard, actually.</p>
+<p>Using &ldquo;off the shelf&rdquo; pods is as easy as the docs say&hellip; you simply search for the pod you want at <a href="http://cocoapods.org">http://cocoapods.org</a>, add a dependency in the <code>Podfile</code> and then run <code>pod update</code>. I&rsquo;ve found, however, that sometimes I want to fork a project that I&rsquo;m using as a pod so I can make changes. But how then to use the fork as a pod? It&rsquo;s not hard, actually.</p>
 
 <p>I ran into <a href="http://stackoverflow.com/a/12393865/397210">this answer</a> which pointed me to the <a href="https://github.com/CocoaPods/CocoaPods/wiki/Dependency-declaration-options">CocoPods dependency declaration wiki entry</a>. Basically, all that needs to be done is to explicitly specify the git repository to use for the pod, instead of letting it use the default repository.</p>
 
-<p>I&#8217;ve had great luck with this approach for my extraction of the <a href="http://restkit.org">RestKit</a> ObjectMapping functionality (see my <a href="https://github.com/levigroker/RestKitObjectMapping">RestKitObjectMapping</a> fork). All I need to do now, to include this pod in my project is to add this line to my <code>Podspec</code> file:</p>
+<p>I&rsquo;ve had great luck with this approach for my extraction of the <a href="http://restkit.org">RestKit</a> ObjectMapping functionality (see my <a href="https://github.com/levigroker/RestKitObjectMapping">RestKitObjectMapping</a> fork). All I need to do now, to include this pod in my project is to add this line to my <code>Podspec</code> file:</p>
 
 <pre><code>pod 'RestKitObjectMapping', :git =&gt; 'https://github.com/levigroker/RestKitObjectMapping.git'
 </code></pre>
@@ -185,7 +165,18 @@
 
 
     </p>
-    <div class="sharing"></div>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2012/11/08/powerful/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2012/11/08/powerful/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
     <p class="meta">
       
         <a class="basic-alignment left" href="/blog/2012/10/25/the-shadow-knows/" title="Previous Post: The Shadow Knows">&laquo; The Shadow Knows</a>
@@ -218,7 +209,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods are!</a>
+        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods Are!</a>
       </li>
     
       <li class="post">
@@ -274,11 +265,10 @@
   
 </section>
 
-<script src='https://d2zh9g63fcvyrq.cloudfront.net/adn.js'></script>
 
 <section>
-<a href="https://alpha.app.net/levigroker" class='adn-button' rel='me' data-type='follow' data-width='220' data-height='38' data-user-id="@levigroker">@levigroker on App.net</a>
-</section>
+<a href='https://alpha.app.net/levigroker' class='adn-button' target='_blank' data-type='follow' data-width='295' data-height='20' data-user-id='@levigroker' data-show-username='1' rel='me'>Follow me on App.net</a>
+<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script></section>
 
 
 
@@ -300,7 +290,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Levi Brown -
+  Copyright &copy; 2014 - Levi Brown -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
@@ -326,7 +316,7 @@
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="Creating custom data objects as subclasses of NSObject is something which tends to happen
-quite often, and making those objects &#8220;good citizens &hellip;">
+quite often, and making those objects &ldquo;good citizens& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,7 +25,7 @@ quite often, and making those objects &#8220;good citizens &hellip;">
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -64,7 +64,7 @@ quite often, and making those objects &#8220;good citizens &hellip;">
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:levigroker.github.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -82,26 +82,6 @@ quite often, and making those objects &#8220;good citizens &hellip;">
     <div id="content">
       <div>
 <article class="hentry" role="article">
-
-  
-    <div class="article_sharing">
-  
-  <p>
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2013/02/12/hashbuilder/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2013/02/12/hashbuilder/" >Tweet</a>
-  </p>
-  
-  
-  <p>
-  <div class="g-plusone" data-size="medium"></div>
-  </p>
-  
-  
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-<script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-</div>
-
-  
-
   
   <header>
     
@@ -129,14 +109,14 @@ quite often, and making those objects &#8220;good citizens &hellip;">
 
 
 <div class="entry-content"><p>Creating custom data objects as subclasses of NSObject is something which tends to happen
-quite often, and making those objects &#8220;good citizens&#8221; which can be reliably placed into
+quite often, and making those objects &ldquo;good citizens&rdquo; which can be reliably placed into
 NS collections (<code>NSDictionary</code>, <code>NSSet</code>, <code>NSArray</code>, etc.) means taking a few extra steps.
-One of these steps is to override <code>NSObject</code>&#8217;s <code>- (BOOL)isEqual:(id)object</code> method, and,
+One of these steps is to override <code>NSObject</code>&rsquo;s <code>- (BOOL)isEqual:(id)object</code> method, and,
 of course if you do that, you should (read: <em>must</em>) also override <code>- (NSUInteger)hash</code>.</p>
 
 <p>Providing a good hash value from your overridden <code>- (NSUInteger)hash</code> method is a deep
 topic, luckily we can stand on the backs of giants, and use knowledge and techniques
-which follow &#8220;known good&#8221; practices. With that in mind, I created a utility, HashBuilder,
+which follow &ldquo;known good&rdquo; practices. With that in mind, I created a utility, HashBuilder,
 which makes generating a suitable hash value trivial.</p>
 
 <p><a href="https://github.com/levigroker/HashBuilder">HashBuilder</a> can be used to build a hash
@@ -146,7 +126,7 @@ returned from an override to the <code>NSObject</code> <code>- (NSUInteger)hash<
 
 <h3>Documentation</h3>
 
-<p>To use, create a HashBuilder object, contribute to it, then query the &#8216;builtHash&#8217;
+<p>To use, create a HashBuilder object, contribute to it, then query the &lsquo;builtHash&rsquo;
 property for the resulting hash.</p>
 
 <pre><code>- (NSUInteger)hash
@@ -187,7 +167,7 @@ NSUInteger hash2 = builder2.builtHash;
 
 <h3>Installing</h3>
 
-<p>If you&#8217;re using <a href="http://cocopods.org">CocoPods</a> it&#8217;s as simple as adding this to your <code>Podfile</code>:</p>
+<p>If you&rsquo;re using <a href="http://cocopods.org">CocoPods</a> it&rsquo;s as simple as adding this to your <code>Podfile</code>:</p>
 
 <pre><code>pod 'HashBuilder', '~&gt; 1.0'
 </code></pre>
@@ -220,7 +200,18 @@ NSUInteger hash2 = builder2.builtHash;
 
 
     </p>
-    <div class="sharing"></div>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2013/02/12/hashbuilder/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2013/02/12/hashbuilder/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
     <p class="meta">
       
         <a class="basic-alignment left" href="/blog/2012/11/16/orientationrespectfulnavigationcontroller/" title="Previous Post: Orientation Respectful UINavigationController">&laquo; Orientation Respectful UINavigationController</a>
@@ -253,7 +244,7 @@ NSUInteger hash2 = builder2.builtHash;
       </li>
     
       <li class="post">
-        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods are!</a>
+        <a href="/blog/2012/11/08/powerful/">Powerful, CocoaPods Are!</a>
       </li>
     
       <li class="post">
@@ -309,11 +300,10 @@ NSUInteger hash2 = builder2.builtHash;
   
 </section>
 
-<script src='https://d2zh9g63fcvyrq.cloudfront.net/adn.js'></script>
 
 <section>
-<a href="https://alpha.app.net/levigroker" class='adn-button' rel='me' data-type='follow' data-width='220' data-height='38' data-user-id="@levigroker">@levigroker on App.net</a>
-</section>
+<a href='https://alpha.app.net/levigroker' class='adn-button' target='_blank' data-type='follow' data-width='295' data-height='20' data-user-id='@levigroker' data-show-username='1' rel='me'>Follow me on App.net</a>
+<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script></section>
 
 
 
@@ -335,7 +325,7 @@ NSUInteger hash2 = builder2.builtHash;
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Levi Brown -
+  Copyright &copy; 2014 - Levi Brown -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
@@ -361,7 +351,7 @@ NSUInteger hash2 = builder2.builtHash;
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
