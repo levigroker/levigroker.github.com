@@ -119,5 +119,11 @@ Not all that elegant, unfortunately, but a workaround at least.
 
 ### Thanks
 
-Thanks to [@signed8bit](https://twitter.com/signed8bit) for the moral support, and the wayback-machine.
+Thanks to [@signed8bit](https://twitter.com/signed8bit) for the moral support, and the wayback-machine.  
 Thanks to [Soli](http://forums.plexapp.com/index.php/user/22159-soli/) for the unmount workaround idea.
+
+### Comments
+
+[Max Yarchak](http://MaxProWeb.com)
+> I face the same issue. I've build a script which does reconnect to wifi (network) and it solves the issue with permissions for me.  
+> [https://github.com/MaxProWeb/MacAutomountFix](https://github.com/MaxProWeb/MacAutomountFix)
