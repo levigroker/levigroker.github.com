@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2014-05-15T16:04:50-06:00</updated>
+  <updated>2014-05-21T10:59:49-06:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -142,8 +142,15 @@ browse to <code>Contents/Info.plist</code>, and then edit the Info.plist to add 
 
 <h3>Thanks</h3>
 
-<p>Thanks to <a href="https://twitter.com/signed8bit">@signed8bit</a> for the moral support, and the wayback-machine.
+<p>Thanks to <a href="https://twitter.com/signed8bit">@signed8bit</a> for the moral support, and the wayback-machine.<br/>
 Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a> for the unmount workaround idea.</p>
+
+<h3>Comments</h3>
+
+<p><a href="http://MaxProWeb.com">Max Yarchak</a></p>
+
+<blockquote><p>I face the same issue. I&rsquo;ve build a script which does reconnect to wifi (network) and it solves the issue with permissions for me.<br/>
+<a href="https://github.com/MaxProWeb/MacAutomountFix">https://github.com/MaxProWeb/MacAutomountFix</a></p></blockquote>
 ]]></content>
   </entry>
   
