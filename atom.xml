@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2014-05-21T10:59:49-06:00</updated>
+  <updated>2014-10-31T16:22:40-06:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -401,7 +401,7 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
   
   <entry>
     <title type="html"><![CDATA[Give Me Back My ~/Library (!)]]></title>
-    <link href="http://levigroker.github.com/blog/2012/09/07/give-me-back-my-%7E-slash-library/"/>
+    <link href="http://levigroker.github.com/blog/2012/09/07/give-me-back-my-~-slash-library/"/>
     <updated>2012-09-07T10:39:00-06:00</updated>
     <id>http://levigroker.github.com/blog/2012/09/07/give-me-back-my-~-slash-library</id>
     <content type="html"><![CDATA[<p>As a developer I need access to my Library directory, but Apple keeps hiding it from me with every OS update. Finally tired of manually typing <code>chflags nohidden ~/Library/</code> every time it disappeared, I created a simple LaunchAgent to do this for me every time I log into my machine.</p>
@@ -696,8 +696,6 @@ There were two reasons for this:</p>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo launchctl unload -w /System/Library/LaunchDaemons/ftp.plist
 </span><span class='line'>sudo dscl . -delete /Users/ftp
 </span></code></pre></td></tr></table></div></figure>
-
-
 
 ]]></content>
   </entry>
