@@ -125,6 +125,107 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-05-07T15:58:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, May  7 2012</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/05/07/override-deprecated-api-warning/" itemprop="url">Override Deprecated API Warning</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Sometimes I need to make a call to a deprecated API (for DEBUG builds only, of course) and don&rsquo;t want to see the warning. This little preprocessor tip will hide that warning:</p>
+
+<div><script src='https://gist.github.com/2630702.js'></script>
+<noscript><pre><code>#ifdef DEBUG
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored &quot;-Wdeprecated-declarations&quot;
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#pragma clang diagnostic pop
+#endif
+</code></pre></noscript></div>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-03-15T17:01:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, March 15 2012</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/03/15/coredata-browsing/" itemprop="url">CoreData Browsing</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Found a handy tool for browsing core data on the simulator. It&rsquo;s not very polished, but it allows you to perform fetch requests with predicates and get back results, which helps immensely when trying to understand what&rsquo;s happening inside your app&rsquo;s data at runtime.
+Check it out:</p>
+
+<p><a href="http://atastypixel.com/blog/browsing-core-data-databases-using-f-script">http://atastypixel.com/blog/browsing-core-data-databases-using-f-script/</a></p>
+
+<p>I also found this answer on SO which helped me get bootstrapped by giving the location of the two needed files in the simulator:</p>
+
+<p><a href="http://stackoverflow.com/a/5998072/397210">http://stackoverflow.com/a/5998072/397210</a></p>
+
+<p>Happy CoreData spelunking!</p>
+
+<p>P.S. <a href="https://twitter.com/tomhoag">@tomhoag</a> suggested this <a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager">https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/</a> as well&hellip; looks handy!</p>
+
+<h2>Update</h2>
+
+<h6>(Monday, September 24 2012)</h6>
+
+<p>Since the original post, I&rsquo;ve discovered <a href="http://itunes.apple.com/us/app/core-data-editor/id403025957?mt=12">Core Data Editor</a> which is really great and I recommend it. However, the fscript approach allows one to perform predicate based fetch requests which is not something the Core Data Editor supports (at this time?) and is invaluable, so having both tools around is still handy.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-01-24T15:54:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Tuesday, January 24 2012</time>
         
       </p>
@@ -520,15 +621,15 @@ There were two reasons for this:</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/01/30/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
+    
+    <a class="list-group-item " href="/blog/2015/01/30/managing-ssh-git-keys/">Managing Ssh Git Keys</a>
+    
     <a class="list-group-item " href="/blog/2014/10/31/switching-it-up/">Switching It Up</a>
     
     <a class="list-group-item " href="/blog/2013/03/11/lion-and-automounter/">Lion &amp; Automounter</a>
     
     <a class="list-group-item " href="/blog/2013/02/12/hashbuilder/">HashBuilder</a>
-    
-    <a class="list-group-item " href="/blog/2012/11/16/orientationrespectfulnavigationcontroller/">Orientation Respectful UINavigationController</a>
-    
-    <a class="list-group-item " href="/blog/2012/11/08/powerful/">Powerful, CocoaPods Are!</a>
     
   </div>
 </section>
@@ -614,7 +715,7 @@ There were two reasons for this:</p>
     </div>
     <footer role="contentinfo"><div class="container">
     <p class="text-muted credits">
-  Copyright &copy; 2014 - Levi Brown<br>
+  Copyright &copy; 2015 - Levi Brown<br>
   <small>
       <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
       <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.

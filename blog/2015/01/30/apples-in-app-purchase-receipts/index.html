@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Anonymous FTP on Lion - grokin.gs</title>
+  <title>Apple&#8217;s In-App Purchase Receipts - grokin.gs</title>
   <meta name="author" content="Levi Brown">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://levigroker.github.com/blog/2011/11/07/anonymous-ftp-on-lion">
+  <link rel="canonical" href="http://levigroker.github.com/blog/2015/01/30/apples-in-app-purchase-receipts">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://levigroker.github.com/blog/2011/11/07/anonymous-ftp-on-lion">
-  <meta property="og:title" content="Anonymous FTP on Lion - grokin.gs">
+  <meta property="og:url" content="http://levigroker.github.com/blog/2015/01/30/apples-in-app-purchase-receipts">
+  <meta property="og:title" content="Apple's In-App Purchase Receipts - grokin.gs">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -121,38 +121,46 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2011-11-07T13:14:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, November  7 2011</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-30T15:36:20-07:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, January 30 2015</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Anonymous FTP on Lion
+        Apple&#8217;s In-App Purchase Receipts
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><h2>Start:</h2>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>Recently I&rsquo;ve been reading up on Apple&rsquo;s In-App Purchase system with the goal of understanding how to support various types of purchases. It seems to me that non-consumables are kind of the &ldquo;poster child&rdquo; in-app purchase, for the typical &ldquo;remove adds&rdquo; or &ldquo;unlock content&rdquo; models. Which makes sense, because, in-app purchases are pretty simple if you are talking about auto-renewing subscriptions, or non-consumable items. Simple because Apple sends you all the information you need in their receipt, and persists that information for you. The only thing you&rsquo;re required to do is allow the user to &ldquo;restore purchases&rdquo; which basically gives you the receipt information back as if a purchase was made. Easy.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo dscl . -create /Users/ftp
-</span><span class='line'>sudo dscl . -create /Users/ftp NFSHomeDirectory /Users/labrown/Public/ftp
-</span><span class='line'>sudo launchctl load -w /System/Library/LaunchDaemons/ftp.plist
-</span></code></pre></td></tr></table></div></figure>
+<p>Things get more complicated when you want to handle the <em>other</em> types of purchases. Specifically consumables and non-renewing subscriptions. Apple pretty much says: &ldquo;Here&rsquo;s the receipt for your purchase&hellip; you better keep track of it for your user. Oh, and we&rsquo;re never giving you this information again&hellip;&rdquo; or at least that&rsquo;s what it sounds like to me when reading through the &ldquo;Persisting Using the App Receipt” section of the <a href="https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Chapters/DeliverProduct.html">In-App Purchase Programming  Guide</a></p>
 
+<p> Where it says:</p>
 
-<h2>Stop:</h2>
+<blockquote><p>Information about consumable products and non-renewing subscriptions is added to the receipt when they’re paid for and remains in the receipt until you finish the transaction. After you finish the transaction, this information is removed the next time the receipt is updated—for example, the next time the user makes a purchase.</p></blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo launchctl unload -w /System/Library/LaunchDaemons/ftp.plist
-</span><span class='line'>sudo dscl . -delete /Users/ftp
-</span></code></pre></td></tr></table></div></figure>
+<p>So that means, you, as the developer, must have your own server to maintain a record of these kinds of purchases, and allow a mechanism for your user to restore these kinds of purchases (on a new device, for instance). That means building and maintaining your own server to handle this, or integrate with something like <a href="https://parse.com">Parse</a>. Not the end of the world, but&hellip;</p>
 
+<p>That&rsquo;s kind of crummy.</p>
+
+<p>Not only do you need to build/integrate with the server component, but now you must ask your users to create an account with your system so you can identify them to associate their purchases with their account. I&rsquo;m sure users are used to this, but it&rsquo;s still a drag.</p>
+
+<p>So, I searched around and found  <a href="http://www.progressconcepts.com/blog/non-renewing-subscription-app-purchases-ios/">this post</a> which stated that non-renewing subscription information persisted in the receipt from Apple. Wait, what? This post is obviously crazy, the In-App Purchase Programming  Guide said that didn&rsquo;t happen&hellip;</p>
+
+<p>But now, while reading through Apple&rsquo;s <a href="https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW1">Receipt Validation Programming Guide</a> there&rsquo;s this statement in the &ldquo;In-App Purchase Receipt&rdquo; section:</p>
+
+<blockquote><p>The in-app purchase receipt for a non-consumable product, auto-renewable subscription, non-renewing subscription, or free subscription remains in the receipt indefinitely.</p></blockquote>
+
+<p>Note the <em>non-renewing subscription</em> is listed as remaining &ldquo;in the receipt indefinitely.&rdquo;</p>
+
+<p>So maybe that post wasn&rsquo;t crazy, and we could use the receipt for non-renewing subscriptions(!) without the need for a server component. That&rsquo;s super interesting&hellip;</p>
+
+<p>&hellip;but you&rsquo;re still out of luck if you want to deal in consumables.</p>
+
+<p>P.S. I&rsquo;ve provided Apple with this feedback for their In-App Purchase Programming  Guide documentation; feel free to do so as well.</p>
 </div>
 
 
@@ -176,7 +184,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2011-11-07T13:14:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, November  7 2011</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-30T15:36:20-07:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, January 30 2015</time>
           
 
 
@@ -184,7 +192,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2011/11/07/anonymous-ftp-on-lion/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2011/11/07/anonymous-ftp-on-lion/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/2015/01/30/apples-in-app-purchase-receipts/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/2015/01/30/apples-in-app-purchase-receipts/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -196,8 +204,8 @@
         
           <ul class="meta text-muted pager">
             
+            <li class="previous"><a href="/blog/2015/01/30/managing-ssh-git-keys/" title="Previous Post: Managing ssh git keys">&laquo; Managing ssh git keys</a></li>
             
-            <li class="next"><a href="/blog/2011/12/05/ranged-random-numbers-in-objective-c/" title="Next Post: Ranged Random Numbers in Objective C">Ranged Random Numbers in Objective C &raquo;</a></li>
             
           </ul>
         
@@ -216,7 +224,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/01/30/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
+    <a class="list-group-item active" href="/blog/2015/01/30/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
     
     <a class="list-group-item " href="/blog/2015/01/30/managing-ssh-git-keys/">Managing Ssh Git Keys</a>
     

@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2014-10-31T17:07:15-06:00</updated>
+  <updated>2015-01-30T16:07:26-07:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Apple's In-App Purchase Receipts]]></title>
+    <link href="http://levigroker.github.com/blog/2015/01/30/apples-in-app-purchase-receipts/"/>
+    <updated>2015-01-30T15:36:20-07:00</updated>
+    <id>http://levigroker.github.com/blog/2015/01/30/apples-in-app-purchase-receipts</id>
+    <content type="html"><![CDATA[<p>Recently I&rsquo;ve been reading up on Apple&rsquo;s In-App Purchase system with the goal of understanding how to support various types of purchases. It seems to me that non-consumables are kind of the &ldquo;poster child&rdquo; in-app purchase, for the typical &ldquo;remove adds&rdquo; or &ldquo;unlock content&rdquo; models. Which makes sense, because, in-app purchases are pretty simple if you are talking about auto-renewing subscriptions, or non-consumable items. Simple because Apple sends you all the information you need in their receipt, and persists that information for you. The only thing you&rsquo;re required to do is allow the user to &ldquo;restore purchases&rdquo; which basically gives you the receipt information back as if a purchase was made. Easy.</p>
+
+<p>Things get more complicated when you want to handle the <em>other</em> types of purchases. Specifically consumables and non-renewing subscriptions. Apple pretty much says: &ldquo;Here&rsquo;s the receipt for your purchase&hellip; you better keep track of it for your user. Oh, and we&rsquo;re never giving you this information again&hellip;&rdquo; or at least that&rsquo;s what it sounds like to me when reading through the &ldquo;Persisting Using the App Receipt” section of the <a href="https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Chapters/DeliverProduct.html">In-App Purchase Programming  Guide</a></p>
+
+<p> Where it says:</p>
+
+<blockquote><p>Information about consumable products and non-renewing subscriptions is added to the receipt when they’re paid for and remains in the receipt until you finish the transaction. After you finish the transaction, this information is removed the next time the receipt is updated—for example, the next time the user makes a purchase.</p></blockquote>
+
+<p>So that means, you, as the developer, must have your own server to maintain a record of these kinds of purchases, and allow a mechanism for your user to restore these kinds of purchases (on a new device, for instance). That means building and maintaining your own server to handle this, or integrate with something like <a href="https://parse.com">Parse</a>. Not the end of the world, but&hellip;</p>
+
+<p>That&rsquo;s kind of crummy.</p>
+
+<p>Not only do you need to build/integrate with the server component, but now you must ask your users to create an account with your system so you can identify them to associate their purchases with their account. I&rsquo;m sure users are used to this, but it&rsquo;s still a drag.</p>
+
+<p>So, I searched around and found  <a href="http://www.progressconcepts.com/blog/non-renewing-subscription-app-purchases-ios/">this post</a> which stated that non-renewing subscription information persisted in the receipt from Apple. Wait, what? This post is obviously crazy, the In-App Purchase Programming  Guide said that didn&rsquo;t happen&hellip;</p>
+
+<p>But now, while reading through Apple&rsquo;s <a href="https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW1">Receipt Validation Programming Guide</a> there&rsquo;s this statement in the &ldquo;In-App Purchase Receipt&rdquo; section:</p>
+
+<blockquote><p>The in-app purchase receipt for a non-consumable product, auto-renewable subscription, non-renewing subscription, or free subscription remains in the receipt indefinitely.</p></blockquote>
+
+<p>Note the <em>non-renewing subscription</em> is listed as remaining &ldquo;in the receipt indefinitely.&rdquo;</p>
+
+<p>So maybe that post wasn&rsquo;t crazy, and we could use the receipt for non-renewing subscriptions(!) without the need for a server component. That&rsquo;s super interesting&hellip;</p>
+
+<p>&hellip;but you&rsquo;re still out of luck if you want to deal in consumables.</p>
+
+<p>P.S. I&rsquo;ve provided Apple with this feedback for their In-App Purchase Programming  Guide documentation; feel free to do so as well.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Managing Ssh Git Keys]]></title>
+    <link href="http://levigroker.github.com/blog/2015/01/30/managing-ssh-git-keys/"/>
+    <updated>2015-01-30T11:26:32-07:00</updated>
+    <id>http://levigroker.github.com/blog/2015/01/30/managing-ssh-git-keys</id>
+    <content type="html"><![CDATA[<p>Like many developers, I would guess, I have many <code>ssh</code> keys. Keys for various services such as <a href="https://github.com">github</a>, <a href="https://bitbucket.org">bitbucket</a>, and others, each with the potential for multiple accounts. Managing these keys when using git on the command line can be a pain, but I&rsquo;ve got a decent working solution.</p>
+
+<h1>ssh-agent</h1>
+
+<p><code>ssh-agent</code> is a process that sits around and helps <code>ssh</code> do its thing on your behalf. There are several helper apps which allow you to configure its behavior, but specifically we are interested in <code>ssh-add</code>.</p>
+
+<p><code>ssh-add</code> is your friend, especially on Mac OS X.</p>
+
+<p>It can be used to store credentials which, upon a connection attempt, <code>ssh</code> will use. <code>ssh</code> will try all the credentials in the list until it finds one which works.</p>
+
+<p>You can get a listing of what keys are already &ldquo;known&rdquo; by the agent with <code>ssh-add -l</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Moorea:~ levi<span class="nv">$ </span>ssh-add -l
+</span><span class='line'><span class="m">2048</span> 7d:81:16:54:ae:cb:9b:da:b6:65:75:32:40:c6:1e:ac /Users/levi/.ssh/progroker_id_rsa <span class="o">(</span>RSA<span class="o">)</span>
+</span><span class='line'><span class="m">1024</span> b5:86:9e:05:d3:ba:f1:57:71:90:d0:2e:a9:94:1a:47 /Users/levi/.ssh/id_dsa <span class="o">(</span>DSA<span class="o">)</span>
+</span><span class='line'><span class="m">2048</span> d4:f4:8c:be:2d:cd:5d:06:55:4a:24:bd:c1:9c:83:2b /Users/levi/.ssh/id_rsa_bitbucket <span class="o">(</span>RSA<span class="o">)</span>
+</span><span class='line'>Moorea:~ levi<span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And here&rsquo;s the awesome-sauce&hellip; you can add keys <strong>whose credentials get stored in the keychain</strong> with <code>ssh-add -K &lt;path_to_private_key&gt;</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Moorea:~ levi<span class="nv">$ </span>ssh-add -K /Users/levi/.ssh/id_rsa_bitbucket
+</span><span class='line'>Enter passphrase <span class="k">for</span> /Users/levi/.ssh/id_rsa_bitbucket:
+</span><span class='line'>Passphrase updated in keychain: /Users/levi/.ssh/id_rsa_bitbucket
+</span><span class='line'>Identity added: /Users/levi/.ssh/id_rsa_bitbucket <span class="o">(</span>/Users/levi/.ssh/id_rsa_bitbucket<span class="o">)</span>
+</span><span class='line'>Moorea:~ levi<span class="nv">$ </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, if your <code>ssh</code> key has a passphrase on it, that passphrase is now stored in your Mac OS X keychain, and when <code>ssh</code> is looking for credentials to make the connection with it can find the key <em>and</em> use it without you needing to enter your passphrase again.</p>
+
+<p>Win.</p>
+
+<h1>HTTPS</h1>
+
+<p>Further, for bonus points, when you&rsquo;re not using <code>ssh</code>, but rather https, you can still use the keychain&hellip;</p>
+
+<p>Being on Mac OS X, we have the <code>osxkeychain</code> which can be used to store and retrive the kind of information we need for authentication.</p>
+
+<p>To set this up, add (or ensure it is already there) the <code>helper</code> line in the <code>[credential]</code> section of your <code>~/.gitconfig</code> file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>credential<span class="o">]</span>
+</span><span class='line'>        <span class="nv">helper</span> <span class="o">=</span> osxkeychain
+</span><span class='line'>        <span class="nv">useHttpPath</span> <span class="o">=</span> <span class="nb">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will allow git to query the OS keychain when it is looking for stored credentials.</p>
+
+<p>If you have multiple accounts on the same system, you may want to tie a set of credentials to the full repository path, so you can access different repositories with different credentials. That&rsquo;s what the <code>useHttpPath = true</code> line does.</p>
+
+<p>Now, once you authorize a connection to a specific repository those credentials will be stored in your keychain:</p>
+
+<p><img src="images/posts/2015-01-30-managing-ssh-git-keys/git_keychain.png" title="git keychain entries" alt="git keychain entries"></p>
+
+<p>Win a second time.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Switching It Up]]></title>
@@ -417,6 +530,12 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
 
 
 <p>(Thanks to Bob Foster for this version)</p>
+
+<h2>Update</h2>
+
+<h6>(Monday, November 3 2014)</h6>
+
+<p>Bob Foster passes attribution to <a href="http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/">http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/</a></p>
 ]]></content>
   </entry>
   
