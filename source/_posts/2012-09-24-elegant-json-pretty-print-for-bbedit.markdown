@@ -18,3 +18,7 @@ A while ago I found this post [http://crisp.tumblr.com/post/2574967567/json-pret
 A little less elegant in the script, but this updated version has a nicer output:
 {% gist 3777091 %}
 (Thanks to Bob Foster for this version)
+
+## Update
+###### (Monday, November 3 2014)
+Bob Foster passes attribution to [http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/](http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/)
