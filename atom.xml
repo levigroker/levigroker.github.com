@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2015-03-05T17:30:57-07:00</updated>
+  <updated>2015-03-05T17:36:15-07:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -25,7 +25,7 @@
 <p>This frustration was caused by the latest in a long line of frustrations and their workarounds. Specifically, our bots are now spontaneously failing because of this error:</p>
 
 <blockquote><p>&ldquo;Failed to mmap. Could not write data: Invalid argument (-1)&rdquo;
-<img src="images/posts/2015-03-05-frustrations-with-xcode-bots/build_service_error.png" title="build service error" alt="build service error"></p></blockquote>
+<img src="http://levigroker.github.com/images/posts/2015-03-05-frustrations-with-xcode-bots/build_service_error.png" title="build service error" alt="build service error"></p></blockquote>
 
 <p><em>(don&rsquo;t be fooled by the &ldquo;Fix It&rdquo; button which doesn&rsquo;t seem to)</em></p>
 
