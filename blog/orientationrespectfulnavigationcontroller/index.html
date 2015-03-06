@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>About grokin.gs - grokin.gs</title>
+  <title>Orientation Respectful UINavigationController - grokin.gs</title>
   <meta name="author" content="Levi Brown">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://levigroker.github.com/about">
+  <link rel="canonical" href="http://levigroker.github.com/blog/orientationrespectfulnavigationcontroller">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://levigroker.github.com/about">
-  <meta property="og:title" content="About grokin.gs - grokin.gs">
+  <meta property="og:url" content="http://levigroker.github.com/blog/orientationrespectfulnavigationcontroller">
+  <meta property="og:title" content="Orientation Respectful UINavigationController - grokin.gs">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -66,7 +66,7 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li >
+                <li class="active">
                     <a rel="index" href="/">Blog</a>
                 </li>
                 <li >
@@ -99,30 +99,123 @@
       <div id="main" role="main" class="container">
         <div id="content">
           <div class="row">
-  <div class="page-content col-md-9">
-    <article role="article">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="grokin.gs" />
+    
+    <meta itemprop="url" content="http://levigroker.github.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       
-        <header class="page-header">
-          
-          
-            <h1 class="entry-title">
-              About grokin.gs
-              
-            </h1>
-          
-        </header>
-      
-      <div class="entry-content">
-        <p>grok: /grok/, var. /grohk/ vt. [from the novel &ldquo;Stranger in a Strange Land&rdquo;, by Robert A. Heinlein, where it is a Martian word meaning literally `to drink\&lsquo; and metaphorically `to be one with\&rsquo;] The emphatic form is `grok in fullness\&lsquo;. 1. To understand, usually in a global sense. Connotes intimate and exhaustive knowledge. &ndash; The Jargon File 4.2.0</p>
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
 
-      </div>
-      
-        <footer>
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-11-16T13:39:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, November 16 2012</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Orientation Respectful UINavigationController
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>While working on a project for iOS 6 I ran into an interesting issue with rotations.</p>
+
+<p>I wanted one of my views to rotate, but not others, and since <code>UIViewController</code>&rsquo;s <code>shouldAutorotateToInterfaceOrientation:</code> is deprecated in iOS 6 and the docs point at overriding <code>shouldAutorotate</code>, I swapped them out. But&hellip; <code>shouldAutorotate</code> didn&rsquo;t get called. Hrm? A little poking around and I see this in the <a href="http://developer.apple.com/library/ios/#releasenotes/General/RN-iOSSDK-6_0/_index.html">iOS 6 release notes</a>:</p>
+
+<blockquote><p>Now, iOS containers (such as UINavigationController) do not consult their children to
+determine whether they should autorotate. By default, an app and a view controller’s
+supported interface orientations are set to UIInterfaceOrientationMaskAll for the iPad
+idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></blockquote>
+
+<p>So, because my views are &ldquo;underneath&rdquo; a <code>UINavigationController</code> their <code>shouldAutorotate</code> methods are not getting called, only the parent <code>UINavigationController</code> is queried. That seems like an odd behavior to me, but it&rsquo;s easy enough to remedy. A subclass of <code>UINavigationController</code> which respects the desired behavior of the top view controller is all that&rsquo;s needed.</p>
+
+<p>This UINavigationController subclass will query it&rsquo;s topmost view controller for desired rotation behavior, unlike the default implementation:</p>
+
+<div><script src='https://gist.github.com/4090689.js'></script>
+<noscript><pre><code>//
+//  OrientationRespectfulNavigationController.h
+//
+//  Created by Levi Brown on 11/15/12.
+//  Created by Levi Brown on 11/15/12. @levigroker
+//  This work is licensed under a Creative Commons Attribution 3.0 Unported License
+//  http://creativecommons.org/licenses/by/3.0/
+//  Attribution to Levi Brown (@levigroker) is appreciated but not required.
+//
+
+/*
+ This NavigationController will query it&#39;s topmost view controller for desired rotation behavior,
+ unlike the default implementation.
+
+ From the iOS 6 release notes:
+ http://developer.apple.com/library/ios/#releasenotes/General/RN-iOSSDK-6_0/_index.html
+
+ Now, iOS containers (such as UINavigationController) do not consult their children to
+ determine whether they should autorotate. By default, an app and a view controller’s
+ supported interface orientations are set to UIInterfaceOrientationMaskAll for the iPad
+ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.
+ */
+
+#import &lt;UIKit/UIKit.h&gt;
+
+@interface OrientationRespectfulNavigationController : UINavigationController
+
+@end
+</code></pre></noscript></div>
+
+
+<p>To use, simply include the source in your project, and select <code>OrientationRespectfulNavigationController</code> as the class to use in place of each <code>UINavigationController</code> you want to have this behavior:</p>
+
+<p><img src="images/posts/2012-11-16-orientationrespectfulnavigationcontroller/IBClassConfig.png" title="XCode configuration for UINavigationController class override" alt="XCode configuration for UINavigationController class override"></p>
+
+<p>NOTE: I&rsquo;m by no means the first to figure this out. StackOverflow <a href="http://stackoverflow.com/questions/12520030/how-to-force-a-uiviewcontroller-to-portait-orientation-in-ios-6">has</a> <a href="http://stackoverflow.com/q/12777474/397210">several</a>  <a href="http://stackoverflow.com/a/12996924/397210">posts</a> which illustrate the problem and solution.</p>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
           
-          
-            <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/about/index.html" data-via="levigroker" data-counturl="http://levigroker.github.com/about/index.html" >Tweet</a>
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Levi Brown</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-11-16T13:39:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, November 16 2012</time>
+          
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/orientationrespectfulnavigationcontroller/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/orientationrespectfulnavigationcontroller/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -130,17 +223,26 @@
   
 </div>
 
-          
-        </footer>
-      
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/powerful/" title="Previous Post: Powerful, CocoaPods are!">&laquo; Powerful, CocoaPods are!</a></li>
+            
+            
+            <li class="next"><a href="/blog/hashbuilder/" title="Next Post: HashBuilder">HashBuilder &raquo;</a></li>
+            
+          </ul>
+        
+      </footer>
     </article>
     
   </div>
 
   
-    <aside class="sidebar col-md-3">
-      
-        <section class="panel panel-default">
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Recent Posts</h3>
   </div>
@@ -231,8 +333,8 @@
 
 
 
-      
-    </aside>
+    
+  </aside>
   
 </div>
 

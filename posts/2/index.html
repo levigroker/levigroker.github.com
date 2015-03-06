@@ -125,12 +125,139 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-09-07T10:52:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, September  7 2012</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/elegant-json-pretty-print-for-bbedit/" itemprop="url">Elegant JSON Pretty Print for BBEdit</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&rsquo;t have anything (that I&rsquo;ve found) which supports pretty printing JSON by default.</p>
+
+<p>A while ago I found this post <a href="http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit">http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit</a> which worked great, but I ran into <a href="http://coderwall.com/p/g1cm2g">this elegant little snippet</a>. Inspired, I created a much simpler Text Filter for BBEdit:</p>
+
+<div><script src='https://gist.github.com/3667653.js'></script>
+<noscript><pre><code>#!/bin/bash
+python -m json.tool
+</code></pre></noscript></div>
+
+
+<p>(drop this file in your <code>~/Library/Application Support/BBEdit/Text Filters</code> directory and then you can select it from BBEdit&rsquo;s Text->Apply Text Filter menu.</p>
+
+<h2>Update</h2>
+
+<h6>(Monday, September 24 2012)</h6>
+
+<p>A little less elegant in the script, but this updated version has a nicer output:</p>
+
+<div><script src='https://gist.github.com/3777091.js'></script>
+<noscript><pre><code>#!/bin/bash
+python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=2)&quot;</code></pre></noscript></div>
+
+
+<p>(Thanks to Bob Foster for this version)</p>
+
+<h2>Update</h2>
+
+<h6>(Monday, November 3 2014)</h6>
+
+<p>Bob Foster passes attribution to <a href="http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/">http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/</a></p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-09-07T10:39:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, September  7 2012</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/give-me-back-my-~-slash-library/" itemprop="url">Give Me Back My ~/Library (!)</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>As a developer I need access to my Library directory, but Apple keeps hiding it from me with every OS update. Finally tired of manually typing <code>chflags nohidden ~/Library/</code> every time it disappeared, I created a simple LaunchAgent to do this for me every time I log into my machine.</p>
+
+<p>Check it out:</p>
+
+<div><script src='https://gist.github.com/3667585.js'></script>
+<noscript><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;string&gt;com.levigroker.unhide_library&lt;/string&gt;
+    &lt;key&gt;LingonWhat&lt;/key&gt;
+    &lt;string&gt;/Users/levi/Library/Automation/unhide_library.sh&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;/Users/levi/Library/Automation/unhide_library.sh&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;RunAtLoad&lt;/key&gt;
+    &lt;true/&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre></noscript></div>
+
+
+<p>As an aside, I&rsquo;ll take this space to plug <a href="http://www.peterborgapps.com/lingon/">Lingon</a> (I have no affiliation), which is a nice GUI tool for managing LaunchAgents and saves you from editing XML and dropping to the command line to talk to <code>launchd</code>.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-05-07T15:58:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, May  7 2012</time>
         
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/05/07/override-deprecated-api-warning/" itemprop="url">Override Deprecated API Warning</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/override-deprecated-api-warning/" itemprop="url">Override Deprecated API Warning</a></h2>
     
   </header>
 
@@ -177,7 +304,7 @@
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/03/15/coredata-browsing/" itemprop="url">CoreData Browsing</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/coredata-browsing/" itemprop="url">CoreData Browsing</a></h2>
     
   </header>
 
@@ -231,7 +358,7 @@ Check it out:</p>
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/01/24/using-nsurlprotocol-for-injecting-test-data/" itemprop="url">Using NSURLProtocol for Injecting Test Data</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/using-nsurlprotocol-for-injecting-test-data/" itemprop="url">Using NSURLProtocol for Injecting Test Data</a></h2>
     
   </header>
 
@@ -268,7 +395,7 @@ Check it out:</p>
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/01/19/asynchronous-ghunit-tests-and-objective-c-foo/" itemprop="url">Asynchronous GHUnit Tests &amp; Objective C Foo!</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/asynchronous-ghunit-tests-and-objective-c-foo/" itemprop="url">Asynchronous GHUnit Tests &amp; Objective C Foo!</a></h2>
     
   </header>
 
@@ -365,7 +492,7 @@ There were two reasons for this:</p>
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/01/06/ongoing-resources-for-ios-knowledge/" itemprop="url">Ongoing Resources for iOS Knowledge</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/ongoing-resources-for-ios-knowledge/" itemprop="url">Ongoing Resources for iOS Knowledge</a></h2>
     
   </header>
 
@@ -444,7 +571,7 @@ There were two reasons for this:</p>
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2011/12/09/learning-ios/" itemprop="url">Learning iOS</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/learning-ios/" itemprop="url">Learning iOS</a></h2>
     
   </header>
 
@@ -521,7 +648,7 @@ There were two reasons for this:</p>
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2011/12/05/ranged-random-numbers-in-objective-c/" itemprop="url">Ranged Random Numbers in Objective C</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/ranged-random-numbers-in-objective-c/" itemprop="url">Ranged Random Numbers in Objective C</a></h2>
     
   </header>
 
@@ -567,7 +694,7 @@ There were two reasons for this:</p>
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2011/11/07/anonymous-ftp-on-lion/" itemprop="url">Anonymous FTP on Lion</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/anonymous-ftp-on-lion/" itemprop="url">Anonymous FTP on Lion</a></h2>
     
   </header>
 
@@ -621,15 +748,15 @@ There were two reasons for this:</p>
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/01/30/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
+    <a class="list-group-item " href="/blog/frustrations-with-xcode-bots/">Frustrations With Xcode Bots</a>
     
-    <a class="list-group-item " href="/blog/2015/01/30/managing-ssh-git-keys/">Managing Ssh Git Keys</a>
+    <a class="list-group-item " href="/blog/xcode-bot-keychain-configuration/">Xcode Bot Keychain Configuration</a>
     
-    <a class="list-group-item " href="/blog/2014/10/31/switching-it-up/">Switching It Up</a>
+    <a class="list-group-item " href="/blog/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
     
-    <a class="list-group-item " href="/blog/2013/03/11/lion-and-automounter/">Lion &amp; Automounter</a>
+    <a class="list-group-item " href="/blog/managing-ssh-git-keys/">Managing Ssh Git Keys</a>
     
-    <a class="list-group-item " href="/blog/2013/02/12/hashbuilder/">HashBuilder</a>
+    <a class="list-group-item " href="/blog/switching-it-up/">Switching It Up</a>
     
   </div>
 </section>

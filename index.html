@@ -125,12 +125,166 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-05T16:15:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, March  5 2015</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/frustrations-with-xcode-bots/" itemprop="url">Frustrations With Xcode Bots</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Truly I want to like Xcode Bots, and I want them to work for my needs, but I got frustrated enough to tweet this not long ago:</p>
+
+<blockquote><p>3:45 PM MT - 3 Mar 2015 <a href="https://twitter.com/levigroker/status/572890492603510784">&ldquo;I’m so done being bitten and frustrated with Xcode Bots. What a steaming pile. &lt;/rant&gt;&rdquo; -levigroker</a></p></blockquote>
+
+<p>This frustration was caused by the latest in a long line of frustrations and their workarounds. Specifically, our bots are now spontaneously failing because of this error:</p>
+
+<blockquote><p>&ldquo;Failed to mmap. Could not write data: Invalid argument (-1)&rdquo;
+<img src="images/posts/2015-03-05-frustrations-with-xcode-bots/build_service_error.png" title="build service error" alt="build service error"></p></blockquote>
+
+<p><em>(don&rsquo;t be fooled by the &ldquo;Fix It&rdquo; button which doesn&rsquo;t seem to)</em></p>
+
+<p>I&rsquo;m not the only one, as there are others on the <a href="https://devforums.apple.com/thread/254233">Apple Dev Forums</a> (login required) which are experiencing the same (or very similar) issue. The suggested workaround is to downgrade from Xcode 6.1.1 to 6.1. Yeah, I&rsquo;m not about to do that, so our CI build is broken, and I&rsquo;m left with no choice but to go back to <a href="http://jenkins-ci.org">Jenkins</a>. Honestly, that kind of gives me a sense of relief since I know I can get Jenkins to perform all the tasks I need, and I know if our CI build breaks it will be <em>my</em> fault and not an external dependency like Xcode Bots, over which I have no control.</p>
+
+<p>I mentioned a long line of frustrations with Xcode Bots, and that&rsquo;s true. I&rsquo;ve not taken the time to try to document them all, but here&rsquo;s some off the top of my head:</p>
+
+<ul>
+<li>In my post <a href="/blog/xcode-bot-keychain-configuration/">Xcode Bot Keychain Configuration</a> I mentioned the fact that the bot server does not seem to fetch non-development provisioning profiles, and the steps needed to work around this issue.</li>
+<li>Because of the aforementioned provisioning profile issue, we have <em>never</em> been able to get our Mac app build to work. We always get a provisioning profile mismatch error. We even went so far as to copy the developer cert and private key into the bot&rsquo;s keychain&hellip;</li>
+<li>Inexplicably, a CI build will fail, and automatically rebuild, which will then succeed.</li>
+<li>If a build (&ldquo;integration&rdquo;) succeeds, we get two for the price of one (no idea why&hellip; no new commits triggered it).</li>
+<li>The web UI is&hellip; gone? In previous builds of the Xcode Bot server there was a web UI which presented the details of each build. This was removed, so any truly useful information must be gathered from Xcode.</li>
+<li>Tracking down build system issues is laborious and cumbersome. The only real source of valuable information is the raw &ldquo;Build Log&rdquo; file, which can be viewed from within Xcode, but only after the integration has finished (no &ldquo;tail -f&rdquo;-like behavior), but be prepared to wait and keep scrolling as this file loads, slowly, with no UI feedback from your remote build server.</li>
+<li>In general, the internals of the Xcode Bot system are so black box and inaccessible that debugging the process, understanding how it works, or extending it, is a non-trivial time investment which I&rsquo;d rather use to be working on actual projects.</li>
+</ul>
+
+
+<p>After all this, I still have high hopes for Xcode Bots, I do want to like them, and I look forward to the day when I can use them for my needs. That day is not today, unfortunately.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-05T15:56:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, March  5 2015</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/xcode-bot-keychain-configuration/" itemprop="url">Xcode Bot Keychain Configuration</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>The Xcode Bot server (as of 3.2.1) uses <code>/Library/Developer/XcodeServer/Keychains/Portal.keychain</code> to store the needed certs and keys used for codesigning (previously it used the <code>System.keychain</code>.</p>
+
+<p>The server seems to only automatically download developement certs and profiles (not distribution) so we must manually populate the keychain with the dsitribution cert/key pairs needed and manually place the distribution profile(s) we need into the location which the server looks for them. In my <a href="https://github.com/levigroker/iOSContinuousIntegration">iOSContinuousIntegration</a> system I have a <code>pre_action.sh</code> script which handles copying the profiles from where they are committed in the repository to the proper location on the server for the bots to locate them, so no need to go into that here. The keychain is a bit more complicated&hellip;</p>
+
+<p>(Shamelessly borrowed from <a href="http://stackoverflow.com/a/25934218/397210">http://stackoverflow.com/a/25934218/397210</a>)</p>
+
+<ol>
+<li><p>Copy the Portal keychain to your desktop:</p>
+
+<pre><code> sudo cp /Library/Developer/XcodeServer/Keychains/Portal.keychain ~/Desktop/
+ Password: your-administrator-password
+ sudo chown `whoami`:staff ~/Desktop/Portal.keychain 
+</code></pre></li>
+<li><p>Set the Portal keychain password to &ldquo;123&rdquo;</p>
+
+<pre><code> security set-keychain-password -o "`sudo cat /Library/Developer/XcodeServer/SharedSecrets/PortalKeychainSharedSecret`" ~/Desktop/Portal.keychain 
+ New Password: 123
+ Retype New Password: 123
+</code></pre></li>
+<li><p>Open the Keychain in Keychain Access:</p>
+
+<pre><code> open -b com.apple.keychainaccess ~/Desktop/Portal.keychain
+</code></pre></li>
+<li><p>Unlock the &ldquo;Portal&rdquo; keychain using password &ldquo;123&rdquo; (This may not be needed as it may already be unlocked).</p></li>
+<li><p>Add the needed keys to the &ldquo;Portal&rdquo; keychain. Generally you will want your AdHoc Distribution certificate and private key, assuming you&rsquo;re building for AdHoc distribution (for say, <a href="http://try.crashlytics.com/beta/">Crashlytics Beta</a>).</p></li>
+<li><p>Make sure the private keys have the correct access rights (in the &ldquo;Access Control&rdquo; tab of the &ldquo;Get Info&rdquo; for the private keys in Keychain Access), &ldquo;xcsbuildd&rdquo;, &ldquo;xcscontrol&rdquo;, &ldquo;xcodebuild&rdquo; and &ldquo;codesign&rdquo; should be listed. &ldquo;xcsbuildd&rdquo;, &ldquo;xcscontrol&rdquo;, and &ldquo;xcodebuild&rdquo; are inside the Xcode binary&hellip; <code>/Applications/Xcode.app/Contents/Developer/usr/bin</code> while &ldquo;codesign&rdquo; is <code>usr/bin/codesign</code>. Finder&rsquo;s &ldquo;Go to Folder&hellip;&rdquo; command is useful for locating these binaries. Though you will likely need to &ldquo;unhide&rdquo; the <code>/usr</code> directory from the GUI.</p>
+
+<p> This can be done by opening a terminal and issuing the command:</p>
+
+<pre><code> sudo chflags nohidden /usr
+</code></pre>
+
+<p> Then navigate to <code>/usr/bin</code> and select the codesign executable from the file picker GUI in the &ldquo;Access Control List&rdquo; tab of the Keychain Access&rsquo;s Get Info dialog. Once added to the ACL you can (and should) re-hide <code>/usr</code> with this command:</p>
+
+<pre><code> sudo chflags hidden /usr
+</code></pre></li>
+<li><p>Lock the &ldquo;Portal&rdquo; keychain, quit &ldquo;Keychain Access&rdquo;</p></li>
+<li><p>Reset the Portal keychain password:</p>
+
+<pre><code> security set-keychain-password -p "`sudo cat /Library/Developer/XcodeServer/SharedSecrets/PortalKeychainSharedSecret`" ~/Desktop/Portal.keychain 
+ Password: your-administrator-password (optional step)  
+ Old Password: 123
+</code></pre>
+
+<p> It may or may not ask you for your administrator password again, pay attention to the prompt.</p></li>
+<li><p>Copy the Portal keychain back</p>
+
+<pre><code>   sudo chown _xcsbuildd:_xcs ~/Desktop/Portal.keychain
+   sudo cp ~/Desktop/Portal.keychain /Library/Developer/XcodeServer/Keychains/
+</code></pre></li>
+<li><p>Since the system caches open keychains, restart you computer.</p></li>
+</ol>
+
+
+<p>&hellip;all this because Xcode Bots don&rsquo;t copy non-development profiles.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-30T15:36:20-07:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, January 30 2015</time>
         
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/30/apples-in-app-purchase-receipts/" itemprop="url">Apple&#8217;s In-App Purchase Receipts</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/apples-in-app-purchase-receipts/" itemprop="url">Apple&#8217;s In-App Purchase Receipts</a></h2>
     
   </header>
 
@@ -193,7 +347,7 @@
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/30/managing-ssh-git-keys/" itemprop="url">Managing Ssh Git Keys</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/managing-ssh-git-keys/" itemprop="url">Managing Ssh Git Keys</a></h2>
     
   </header>
 
@@ -299,7 +453,7 @@
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/10/31/switching-it-up/" itemprop="url">Switching It Up</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/switching-it-up/" itemprop="url">Switching It Up</a></h2>
     
   </header>
 
@@ -348,7 +502,7 @@
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2013/03/11/lion-and-automounter/" itemprop="url">Lion &amp; Automounter</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/lion-and-automounter/" itemprop="url">Lion &amp; Automounter</a></h2>
     
   </header>
 
@@ -517,7 +671,7 @@ Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2013/02/12/hashbuilder/" itemprop="url">HashBuilder</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/hashbuilder/" itemprop="url">HashBuilder</a></h2>
     
   </header>
 
@@ -618,7 +772,7 @@ NSUInteger hash2 = builder2.builtHash;
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/11/16/orientationrespectfulnavigationcontroller/" itemprop="url">Orientation Respectful UINavigationController</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/orientationrespectfulnavigationcontroller/" itemprop="url">Orientation Respectful UINavigationController</a></h2>
     
   </header>
 
@@ -704,7 +858,7 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/11/08/powerful/" itemprop="url">Powerful, CocoaPods Are!</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/powerful/" itemprop="url">Powerful, CocoaPods Are!</a></h2>
     
   </header>
 
@@ -771,12 +925,12 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/10/25/the-shadow-knows/" itemprop="url">The Shadow Knows</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/the-shadow-knows/" itemprop="url">The Shadow Knows</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Adding drop shadows is a nice little UI touch which brings depth, and I like them, assuming they&rsquo;re done subtlety.</p>
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Adding drop shadows is a nice little UI touch which brings depth, and I like them, assuming they&rsquo;re done with subtlety.</p>
 
 <p>That said, I&rsquo;ve been playing around with them a bit and have a couple of things to share.</p>
 
@@ -818,133 +972,6 @@ idiom and UIInterfaceOrientationMaskAllButUpsideDown for the iPhone idiom.</p></
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-09-07T10:52:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, September  7 2012</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/09/07/elegant-json-pretty-print-for-bbedit/" itemprop="url">Elegant JSON Pretty Print for BBEdit</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Working with JSON in BBEdit is great, but reading JSON is greatly enhanced by having it formatted nicely, and BBEdit doesn&rsquo;t have anything (that I&rsquo;ve found) which supports pretty printing JSON by default.</p>
-
-<p>A while ago I found this post <a href="http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit">http://crisp.tumblr.com/post/2574967567/json-pretty-print-formatting-in-bbedit</a> which worked great, but I ran into <a href="http://coderwall.com/p/g1cm2g">this elegant little snippet</a>. Inspired, I created a much simpler Text Filter for BBEdit:</p>
-
-<div><script src='https://gist.github.com/3667653.js'></script>
-<noscript><pre><code>#!/bin/bash
-python -m json.tool
-</code></pre></noscript></div>
-
-
-<p>(drop this file in your <code>~/Library/Application Support/BBEdit/Text Filters</code> directory and then you can select it from BBEdit&rsquo;s Text->Apply Text Filter menu.</p>
-
-<h2>Update</h2>
-
-<h6>(Monday, September 24 2012)</h6>
-
-<p>A little less elegant in the script, but this updated version has a nicer output:</p>
-
-<div><script src='https://gist.github.com/3777091.js'></script>
-<noscript><pre><code>#!/bin/bash
-python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=2)&quot;</code></pre></noscript></div>
-
-
-<p>(Thanks to Bob Foster for this version)</p>
-
-<h2>Update</h2>
-
-<h6>(Monday, November 3 2014)</h6>
-
-<p>Bob Foster passes attribution to <a href="http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/">http://ruslanspivak.com/2010/10/12/pretty-print-json-from-the-command-line/</a></p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-09-07T10:39:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, September  7 2012</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2012/09/07/give-me-back-my-~-slash-library/" itemprop="url">Give Me Back My ~/Library (!)</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>As a developer I need access to my Library directory, but Apple keeps hiding it from me with every OS update. Finally tired of manually typing <code>chflags nohidden ~/Library/</code> every time it disappeared, I created a simple LaunchAgent to do this for me every time I log into my machine.</p>
-
-<p>Check it out:</p>
-
-<div><script src='https://gist.github.com/3667585.js'></script>
-<noscript><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
-&lt;plist version=&quot;1.0&quot;&gt;
-&lt;dict&gt;
-    &lt;key&gt;Label&lt;/key&gt;
-    &lt;string&gt;com.levigroker.unhide_library&lt;/string&gt;
-    &lt;key&gt;LingonWhat&lt;/key&gt;
-    &lt;string&gt;/Users/levi/Library/Automation/unhide_library.sh&lt;/string&gt;
-    &lt;key&gt;ProgramArguments&lt;/key&gt;
-    &lt;array&gt;
-        &lt;string&gt;/Users/levi/Library/Automation/unhide_library.sh&lt;/string&gt;
-    &lt;/array&gt;
-    &lt;key&gt;RunAtLoad&lt;/key&gt;
-    &lt;true/&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre></noscript></div>
-
-
-<p>As an aside, I&rsquo;ll take this space to plug <a href="http://www.peterborgapps.com/lingon/">Lingon</a> (I have no affiliation), which is a nice GUI tool for managing LaunchAgents and saves you from editing XML and dropping to the command line to talk to <code>launchd</code>.</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -968,15 +995,15 @@ python -c &quot;import sys, json; print json.dumps(json.load(sys.stdin), indent=
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/01/30/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
+    <a class="list-group-item " href="/blog/frustrations-with-xcode-bots/">Frustrations With Xcode Bots</a>
     
-    <a class="list-group-item " href="/blog/2015/01/30/managing-ssh-git-keys/">Managing Ssh Git Keys</a>
+    <a class="list-group-item " href="/blog/xcode-bot-keychain-configuration/">Xcode Bot Keychain Configuration</a>
     
-    <a class="list-group-item " href="/blog/2014/10/31/switching-it-up/">Switching It Up</a>
+    <a class="list-group-item " href="/blog/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
     
-    <a class="list-group-item " href="/blog/2013/03/11/lion-and-automounter/">Lion &amp; Automounter</a>
+    <a class="list-group-item " href="/blog/managing-ssh-git-keys/">Managing Ssh Git Keys</a>
     
-    <a class="list-group-item " href="/blog/2013/02/12/hashbuilder/">HashBuilder</a>
+    <a class="list-group-item " href="/blog/switching-it-up/">Switching It Up</a>
     
   </div>
 </section>
