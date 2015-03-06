@@ -12,7 +12,7 @@ Truly I want to like Xcode Bots, and I want them to work for my needs, but I got
 This frustration was caused by the latest in a long line of frustrations and their workarounds. Specifically, our bots are now spontaneously failing because of this error:
 
 > "Failed to mmap. Could not write data: Invalid argument (-1)"
-{% img images/posts/2015-03-05-frustrations-with-xcode-bots/build_service_error.png 'build service error' 'build service error' %}
+{% img /images/posts/2015-03-05-frustrations-with-xcode-bots/build_service_error.png 'build service error' 'build service error' %}
 
 *(don't be fooled by the "Fix It" button which doesn't seem to)*
 

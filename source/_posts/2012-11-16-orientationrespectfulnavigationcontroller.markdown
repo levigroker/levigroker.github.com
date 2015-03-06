@@ -23,6 +23,6 @@ This UINavigationController subclass will query it's topmost view controller for
 
 To use, simply include the source in your project, and select `OrientationRespectfulNavigationController` as the class to use in place of each `UINavigationController` you want to have this behavior:
 
-{% img images/posts/2012-11-16-orientationrespectfulnavigationcontroller/IBClassConfig.png 'XCode configuration for UINavigationController class override' 'XCode configuration for UINavigationController class override' %}
+{% img /images/posts/2012-11-16-orientationrespectfulnavigationcontroller/IBClassConfig.png 'XCode configuration for UINavigationController class override' 'XCode configuration for UINavigationController class override' %}
 
 NOTE: I'm by no means the first to figure this out. StackOverflow [has](http://stackoverflow.com/questions/12520030/how-to-force-a-uiviewcontroller-to-portait-orientation-in-ios-6) [several](http://stackoverflow.com/q/12777474/397210)  [posts](http://stackoverflow.com/a/12996924/397210) which illustrate the problem and solution.

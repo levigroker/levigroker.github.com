@@ -61,6 +61,6 @@ If you have multiple accounts on the same system, you may want to tie a set of c
 
 Now, once you authorize a connection to a specific repository those credentials will be stored in your keychain:
 
-{% img images/posts/2015-01-30-managing-ssh-git-keys/git_keychain.png 'git keychain entries' 'git keychain entries' %}
+{% img /images/posts/2015-01-30-managing-ssh-git-keys/git_keychain.png 'git keychain entries' 'git keychain entries' %}
 
 Win a second time.

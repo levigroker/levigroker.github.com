@@ -17,7 +17,7 @@ it does not configure the test target to use the `Pods.xcconfig` which specify a
 
 You'll need to go into the project settings, on the info tab of the project (not the target) and expand each configuration in the "Configurations" area (just under "Deployment Target"). Then set each configuration to use the Pods configuration on any alternate targets (like my test target):
 
-{% img images/posts/2012-11-08-powerful/PodsxcconfigConfig.png 'XCode configuration of xcconfig usage on targets' 'XCode configuration of xcconfig usage on targets' %}
+{% img /images/posts/2012-11-08-powerful/PodsxcconfigConfig.png 'XCode configuration of xcconfig usage on targets' 'XCode configuration of xcconfig usage on targets' %}
 
 From then on the alternate targets will inherit from the `Pods.xcconfig` configuration as they should.
 
