@@ -5,7 +5,7 @@ date: 2012-10-25 16:46
 comments: false
 categories:
 ---
-Adding drop shadows is a nice little UI touch which brings depth, and I like them, assuming they're done subtlety.
+Adding drop shadows is a nice little UI touch which brings depth, and I like them, assuming they're done with subtlety.
 
 That said, I've been playing around with them a bit and have a couple of things to share.
 
