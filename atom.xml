@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2015-03-05T17:37:44-07:00</updated>
+  <updated>2015-03-31T15:51:00-06:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -12,6 +12,132 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CreateTextFileHere]]></title>
+    <link href="http://levigroker.github.com/blog/createtextfilehere/"/>
+    <updated>2015-03-31T14:58:28-06:00</updated>
+    <id>http://levigroker.github.com/blog/createtextfilehere</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/levigroker/CreateTextFileHere">CreateTextFileHere</a> is a manually activated AppleScript applet used to create a text file at the current Finder location with <a href="http://www.bbedit.com/">BBEdit</a></p>
+
+<p>This utility works in tandem with the &lsquo;bbedit&rsquo; command line binary (which should
+already be installed and functional at <code>/usr/local/bin/bbedit</code>).</p>
+
+<p>The intention is for this utility to be accessed from the currently active Finder window and acts on the current directory in the Finder. I suggest adding CreateTextFileHere.app to the a Finder window&rsquo;s shelf (command-drag it into a Finder window at the top where the other tool icons are located) so it is available from the Finder as needed. Alternatively, it could be activated from the <a href="https://iworkautomation.com/numbers/script-menu.html">Script Menu</a>.</p>
+
+<p>Thanks to the kind folk over at Bare Bones Software for letting me use a modified version of their text document icon.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tools]]></title>
+    <link href="http://levigroker.github.com/blog/tools/"/>
+    <updated>2015-03-19T12:13:48-06:00</updated>
+    <id>http://levigroker.github.com/blog/tools</id>
+    <content type="html"><![CDATA[<p>Everyone works in different ways and employ different tools to do the things they want to do. Here&rsquo;s my curated list of tools I find I keep coming back to.</p>
+
+<h3>Development</h3>
+
+<p><a href="http://www.git-tower.com">Tower</a><br/>
+The best Mac GUI git client I&rsquo;ve tried.</p>
+
+<p><a href="http://cocoapods.org">CocoaPods</a><br/>
+Third party code dependency manager.</p>
+
+<p><a href="https://kapeli.com/dash">Dash</a><br/>
+Awesome documentation browser. Handles many languages and doc sets, but I use it primarily for Cocoa.</p>
+
+<p><a href="http://simpholders.com">SimPholders 2</a><br/>
+For finding and inspecting the contents of your app in the simulator.</p>
+
+<p><a href="http://www.macroplant.com/iexplorer/">iExplorer</a><br/>
+For inspecting the contents of your app (or others) on-device, this is a great tool.</p>
+
+<p><a href="http://rentzsch.github.io/mogenerator/">mogenerator</a><br/>
+If you&rsquo;re working with CoreData, you should be using this tool to abstract your object classes.</p>
+
+<p><a href="https://fabric.io">Fabric</a><br/>
+iOS crash reporting, usage statistics, beta build distribution, and more.</p>
+
+<p><a href="https://code.google.com/p/cocoa-rest-client/">Cocoa Rest Client</a><br/>
+A simple GUI alternative to <code>curl</code> for testing ReST endpoints.</p>
+
+<p><a href="http://www.cocoajsoneditor.com">Cocoa JSON Editor</a><br/>
+Super nice GUI tool for creating and editing JSON files.</p>
+
+<p><a href="http://www.cockos.com/licecap/">licecap</a><br/>
+Create animated gifs. Really nice for quick app demos on github.</p>
+
+<p><a href="http://www.kevincallahan.org/software/accessorizer.html">Accessorizer</a><br/>
+Great timesaver for generating boilerplate Objective C code, though Objective-C&rsquo;s language updates have made this tool less useful than it used to be.</p>
+
+<h3>General</h3>
+
+<p><a href="https://agilebits.com/onepassword">1Password</a><br/>
+A secure vault for passwords, credit cards, passports, etc. Seriously the first thing I install on a new device.</p>
+
+<p><a href="https://db.tt/ktbXT8tW">Dropbox</a> (referral link)<br/>
+Secure online file storage and sharing. The second thing I install on a new machine, primarily to sync 1Password vaults and other app settings.</p>
+
+<p><a href="http://www.barebones.com/products/bbedit/">BBEdit</a><br/>
+<em>The</em> text editor. I&rsquo;ve been using this since&hellip; well since I can remember. It does it all and doesn&rsquo;t get in your way. Installed almost immediately on a new machine.</p>
+
+<p><a href="http://www.obdev.at/products/littlesnitch/index.html">Little Snitch</a><br/>
+Basically a firewall for outgoing network connections. Probably the fourth thing I install on a new machine.</p>
+
+<p><a href="http://qsapp.com">Quicksilver</a><br/>
+A keyboard activated launcher and action performer (hard to describe). It is kind of like spotlight, but with more customizability and functionality.</p>
+
+<p><a href="http://getpocket.com">Pocket</a><br/>
+Bookmarking and reading app. Desktop, iOS, and web. A great way to keep hold of the gems one finds while surfing, Twitter, etc.</p>
+
+<p><a href="http://www.acqualia.com/soulver/">Soulver</a><br/>
+Awesome calculator for problem solving.</p>
+
+<p><a href="http://www.yummysoftware.com">Yummy FTP</a><br/>
+The best FTP/SFTP Mac GUI client I have tried.</p>
+
+<p><a href="https://agilebits.com/knox">Knox</a><br/>
+Simplifies creation and management of encrypted disk images. Everything that doesn&rsquo;t go in 1Password goes in here.</p>
+
+<p><a href="https://www.peterborgapps.com/lingon/">Lingon</a><br/>
+A GUI for creating and managing <code>launchd</code> configurations.</p>
+
+<p><a href="http://manytricks.com/namemangler/">Name Mangler</a><br/>
+Rename batches of files via a nice GUI.</p>
+
+<p><a href="http://tapbots.com">Tweetbot</a><br/>
+Twitter client for Mac and iOS.</p>
+
+<p><a href="https://slack.com">Slack</a><br/>
+Team collaboration and communication tool.</p>
+
+<p><a href="http://airmailapp.com">Airmail</a><br/>
+The best, but not perfect, email client I have tried since giving up on Mail.app.</p>
+
+<p><a href="https://secure.backblaze.com/r/00mdf8">Backblaze</a> (referral link)<br/>
+Offsite painless backup solution.</p>
+
+<p><a href="http://www.macbartender.com">Bartender</a><br/>
+De-clutter your menu bar. This manages all the little menubar warts that seem to show up with various tools. Keeps things nicely tucked away, but accessable.</p>
+
+<p><a href="http://www.bettertouchtool.net">BetterTouchTool</a><br/>
+A tool for configuring your interaction with a mouse or trackpad. Basically it allows you to program various gestures, clicks, taps, etc. to do any number of things.</p>
+
+<p><a href="https://github.com/jbtule/cdto">cd to</a><br/>
+A great little app which you install in your Finder &ldquo;shelf&rdquo; to open a terminal window at the current Finder location. It&rsquo;s a huge timesaver if you are moving between the finder and Terminal a lot.<br/>
+There&rsquo;s an updated <a href="http://cl.ly/3U01352I293L">Yosemite icon</a> (from <a href="https://github.com/jbtule/cdto/issues/9">https://github.com/jbtule/cdto/issues/9</a>) which you&rsquo;ll most likely want too.</p>
+
+<p><a href="https://github.com/levigroker/CreateTextFileHere">CreateTextFileHere</a> (shameless self promotion)<br/>
+Another little app which sits in your Finder &ldquo;shelf&rdquo; to create a text file at the current Finder location. Created by yours truly.</p>
+
+<p><a href="http://www.degreesapp.com">Degrees</a><br/>
+A little weather widget. I use the Mac menubar version. It&rsquo;s nice and unobtrusive.</p>
+
+<p><a href="http://unarchiver.c3.cx/unarchiver">The Unarchiver</a><br/>
+Far better tool than Mac OS X&rsquo;s standard unarchiving tool. It handles so many more file formats.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Frustrations With Xcode Bots]]></title>
@@ -890,51 +1016,6 @@ There were two reasons for this:</p>
 <h2>Give Back</h2>
 
 <p>Probably about the most astounding thing I encountered when I first joined this community, for that is what it is, was the unselfish and unpretentious giving of knowledge and experience. There is an amazing amount of source code out there, for free. People are writing blogs and answering questions <em>all the time</em>. When you have the experience, pay it forward and help the community by sharing.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ranged Random Numbers in Objective C]]></title>
-    <link href="http://levigroker.github.com/blog/ranged-random-numbers-in-objective-c/"/>
-    <updated>2011-12-05T12:47:00-07:00</updated>
-    <id>http://levigroker.github.com/blog/ranged-random-numbers-in-objective-c</id>
-    <content type="html"><![CDATA[<p>Sounds pretty basic, and it is, but like many things there are lots of ways to do it. This is my new favorite:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">u_int32_t</span> <span class="n">arc4random_uniform</span><span class="p">(</span><span class="n">u_int32_t</span> <span class="cm">/*upper_bound*/</span><span class="p">)</span> <span class="n">__OSX_AVAILABLE_STARTING</span><span class="p">(</span><span class="n">__MAC_10_7</span><span class="p">,</span> <span class="n">__IPHONE_4_3</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Based on <a href="http://stackoverflow.com/a/7082580/397210">discussions on StackOverflow</a> and my own testing.</p>
-
-<p>This assumes you&rsquo;re on iOS 4.3 or later, however.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Anonymous FTP on Lion]]></title>
-    <link href="http://levigroker.github.com/blog/anonymous-ftp-on-lion/"/>
-    <updated>2011-11-07T13:14:00-07:00</updated>
-    <id>http://levigroker.github.com/blog/anonymous-ftp-on-lion</id>
-    <content type="html"><![CDATA[<h2>Start:</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo dscl . -create /Users/ftp
-</span><span class='line'>sudo dscl . -create /Users/ftp NFSHomeDirectory /Users/labrown/Public/ftp
-</span><span class='line'>sudo launchctl load -w /System/Library/LaunchDaemons/ftp.plist
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Stop:</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo launchctl unload -w /System/Library/LaunchDaemons/ftp.plist
-</span><span class='line'>sudo dscl . -delete /Users/ftp
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

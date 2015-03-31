@@ -125,6 +125,144 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-11-08T10:38:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, November  8 2012</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/powerful/" itemprop="url">Powerful, CocoaPods Are!</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="http://cocoapods.org">CocoaPods</a>, &ldquo;The Objective-C Library Manager,&rdquo; is something I&rsquo;ve been using now for a while and really enjoying it for integrating third party frameworks and components into my projects. If you&rsquo;re not familiar with it already, I <em>highly</em> recommend you look into it as it is really powerful and useful.</p>
+
+<h3>Installing pods for multiple targets</h3>
+
+<p>My projects generally have at least two targets; the main target and a test target. When I initially setup CocoPods for my projects with a</p>
+
+<pre><code>$ pod install
+</code></pre>
+
+<p>it does not configure the test target to use the <code>Pods.xcconfig</code> which specify all the integration points for the included pods. And, finding where to manually configure the use of the <code>xcconfig</code> file for the test target took me a bit of digging.</p>
+
+<p>You&rsquo;ll need to go into the project settings, on the info tab of the project (not the target) and expand each configuration in the &ldquo;Configurations&rdquo; area (just under &ldquo;Deployment Target&rdquo;). Then set each configuration to use the Pods configuration on any alternate targets (like my test target):</p>
+
+<p><img src="/images/posts/2012-11-08-powerful/PodsxcconfigConfig.png" title="XCode configuration of xcconfig usage on targets" alt="XCode configuration of xcconfig usage on targets"></p>
+
+<p>From then on the alternate targets will inherit from the <code>Pods.xcconfig</code> configuration as they should.</p>
+
+<p>Similarly, some of the growing pains I&rsquo;ve had with my use of CocoaPods have been related to making sure the configurations inherit from the <code>Pods.xcconfig</code> configuration, specifically custom header and library search paths. So if you get build errors related to not being able to find headers or libraries double check the target&rsquo;s header and library search path build settings and ensure the first element is <code>$(inhertied)</code>. In general, I&rsquo;ve found the <a href="https://github.com/CocoaPods/CocoaPods/wiki">CocoPods Wiki</a> is a good place to start reading up, should you encounter issues.</p>
+
+<h3>Using a Fork as a Pod</h3>
+
+<p>Using &ldquo;off the shelf&rdquo; pods is as easy as the docs say&hellip; you simply search for the pod you want at <a href="http://cocoapods.org">http://cocoapods.org</a>, add a dependency in the <code>Podfile</code> and then run <code>pod update</code>. I&rsquo;ve found, however, that sometimes I want to fork a project that I&rsquo;m using as a pod so I can make changes. But how then to use the fork as a pod? It&rsquo;s not hard, actually.</p>
+
+<p>I ran into <a href="http://stackoverflow.com/a/12393865/397210">this answer</a> which pointed me to the <a href="https://github.com/CocoaPods/CocoaPods/wiki/Dependency-declaration-options">CocoPods dependency declaration wiki entry</a>. Basically, all that needs to be done is to explicitly specify the git repository to use for the pod, instead of letting it use the default repository.</p>
+
+<p>I&rsquo;ve had great luck with this approach for my extraction of the <a href="http://restkit.org">RestKit</a> ObjectMapping functionality (see my <a href="https://github.com/levigroker/RestKitObjectMapping">RestKitObjectMapping</a> fork). All I need to do now, to include this pod in my project is to add this line to my <code>Podspec</code> file:</p>
+
+<pre><code>pod 'RestKitObjectMapping', :git =&gt; 'https://github.com/levigroker/RestKitObjectMapping.git'
+</code></pre>
+
+<p>Indeed, very powerful.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-10-25T16:46:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, October 25 2012</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/the-shadow-knows/" itemprop="url">The Shadow Knows</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Adding drop shadows is a nice little UI touch which brings depth, and I like them, assuming they&rsquo;re done with subtlety.</p>
+
+<p>That said, I&rsquo;ve been playing around with them a bit and have a couple of things to share.</p>
+
+<ul>
+<li>If your shadow is to be placed on a rectangular layer, use <code>layer.shadowPath</code> to increase performance.</li>
+</ul>
+
+
+<p>TIP: To easily create the rectangular path: <code>layer.shadowPath = [UIBezierPath bezierPathWithRect:layer.bounds].CGPath;</code></p>
+
+<p>See <a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CALayer_class/Introduction/Introduction.html#//apple_ref/occ/instp/CALayer/shadowPath">Apple&rsquo;s CALayer documentation</a> where they say:</p>
+
+<blockquote><p>If the value in this property is non-nil, the shadow is created using the specified path instead of the layer’s composited alpha channel. The path defines the outline of the shadow. It is filled using the non-zero winding rule and the current shadow color, opacity, and blur radius.</p>
+
+<p>Specifying an explicit path usually improves rendering performance.</p></blockquote>
+
+<ul>
+<li><p>Similarly, using <code>layer.shouldRasterize = YES;</code> should increase performance (See the <a href="http://www.omnigroup.com/blog/entry/ipad_drop_shadow_performance_test/">iPad drop shadow performance</a> post from <a href="http://www.omnigroup.com/">The Omni Group</a>.</p></li>
+<li><p>However, be <em>sure</em> to set the <code>layer.rasterizationScale</code> appropriately or you are likely to see pixelated content. This can easily be achieved by: <code>layer.rasterizationScale = [[UIScreen mainScreen] scale];</code></p></li>
+</ul>
+
+
+<p>So, to recap&hellip; drop shadows can add some really nice, subtle, depth and need not be an overt performance hit.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">CALayer</span> <span class="o">*</span><span class="n">layer</span><span class="p">;</span> <span class="c1">//Assumed to be initialized somewhere else</span>
+</span><span class='line'><span class="n">layer</span><span class="p">.</span><span class="n">shadowPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIBezierPath</span> <span class="nl">bezierPathWithRect:</span><span class="n">layer</span><span class="p">.</span><span class="n">bounds</span><span class="p">].</span><span class="n">CGPath</span><span class="p">;</span>
+</span><span class='line'><span class="n">layer</span><span class="p">.</span><span class="n">shouldRasterize</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'><span class="n">layer</span><span class="p">.</span><span class="n">rasterizationScale</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIScreen</span> <span class="n">mainScreen</span><span class="p">]</span> <span class="n">scale</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-09-07T10:52:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Friday, September  7 2012</time>
         
       </p>
@@ -624,112 +762,11 @@ There were two reasons for this:</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2011-12-05T12:47:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, December  5 2011</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/ranged-random-numbers-in-objective-c/" itemprop="url">Ranged Random Numbers in Objective C</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Sounds pretty basic, and it is, but like many things there are lots of ways to do it. This is my new favorite:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">u_int32_t</span> <span class="n">arc4random_uniform</span><span class="p">(</span><span class="n">u_int32_t</span> <span class="cm">/*upper_bound*/</span><span class="p">)</span> <span class="n">__OSX_AVAILABLE_STARTING</span><span class="p">(</span><span class="n">__MAC_10_7</span><span class="p">,</span> <span class="n">__IPHONE_4_3</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Based on <a href="http://stackoverflow.com/a/7082580/397210">discussions on StackOverflow</a> and my own testing.</p>
-
-<p>This assumes you&rsquo;re on iOS 4.3 or later, however.</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2011-11-07T13:14:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, November  7 2011</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/anonymous-ftp-on-lion/" itemprop="url">Anonymous FTP on Lion</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h2>Start:</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo dscl . -create /Users/ftp
-</span><span class='line'>sudo dscl . -create /Users/ftp NFSHomeDirectory /Users/labrown/Public/ftp
-</span><span class='line'>sudo launchctl load -w /System/Library/LaunchDaemons/ftp.plist
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Stop:</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo launchctl unload -w /System/Library/LaunchDaemons/ftp.plist
-</span><span class='line'>sudo dscl . -delete /Users/ftp
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
       
-        <li class="previous disabled"><a href="#">&larr;&nbsp;Older</a></li>
+        <li class="previous"><a href="/posts/3">&larr;&nbsp;Older</a></li>
       
       <li><a href="/blog/archives">Blog Archives</a></li>
       
@@ -748,15 +785,15 @@ There were two reasons for this:</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/createtextfilehere/">CreateTextFileHere</a>
+    
+    <a class="list-group-item " href="/blog/tools/">Tools</a>
+    
     <a class="list-group-item " href="/blog/frustrations-with-xcode-bots/">Frustrations With Xcode Bots</a>
     
     <a class="list-group-item " href="/blog/xcode-bot-keychain-configuration/">Xcode Bot Keychain Configuration</a>
     
     <a class="list-group-item " href="/blog/apples-in-app-purchase-receipts/">Apple&#8217;s In-App Purchase Receipts</a>
-    
-    <a class="list-group-item " href="/blog/managing-ssh-git-keys/">Managing Ssh Git Keys</a>
-    
-    <a class="list-group-item " href="/blog/switching-it-up/">Switching It Up</a>
     
   </div>
 </section>

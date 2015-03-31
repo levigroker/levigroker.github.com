@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Ranged Random Numbers in Objective C - grokin.gs</title>
+  <title>Tools - grokin.gs</title>
   <meta name="author" content="Levi Brown">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://levigroker.github.com/blog/ranged-random-numbers-in-objective-c">
+  <link rel="canonical" href="http://levigroker.github.com/blog/tools">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="grokin.gs" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://levigroker.github.com/blog/ranged-random-numbers-in-objective-c">
-  <meta property="og:title" content="Ranged Random Numbers in Objective C - grokin.gs">
+  <meta property="og:url" content="http://levigroker.github.com/blog/tools">
+  <meta property="og:title" content="Tools - grokin.gs">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -121,29 +121,121 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2011-12-05T12:47:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, December  5 2011</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-19T12:13:48-06:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, March 19 2015</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Ranged Random Numbers in Objective C
+        Tools
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p>Sounds pretty basic, and it is, but like many things there are lots of ways to do it. This is my new favorite:</p>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>Everyone works in different ways and employ different tools to do the things they want to do. Here&rsquo;s my curated list of tools I find I keep coming back to.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">u_int32_t</span> <span class="n">arc4random_uniform</span><span class="p">(</span><span class="n">u_int32_t</span> <span class="cm">/*upper_bound*/</span><span class="p">)</span> <span class="n">__OSX_AVAILABLE_STARTING</span><span class="p">(</span><span class="n">__MAC_10_7</span><span class="p">,</span> <span class="n">__IPHONE_4_3</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<h3>Development</h3>
 
+<p><a href="http://www.git-tower.com">Tower</a><br/>
+The best Mac GUI git client I&rsquo;ve tried.</p>
 
-<p>Based on <a href="http://stackoverflow.com/a/7082580/397210">discussions on StackOverflow</a> and my own testing.</p>
+<p><a href="http://cocoapods.org">CocoaPods</a><br/>
+Third party code dependency manager.</p>
 
-<p>This assumes you&rsquo;re on iOS 4.3 or later, however.</p>
+<p><a href="https://kapeli.com/dash">Dash</a><br/>
+Awesome documentation browser. Handles many languages and doc sets, but I use it primarily for Cocoa.</p>
+
+<p><a href="http://simpholders.com">SimPholders 2</a><br/>
+For finding and inspecting the contents of your app in the simulator.</p>
+
+<p><a href="http://www.macroplant.com/iexplorer/">iExplorer</a><br/>
+For inspecting the contents of your app (or others) on-device, this is a great tool.</p>
+
+<p><a href="http://rentzsch.github.io/mogenerator/">mogenerator</a><br/>
+If you&rsquo;re working with CoreData, you should be using this tool to abstract your object classes.</p>
+
+<p><a href="https://fabric.io">Fabric</a><br/>
+iOS crash reporting, usage statistics, beta build distribution, and more.</p>
+
+<p><a href="https://code.google.com/p/cocoa-rest-client/">Cocoa Rest Client</a><br/>
+A simple GUI alternative to <code>curl</code> for testing ReST endpoints.</p>
+
+<p><a href="http://www.cocoajsoneditor.com">Cocoa JSON Editor</a><br/>
+Super nice GUI tool for creating and editing JSON files.</p>
+
+<p><a href="http://www.cockos.com/licecap/">licecap</a><br/>
+Create animated gifs. Really nice for quick app demos on github.</p>
+
+<p><a href="http://www.kevincallahan.org/software/accessorizer.html">Accessorizer</a><br/>
+Great timesaver for generating boilerplate Objective C code, though Objective-C&rsquo;s language updates have made this tool less useful than it used to be.</p>
+
+<h3>General</h3>
+
+<p><a href="https://agilebits.com/onepassword">1Password</a><br/>
+A secure vault for passwords, credit cards, passports, etc. Seriously the first thing I install on a new device.</p>
+
+<p><a href="https://db.tt/ktbXT8tW">Dropbox</a> (referral link)<br/>
+Secure online file storage and sharing. The second thing I install on a new machine, primarily to sync 1Password vaults and other app settings.</p>
+
+<p><a href="http://www.barebones.com/products/bbedit/">BBEdit</a><br/>
+<em>The</em> text editor. I&rsquo;ve been using this since&hellip; well since I can remember. It does it all and doesn&rsquo;t get in your way. Installed almost immediately on a new machine.</p>
+
+<p><a href="http://www.obdev.at/products/littlesnitch/index.html">Little Snitch</a><br/>
+Basically a firewall for outgoing network connections. Probably the fourth thing I install on a new machine.</p>
+
+<p><a href="http://qsapp.com">Quicksilver</a><br/>
+A keyboard activated launcher and action performer (hard to describe). It is kind of like spotlight, but with more customizability and functionality.</p>
+
+<p><a href="http://getpocket.com">Pocket</a><br/>
+Bookmarking and reading app. Desktop, iOS, and web. A great way to keep hold of the gems one finds while surfing, Twitter, etc.</p>
+
+<p><a href="http://www.acqualia.com/soulver/">Soulver</a><br/>
+Awesome calculator for problem solving.</p>
+
+<p><a href="http://www.yummysoftware.com">Yummy FTP</a><br/>
+The best FTP/SFTP Mac GUI client I have tried.</p>
+
+<p><a href="https://agilebits.com/knox">Knox</a><br/>
+Simplifies creation and management of encrypted disk images. Everything that doesn&rsquo;t go in 1Password goes in here.</p>
+
+<p><a href="https://www.peterborgapps.com/lingon/">Lingon</a><br/>
+A GUI for creating and managing <code>launchd</code> configurations.</p>
+
+<p><a href="http://manytricks.com/namemangler/">Name Mangler</a><br/>
+Rename batches of files via a nice GUI.</p>
+
+<p><a href="http://tapbots.com">Tweetbot</a><br/>
+Twitter client for Mac and iOS.</p>
+
+<p><a href="https://slack.com">Slack</a><br/>
+Team collaboration and communication tool.</p>
+
+<p><a href="http://airmailapp.com">Airmail</a><br/>
+The best, but not perfect, email client I have tried since giving up on Mail.app.</p>
+
+<p><a href="https://secure.backblaze.com/r/00mdf8">Backblaze</a> (referral link)<br/>
+Offsite painless backup solution.</p>
+
+<p><a href="http://www.macbartender.com">Bartender</a><br/>
+De-clutter your menu bar. This manages all the little menubar warts that seem to show up with various tools. Keeps things nicely tucked away, but accessable.</p>
+
+<p><a href="http://www.bettertouchtool.net">BetterTouchTool</a><br/>
+A tool for configuring your interaction with a mouse or trackpad. Basically it allows you to program various gestures, clicks, taps, etc. to do any number of things.</p>
+
+<p><a href="https://github.com/jbtule/cdto">cd to</a><br/>
+A great little app which you install in your Finder &ldquo;shelf&rdquo; to open a terminal window at the current Finder location. It&rsquo;s a huge timesaver if you are moving between the finder and Terminal a lot.<br/>
+There&rsquo;s an updated <a href="http://cl.ly/3U01352I293L">Yosemite icon</a> (from <a href="https://github.com/jbtule/cdto/issues/9">https://github.com/jbtule/cdto/issues/9</a>) which you&rsquo;ll most likely want too.</p>
+
+<p><a href="https://github.com/levigroker/CreateTextFileHere">CreateTextFileHere</a> (shameless self promotion)<br/>
+Another little app which sits in your Finder &ldquo;shelf&rdquo; to create a text file at the current Finder location. Created by yours truly.</p>
+
+<p><a href="http://www.degreesapp.com">Degrees</a><br/>
+A little weather widget. I use the Mac menubar version. It&rsquo;s nice and unobtrusive.</p>
+
+<p><a href="http://unarchiver.c3.cx/unarchiver">The Unarchiver</a><br/>
+Far better tool than Mac OS X&rsquo;s standard unarchiving tool. It handles so many more file formats.</p>
 </div>
 
 
@@ -167,7 +259,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2011-12-05T12:47:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, December  5 2011</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-19T12:13:48-06:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, March 19 2015</time>
           
 
 
@@ -175,7 +267,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/ranged-random-numbers-in-objective-c/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/ranged-random-numbers-in-objective-c/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://levigroker.github.com/blog/tools/" data-via="levigroker" data-counturl="http://levigroker.github.com/blog/tools/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -187,10 +279,10 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/anonymous-ftp-on-lion/" title="Previous Post: Anonymous FTP on Lion">&laquo; Anonymous FTP on Lion</a></li>
+            <li class="previous"><a href="/blog/frustrations-with-xcode-bots/" title="Previous Post: Frustrations with Xcode Bots">&laquo; Frustrations with Xcode Bots</a></li>
             
             
-            <li class="next"><a href="/blog/learning-ios/" title="Next Post: Learning iOS">Learning iOS &raquo;</a></li>
+            <li class="next"><a href="/blog/createtextfilehere/" title="Next Post: CreateTextFileHere">CreateTextFileHere &raquo;</a></li>
             
           </ul>
         
@@ -211,7 +303,7 @@
     
     <a class="list-group-item " href="/blog/createtextfilehere/">CreateTextFileHere</a>
     
-    <a class="list-group-item " href="/blog/tools/">Tools</a>
+    <a class="list-group-item active" href="/blog/tools/">Tools</a>
     
     <a class="list-group-item " href="/blog/frustrations-with-xcode-bots/">Frustrations With Xcode Bots</a>
     
