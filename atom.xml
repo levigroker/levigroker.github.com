@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2015-03-31T15:51:00-06:00</updated>
+  <updated>2015-04-28T13:58:16-06:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GRKImageCrop]]></title>
+    <link href="http://levigroker.github.com/blog/grkimagecrop/"/>
+    <updated>2015-04-28T13:53:26-06:00</updated>
+    <id>http://levigroker.github.com/blog/grkimagecrop</id>
+    <content type="html"><![CDATA[<p>A UIImage category which provides &ldquo;visible&rdquo; pixel cropping capabilities.</p>
+
+<p>A given image can be rectangularly cropped based on calculated insets to &ldquo;visible&rdquo; pixels.
+Visible pixels are those whose alpha component are greater than or equal to a given alpha
+threshold.</p>
+
+<p>Available on github: <a href="https://github.com/levigroker/GRKImageCrop">https://github.com/levigroker/GRKImageCrop</a></p>
+
+<p><img src="http://levigroker.github.com/images/posts/2015-04-28-grkimagecrop/Demo.gif" title="demo" alt="demo"></p>
+
+<h3>Installing</h3>
+
+<p>If you&rsquo;re using <a href="http://cocopods.org">CocoPods</a> it&rsquo;s as simple as adding this to your
+<code>Podfile</code>:</p>
+
+<pre><code>pod 'GRKImageCrop'
+</code></pre>
+
+<p>otherwise, simply add the contents of the <code>GRKImageCrop</code> subdirectory to your
+project.</p>
+
+<h3>Documentation</h3>
+
+<p>To use, simply import <code>UIImage+GRKImageCrop.h</code>:</p>
+
+<pre><code>#import "UIImage+GRKImageCrop.h"
+</code></pre>
+
+<p>Then you can use the category to create a cropped image from a given image:</p>
+
+<pre><code>[image cropImageBelowAlphaThreshold:0.0f completion:^(UIImage *croppedImage, NSError *error) {
+    if (image)
+    {
+        //Use croppedImage
+    }
+    else
+    {
+        //Hanlde error
+    }
+}];
+</code></pre>
+
+<p>The only expected error would be memory related.</p>
+
+<p>Additional documentation is available in <code>UIImage+GRKImageCrop.h</code> and example usage
+can be found in the <code>GRKImageCropTestApp</code>.</p>
+
+<h4>Disclaimer and Licence</h4>
+
+<ul>
+<li>Inspiration was taken from:
+
+<ul>
+<li><a href="https://developer.apple.com/library/mac/qa/qa1509/_index.html">https://developer.apple.com/library/mac/qa/qa1509/_index.html</a></li>
+<li><a href="http://stackoverflow.com/a/1262893/397210">http://stackoverflow.com/a/1262893/397210</a></li>
+<li><a href="http://stackoverflow.com/a/12617031/397210">http://stackoverflow.com/a/12617031/397210</a></li>
+<li><a href="https://github.com/wrep/UIImage-Trim">https://github.com/wrep/UIImage-Trim</a></li>
+</ul>
+</li>
+<li>I have made use of image cropping code from <a href="http://stackoverflow.com/a/25293588/397210">http://stackoverflow.com/a/25293588/397210</a></li>
+<li>This work is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
+Please see the included LICENSE.txt for complete details.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CreateTextFileHere]]></title>
@@ -967,55 +1039,6 @@ There were two reasons for this:</p>
 <li><a href="https://twitter.com/rwenderlich">@rwenderlich</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning iOS]]></title>
-    <link href="http://levigroker.github.com/blog/learning-ios/"/>
-    <updated>2011-12-09T17:01:00-07:00</updated>
-    <id>http://levigroker.github.com/blog/learning-ios</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve recently been asked a couple times about resources for developers who want to get into iOS development. I don&rsquo;t pretend to be an expert, and am constantly learning myself, but these resources are ones I find useful, believe would be good for people just starting, and should certainly get you started. There&rsquo;s <em>lots</em> of information out there, so don&rsquo;t get too overwhelmed.</p>
-
-<h2>The First Place</h2>
-
-<p>I&rsquo;d start is with a <a href="http://www.amazon.com/iPhone-Programming-Ranch-Guide-Guides/dp/0321706242/ref=pd_sim_b_5" title="">good book</a>. Aaron Hillegass is <em>the</em> goto guy for learning Cocoa and Objective C.</p>
-
-<p>Second, Apple&rsquo;s documentation is quite good and will be your constant companion. Use the Documentation tab of the Xcode Organizer to search and browse the docs. There are many many sample code projects on various topics.</p>
-
-<p>The <a href="http://developer.apple.com/library/ios/navigation/" title="">docs are also online</a>&hellip; some good starting places are:</p>
-
-<ul>
-<li><a href="http://developer.apple.com/library/ios/navigation/#section=Resource%20Types&amp;topic=Getting%20Started">Getting Started</a></li>
-<li><a href="http://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html#//apple_ref/doc/uid/TP30001163">Objective C Intorduction</a></li>
-</ul>
-
-
-<p>View Controllers are the &ldquo;main entry point&rdquo; when using UIKit. It is important to understand them&hellip; many iOS devs do not (I was making fatal mistakes for my first year!). Read Apple&rsquo;s <a href="http://developer.apple.com/library/ios/#featuredarticles/ViewControllerPGforiPhoneOS/Introduction/Introduction.html">View Controller Programming Guide</a> until it makes sense. Paying particular heed to the view hierarchy and view controller hierarchy concepts.</p>
-
-<h2>Attend a Conference/Course</h2>
-
-<p>If you&rsquo;re at all like me, you&rsquo;ll most likely come away inspired and energized to build cool stuff. I&rsquo;ve been to two <a href="http://360idev.com/" title="">360iDev</a>&rsquo;s now and loved them both. Highly recommend.</p>
-
-<p>The <a href="http://pragmaticstudio.com/iphone">Pragmatic Studio</a> just announced a session which looks promising.</p>
-
-<h2>Continuous</h2>
-
-<p>Follow people on Twitter who talk about iOS and Cocoa. There&rsquo;s a lot of people out there with a lot of experience.</p>
-
-<p>This should lead you to some great blog posts and open source projects which will help you learn and grow, as they continue to do for me.</p>
-
-<p>Check out <a href="http://www.raywenderlich.com">Ray Wenderlinch</a>&rsquo;s site for some great intro to intermediate tutorials to get you going.</p>
-
-<p>A <em>great</em> place to go for answers is <a href="http://stackoverflow.com/">StackOverflow</a>. Search before you post&hellip; it&rsquo;s probably been asked (and answered) already.</p>
-
-<h2>Lots to know</h2>
-
-<p>There is a difference between intelligence and knowledge. Do not sell yourself short.</p>
-
-<h2>Give Back</h2>
-
-<p>Probably about the most astounding thing I encountered when I first joined this community, for that is what it is, was the unselfish and unpretentious giving of knowledge and experience. There is an amazing amount of source code out there, for free. People are writing blogs and answering questions <em>all the time</em>. When you have the experience, pay it forward and help the community by sharing.</p>
 ]]></content>
   </entry>
   
