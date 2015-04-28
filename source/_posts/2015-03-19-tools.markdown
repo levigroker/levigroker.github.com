@@ -1,0 +1,109 @@
+---
+layout: post
+title: "Tools"
+date: 2015-03-19 12:13:48 -0600
+comments: false
+categories: 
+---
+Everyone works in different ways and employ different tools to do the things they want to do. Here's my curated list of tools I find I keep coming back to.
+
+### Development
+
+[Tower](http://www.git-tower.com)  
+The best Mac GUI git client I've tried.
+
+[CocoaPods](http://cocoapods.org)  
+Third party code dependency manager.
+
+[Dash](https://kapeli.com/dash)  
+Awesome documentation browser. Handles many languages and doc sets, but I use it primarily for Cocoa.
+
+[SimPholders 2](http://simpholders.com)  
+For finding and inspecting the contents of your app in the simulator.
+
+[iExplorer](http://www.macroplant.com/iexplorer/)  
+For inspecting the contents of your app (or others) on-device, this is a great tool.
+
+[mogenerator](http://rentzsch.github.io/mogenerator/)  
+If you're working with CoreData, you should be using this tool to abstract your object classes.
+
+[Fabric](https://fabric.io)  
+iOS crash reporting, usage statistics, beta build distribution, and more.
+
+[Cocoa Rest Client](https://code.google.com/p/cocoa-rest-client/)  
+A simple GUI alternative to `curl` for testing ReST endpoints.
+
+[Cocoa JSON Editor](http://www.cocoajsoneditor.com)  
+Super nice GUI tool for creating and editing JSON files.
+
+[licecap](http://www.cockos.com/licecap/)  
+Create animated gifs. Really nice for quick app demos on github.
+
+[Accessorizer](http://www.kevincallahan.org/software/accessorizer.html)  
+Great timesaver for generating boilerplate Objective C code, though Objective-C's language updates have made this tool less useful than it used to be.
+
+### General
+
+[1Password](https://agilebits.com/onepassword)  
+A secure vault for passwords, credit cards, passports, etc. Seriously the first thing I install on a new device.
+
+[Dropbox](https://db.tt/ktbXT8tW) (referral link)  
+Secure online file storage and sharing. The second thing I install on a new machine, primarily to sync 1Password vaults and other app settings.
+
+[BBEdit](http://www.barebones.com/products/bbedit/)  
+*The* text editor. I've been using this since... well since I can remember. It does it all and doesn't get in your way. Installed almost immediately on a new machine.
+
+[Little Snitch](http://www.obdev.at/products/littlesnitch/index.html)  
+Basically a firewall for outgoing network connections. Probably the fourth thing I install on a new machine.
+
+[Quicksilver](http://qsapp.com)  
+A keyboard activated launcher and action performer (hard to describe). It is kind of like spotlight, but with more customizability and functionality.
+
+[Pocket](http://getpocket.com)  
+Bookmarking and reading app. Desktop, iOS, and web. A great way to keep hold of the gems one finds while surfing, Twitter, etc.
+
+[Soulver](http://www.acqualia.com/soulver/)  
+Awesome calculator for problem solving.
+
+[Yummy FTP](http://www.yummysoftware.com)  
+The best FTP/SFTP Mac GUI client I have tried.
+
+[Knox](https://agilebits.com/knox)  
+Simplifies creation and management of encrypted disk images. Everything that doesn't go in 1Password goes in here.
+
+[Lingon](https://www.peterborgapps.com/lingon/)  
+A GUI for creating and managing `launchd` configurations.
+
+[Name Mangler](http://manytricks.com/namemangler/)  
+Rename batches of files via a nice GUI.
+
+[Tweetbot](http://tapbots.com)  
+Twitter client for Mac and iOS.
+
+[Slack](https://slack.com)  
+Team collaboration and communication tool.
+
+[Airmail](http://airmailapp.com)  
+The best, but not perfect, email client I have tried since giving up on Mail.app.
+
+[Backblaze](https://secure.backblaze.com/r/00mdf8) (referral link)  
+Offsite painless backup solution.
+
+[Bartender](http://www.macbartender.com)  
+De-clutter your menu bar. This manages all the little menubar warts that seem to show up with various tools. Keeps things nicely tucked away, but accessable.
+
+[BetterTouchTool](http://www.bettertouchtool.net)  
+A tool for configuring your interaction with a mouse or trackpad. Basically it allows you to program various gestures, clicks, taps, etc. to do any number of things.
+
+[cd to](https://github.com/jbtule/cdto)  
+A great little app which you install in your Finder "shelf" to open a terminal window at the current Finder location. It's a huge timesaver if you are moving between the finder and Terminal a lot.  
+There's an updated [Yosemite icon](http://cl.ly/3U01352I293L) (from [https://github.com/jbtule/cdto/issues/9](https://github.com/jbtule/cdto/issues/9)) which you'll most likely want too.
+
+[CreateTextFileHere](https://github.com/levigroker/CreateTextFileHere) (shameless self promotion)  
+Another little app which sits in your Finder "shelf" to create a text file at the current Finder location. Created by yours truly.
+
+[Degrees](http://www.degreesapp.com)  
+A little weather widget. I use the Mac menubar version. It's nice and unobtrusive.
+
+[The Unarchiver](http://unarchiver.c3.cx/unarchiver)  
+Far better tool than Mac OS X's standard unarchiving tool. It handles so many more file formats.
