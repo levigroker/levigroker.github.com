@@ -13,7 +13,8 @@ Our sun is 1,391,684 km in diameter (1712 pixels). [[Sun]](https://en.wikipedia.
 The Earth is 12,742 km in diameter (~16 pixels). [[Earth]](https://en.wikipedia.org/wiki/Earth)  
 The Moon is 3 474.8 km in diameter (~4 pixels). [[Moon]](https://en.wikipedia.org/wiki/Moon)  
 The average distance from the center of the Earth to the center of the moon is 384,400 km (~473 pixels). [[ref]](https://en.wikipedia.org/?title=Lunar_distance_(astronomy))  
-* Please note, all pixel size references are to the [full scale image](/images/posts/2015-06-18-the-size-of-our-sun/SizeOfOurSun.png)
+* Please note, all pixel size references are to the [full scale image](/images/posts/2015-06-18-the-size-of-our-sun/SizeOfOurSun.png)  
+* Image Credit: [NASA](http://www.nasa.gov/multimedia/imagegallery/image_feature_1197.html)
 
 The Sun is 1.81 times as big as the average diameter of the Moon's orbit around Earth!  
 1,391,684 km / (384,400 km x 2) = 1.81
