@@ -1,0 +1,123 @@
+---
+layout: post
+title: "360iDev 2015"
+date: 2015-08-31 14:53:50 -0600
+comments: false
+categories: 
+---
+[360iDev](http://360idev.com) was once again informative and inspirational.
+
+This year, for me, was more inspirational than informative, which is not necessarily bad, but I think just a symptom of my session choices. I've included a list below of the sessions I attended and would recommend, and then sessions I didn't attend but wanted to.
+
+They are still working on transcoding all the [session videos](http://vimeopro.com/360conferences/360idev-2015/) (which they put online for everyone for free!) so check back for updates.
+
+# Recommended Sessions
+
+These are sessions I attended which are worth watching. I've filtered out the sessions which didn't inspire or weren't technically interesting (to me).
+
+* [Something Deep With Mike](http://360idev.com/sessions/something-deep-with-mike/)  
+[Mike Lee (@bmf)](https://twitter.com/bmf) talks about world modeling, how the models predict our current global situation, and what we can do as software engineers to aid in the shaping of our planet's future.  
+
+	This is a **must watch** presentation. My potentially inadequate description might make this talk sound like something you can skip, but that is entirely not correct. The concepts and information presented here are so important and relavent that this should be mandatory viewing for everyone.
+  
+	The 360iDev version of Mike's presentation is more refined and to the point than his UIKonf discussion, but YouTube has Mike's ["World Modelling" UIKonf video](https://www.youtube.com/watch?v=SDZkKvC8r40) online at this time and is worth watching.
+
+* [Decision Fatigue](http://360idev.com/sessions/decision-fatigue/)  
+[Daniel Haight (@Daniel1of1)](https://twitter.com/Daniel1of1) gives us an interesting and informative look at how humans make decisions.
+
+	> Decision Fatigue is the name given to the effect in which the quality of your decision making deteriorates with the number of decisions you have to make.
+	> 
+	> What is interesting is that many studies have shown that the difficulty of the decisions actually have little effect on the rate of the deterioration, more so the quantity. This is to say that having to make a lot of ‘small’ or ‘easy’ decisions can seriously harm the quality of the ‘bigger’ decisions you make.
+	> 
+	> Have you ever had to repeatedly decide how you might implement an API design? How you’d implement a network layer? K&R braces? tabs or spaces? withCompletionBlock: or just completionBlock:? Each of these decisions especially when made over and over can take away from the much more important decisions along the lines of “What is the ultimate goal of what we’re building?” or “Why are we implementing this?”
+
+* [Switching Your Brain to Swift](http://360idev.com/sessions/200-switching-your-brain-to-swift/)  
+[[video]](http://vimeopro.com/360conferences/360idev-2015/video/137530879)  
+[Greg Heo (@gregheo)](https://twitter.com/gregheo) gives a compelling and well presented talk which primed me to get more into Swift.
+	> We’re now a year into Swift. For those coming from Objective-C who are still testing the Swift waters, what do you need to do to switch your brain over to the new Swift way of thinking? What’s new, what’s the same, and what’s completely different when programming for the same platform in a new language?
+	> Big-picture outline:
+	> – focus on safety
+	> – undefined behavior
+	> – less dynamic behavior and fuzziness; more strong typing and predictability
+	> – a little bit on Swift/Obj-C interop and how to make the transition
+ 
+* [Bringing Swift into your Objective-C Projects](http://360idev.com/sessions/200-bringing-swift-into-your-objective-c-projects/)  
+[René Cacheaux (@RCachATX)](https://twitter.com/RCachATX) delivers some really awesome advice about best practices for moving over to Swift.
+
+	> Join us as we explore tips and tricks for introducing Swift source into Objective-C projects. We’ll cover where in the networking-model-UI stack to begin writing Swift, how to maximize the benefits of using Swift without re-writing your apps, and how to avoid some of the common pitfalls getting Swift and Objective-C working harmoniously together.
+
+* [iOS Testing: Beyond the Model](http://360idev.com/sessions/300-ios-testing-beyond-the-model/)  
+[Cate Huston (@catehstn)](https://twitter.com/catehstn) gave an inspired session about how to better implement testing in a MVC structured GUI app. She's written up a [blog post](http://www.catehuston.com/blog/2015/04/15/launching-ios-unit-testing-beyond-the-model/) on this topic too.
+
+	> Unit testing on iOS has always been a challenge, mainly because the ViewController creates a mix of UI and non-UI code. But, it’s totally possible to achieve good levels of coverage on view code for iOS, and this talk will cover some strategies for doing so, focusing on a real app (no contrived examples here!) Including: splitting up a ViewController to make a seam, verifying button actions, dealing with [self navigationController], handling asynchronous code, and how we can compare UIImages.
+
+
+* [Good Intentions II: Enemy of the State](http://360idev.com/sessions/200-good-intentions-ii-enemy-of-the-state/)  
+[Jay Thrash (@jaythrash)](https://twitter.com/jaythrash) gives a very interesting proposal about using a state machine to organize app flow and to clean up View Controllers.
+
+	> In a world where ViewControllers shoulder the burden of managing ever-changing vagarities of application state logic and complex navigation stacks, one design pattern emerges from the past to lead us toward a better, brighter, and lighter future of app development.
+	> 
+	> In this sequel to last year’s blockbuster presentation, “Good Intentions: Building Better ViewControllers”, we will revive a venerable programming technique for explicitly defining application behaviors and thereby reducing the responsibilities of our much maligned ViewControllers.
+
+# "TODO" Sessions
+
+I didn't attend these due to overlap in the schedule, but they sound like sessions which shouldn't be missed.
+
+* [Fancy Custom Transitions](http://360idev.com/sessions/200-fancy-custom-transitions/)  
+[Grant Davis (@gravitybytes)](https://twitter.com/GravityBytes)  
+[[video]](http://vimeopro.com/360conferences/360idev-2015/video/137519217)  
+
+	> Develop powerful, beautiful custom transitions using the APIs introduced in iOS7. In this session we’ll explore how to make both simple animated custom transitions as well as more complicated, interactive transitions.
+
+* [Solving Auto Layout Problems](http://360idev.com/sessions/300-solving-auto-layout-problems/)  
+Jack Cox
+
+	> Auto layout is hard. It requires developers to think different about structuring and manipulating views. If the developer doesn’t express themselves 100% correctly the results can be messy. And auto layout doesn’t help with it’s obtuse error message and verbose messages. This talk will cover some uses of auto layout that bedevil developers like: using auto layout in scroll views, self sizing tables and collections, and debugging conflicts.
+
+* [Apple Pay: What happens when you tap?](http://360idev.com/sessions/100-apple-pay-what-happens-when-you-tap/)  
+[Stepan Hruda (@stepanhruda)](https://twitter.com/stepanhruda)  
+[[video]](http://vimeopro.com/360conferences/360idev-2015/video/137558116)  
+
+	> Arguably Apple Pay might be the nudge that NFC needed to go mainstream. Let’s talk some implementation details of what happens when you tap your iPhone or Apple Watch and why tokenization is a $20 word for a 5-cent software concept.
+	> 
+	> We’ll cover the basics of credit cards, NFC and in-app Apple Pay payments.
+
+* [Mastering Auto Layout](http://360idev.com/sessions/mastering-auto-layout/)  
+[Justin Williams (@justin)](https://twitter.com/justin)  
+[[video]](http://vimeopro.com/360conferences/360idev-2015/video/137550517)
+
+	> The third-part of Justin’s 360iDev Auto Layout trilogy! Learn how to take full advantage of Apple’s modern layout toolkit in your iOS 9 and OS X El Capitan apps. Justin will walk you through crafting custom interface elements using Auto Layout, layout anchors, dynamically sized elements, keeping your sanity with size classes, and Swift 2.
+
+* [Building Habits: keeping users engaged](http://360idev.com/sessions/200-building-habits-keeping-users-engaged/)  
+[Sally Shepard (@mostgood)](https://twitter.com/mostgood)  
+[[slides]](http://www.slideshare.net/mostgood/building-habits-keeping-users-engaged)  
+
+	> So you’ve got some downloads but downloads don’t necessarily equate to active users. How can you engage a first time user? How can you keep them coming back to your app?
+The psychology of building habits
+	> 
+	> * Joyful first experiences
+	> * The awesome power of email
+	> * Deep-linking
+	> * Pushing for good
+	> * Helpful help sections
+
+# Game Jam
+
+As usual, this year I participated in the "Game Jam" on Tuesday night. Since the idea of the game jam has transitioned from building an actual game to more of a "stay up late and code on something" feel, I take the opportunity to build something I wouldn't normally get a chance to play with. This year I chose to attempt to build a "cheat app" for a word game called [Capitals](https://itunes.apple.com/us/app/capitals-free-word-battle/id968456900?mt=8) (which is pretty fun).
+
+The idea sounds simple enough... take a screen shot, run it through an Optical Character Recognition (OCR) process to identify the available letters, then pass those letters into an anagram algorithm to produce a list of possible words.
+
+I might write up a more detailed post on my findings, but the short version is that I spent most of my time trying to get the OCR engine, [Tesseract](https://github.com/tesseract-ocr/tesseract) to recognize the characters in the screen shot. With some help from fellow 360iDev attendees I eventually managed to get the engine to recognize 90 percent of the letters... not good enough. So the idea didn't merit a demo at the Gam Jam review, and is "on the shelf" for future attempts.
+
+# Con-clusion
+
+The 360iDev conference has always been about the people and the community. This year was no exception. We, as iOS developers, have a great community with many very smart and open people in it. As with any community I care about, these are the tenets I try to follow:
+
+* Be kind and supportive
+* Contribute
+* Be thoughtful
+* Take responsibility
+
+Cheers,
+
+Levi
