@@ -125,6 +125,175 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2013-03-11T11:05:00-06:00"  data-updated="true" itemprop="datePublished dateCreated">Monday, March 11 2013</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/lion-and-automounter/" itemprop="url">Lion &amp; Automounter</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Mounting a remote filesystem via the network is something which Unix has been doing since,
+well, the dawn of Unix. So, naturally, when trying to make use of large amounts of network
+storage on a NAS from a Mac OS X based machine, one would assume that mounting the network
+storage and having the mountpoint be maintained automatically should be a simple Unix
+configuration. And there you&rsquo;d be partly correct&hellip;</p>
+
+<p>Darwin does make use of the <code>automount</code> system to configure and maintain mountpoints, and
+one can setup entries in the <code>/etc/fstab</code> to mount remote filesystems using various
+protocols (NFS, SMB, AFP, etc.), and various posts about doing this have been around for
+<a href="http://web.archive.org/web/20090831103644/http://blogs.sun.com/lowbit/entry/easy_afp_autmount_on_os">a long time</a>
+. However, Mac OSX Lion <a href="https://discussions.apple.com/thread/3221944">seems to have broken this</a>
+in such a way that the mount points are inaccessible (incorrect permissions) to all but
+the <code>root</code> user.</p>
+
+<p>Over the weekend I struggled with this for too long, and ultimately found a solution,
+albeit a bit of a hack. Roll up your sleeves, get a new cup of tea, here we go&hellip;</p>
+
+<h3>/etc/fstab</h3>
+
+<p>As root, edit your <code>/etc/fstab</code> and add the mount point you want.
+Note: <code>/etc/fstab</code> did not exist by default. No need to worry, just create it. The <em>magic</em>
+syntax is:</p>
+
+<pre><code>&lt;servername&gt;:/&lt;path&gt; &lt;mount_point&gt; url auto,url==afp://&lt;username&gt;:&lt;password&gt;@&lt;servername&gt;/&lt;path&gt; 0 0
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>nas.grokers.net:/media /Network/media url auto,url==afp://levi:foopass@nas.grokers.net/media 0 0
+</code></pre>
+
+<p>That sets up a mount point at <code>/Network/media</code> which points to the AFP share <code>nas.grokers.net/media</code></p>
+
+<p>If you do this, then tell <code>automount</code> to reload with <code>automount -cv</code> you&rsquo;ll be able to cd into
+<code>/Network/media</code> and see the remote filesystem, but only as root (in Lion, at least).</p>
+
+<p>As an aside, it pains me to embed a password in the filesystem like this. A long time ago,
+I spent a lot of effort trying to figure out a way to dynamically load the password from
+the Keychain instead of embedding it here. I researched how to use executable automount
+configurations so I could fetch the password using <code>/usr/bin/security</code> but ultimately
+could never get it to work, so I gave up. If you&rsquo;ve a way to do this, please <a href="mailto:levigroker@gmail.com">let me know</a>.</p>
+
+<h3>root-only permissions work-around</h3>
+
+<p>To avoid the root-only permissions on the mount point, it would appear a <a href="http://forums.plexapp.com/index.php/topic/14201-howto-automount-afpsmb-shares-using-autofs/?p=202429">solution</a>
+is to unmount the mountpoint after <code>automount</code> loads the configuration in <code>/etc/fstab</code>.</p>
+
+<p>I tried many different approaches to unmount the mountpoint using a <code>launchd</code> <code>/Library/LaunchAgent</code>
+and even a user LaunchAgent, but through many attempts none of them seemed to take place
+<em>after</em> <code>automount</code> had loaded the config, and thus the mountpoint was still root-only
+accessible.</p>
+
+<p>So, an AppleScript application as a Login Item seems to be the only way, but we don&rsquo;t have
+to embed our password (yet again) in the applescript. Instead, I created a shell script to
+do the deed:</p>
+
+<pre><code>#!/bin/bash
+diskutil unmount /Network/media &gt; /dev/null 2&gt;&amp;1
+exit 0
+</code></pre>
+
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper.sh</code> but it doesn&rsquo;t matter where you put it)</p>
+
+<p>Then add a line to the <code>sudoers</code> file so the script will run as <code>root</code> without the need
+for a password:</p>
+
+<p><code>$ sudo visudo</code></p>
+
+<pre><code>levi ALL = NOPASSWD: /Users/levi/Library/Automation/nas_mount_helper.sh
+</code></pre>
+
+<p>Now, to run this script as a Login Item, I created an AppleScript application using the
+AppleScript editor app. The contents of the applescript is pretty basic:</p>
+
+<pre><code>do shell script "sudo /Users/levi/Library/Automation/nas_mount_helper.sh"
+</code></pre>
+
+<p>Save the script as an application, and use the &ldquo;Users &amp; Groups&rdquo; System Preferences to add
+it as a Login Item</p>
+
+<p>Almost there&hellip;</p>
+
+<p>Unfortunately, this didn&rsquo;t quite do it. Upon login the mount couldn&rsquo;t be navigated to via
+the Finder because of some error about the original not being found, so&hellip;</p>
+
+<p>Another shell script was needed to force the mount.</p>
+
+<pre><code>#!/bin/bash
+cd /Network/media
+ls -la
+exit 0
+</code></pre>
+
+<p>(I saved it at <code>/Users/levi/Library/Automation/nas_mount_helper2.sh</code> but it doesn&rsquo;t matter where you put it)</p>
+
+<p>This one we want to run as ourself, so no <code>sudoers</code> entry is needed.</p>
+
+<p>Add an additional line to the applescript to run this after we unmount the share:</p>
+
+<pre><code>do shell script "sudo /Users/levi/Library/Automation/nas_mount_helper.sh"
+do shell script "/Users/levi/Library/Automation/nas_mount_helper2.sh"
+</code></pre>
+
+<h3>Extra Credit</h3>
+
+<p>Finally, to prevent the AppleScript application from being noticeable (showing up in the dock, etc.),
+add the <code>LSUIElement</code> key to the <code>Info.plist</code> of the generated AppleScript application,
+by contextually clicking on the app from the Finder, choosing &ldquo;Show Package Contents&rdquo;,
+browse to <code>Contents/Info.plist</code>, and then edit the Info.plist to add the element:</p>
+
+<pre><code>&lt;plist version="1.0"&gt;
+  &lt;dict&gt;
+    ...
+    &lt;key&gt;LSUIElement&lt;/key&gt;
+    &lt;string&gt;1&lt;/string&gt;
+    ...
+  &lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+
+<p>Not all that elegant, unfortunately, but a workaround at least.</p>
+
+<h3>Thanks</h3>
+
+<p>Thanks to <a href="https://twitter.com/signed8bit">@signed8bit</a> for the moral support, and the wayback-machine.<br/>
+Thanks to <a href="http://forums.plexapp.com/index.php/user/22159-soli/">Soli</a> for the unmount workaround idea.</p>
+
+<h3>Comments</h3>
+
+<p><a href="http://MaxProWeb.com">Max Yarchak</a></p>
+
+<blockquote><p>I face the same issue. I&rsquo;ve build a script which does reconnect to wifi (network) and it solves the issue with permissions for me.<br/>
+<a href="https://github.com/MaxProWeb/MacAutomountFix">https://github.com/MaxProWeb/MacAutomountFix</a></p></blockquote>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2013-02-12T17:48:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Tuesday, February 12 2013</time>
         
       </p>
@@ -696,103 +865,6 @@ Check it out:</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2012-01-19T17:33:00-07:00"  data-updated="true" itemprop="datePublished dateCreated">Thursday, January 19 2012</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/asynchronous-ghunit-tests-and-objective-c-foo/" itemprop="url">Asynchronous GHUnit Tests &amp; Objective C Foo!</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="https://github.com/gabriel/gh-unit">GHUnit</a> is quite useful for running and reporting tests (unit or otherwise) for iOS projects, and I&rsquo;ve been using it for a while with good results. Recently, however, I found as I wrote more and more integration-style tests with a remote HTTP service I found the code getting to be a pain to write and maintain.
-There were two reasons for this:</p>
-
-<h4>GHAssert variants fail with an Exception, and therefore other tests do not continue to execute.</h4>
-
-<p>This was a real drag, since the assert macros are pretty handy, but I want all my tests to run, even if some fail (<em>gasp</em> I know!).</p>
-
-<p>So, I ended up replacing the GHAsserts with a simple conditional, which doesn&rsquo;t feel as clean, but navigates around the issue.</p>
-
-<h4>Selector names became copy and paste heavy.</h4>
-
-<p>Since I&rsquo;m making notification calls like <code>[self notify:kGHUnitWaitStatusSuccess forSelector:@selector(testAsynchronousOperation)];</code> from within the same method it was additional grunt work to copy the selector name to all the places I needed a reference to the selector.</p>
-
-<p>I thought of adding a <code>SEL mySelector = @selector(foo);</code> to each method, which would cut down on the copy &amp; pasting, but that just didn&rsquo;t seem clean to me.</p>
-
-<p>I discovered there is an Objective C variable like <code>self</code> called <code>_cmd</code><a href="http://www.google.com/search?client=safari&amp;rls=en&amp;q=objective+c+_cmd&amp;ie=UTF-8&amp;oe=UTF-8">*</a> which is a reference to the current selector(!). That&rsquo;s cool, and simplifies code like my testing code a lot.</p>
-
-<h4>Sample</h4>
-
-<p>For the specific kinds of test cases I was writing, here&rsquo;s an example which shows both of these issues resolved:</p>
-
-<div><script src='https://gist.github.com/1643797.js'></script>
-<noscript><pre><code>#import &lt;GHUnitIOS/GHUnit.h&gt; 
-
-@interface RemoteDataServiceTest : GHAsyncTestCase { }
-@end
-
-@implementation RemoteDataServiceTest
-
-- (BOOL)shouldRunOnMainThread
-{
-    // By default NO, but if you have a UI test or test dependent on running on the main thread return YES.
-    // Also an async test that calls back on the main thread, you&#39;ll probably want to return YES.
-    return NO;
-}
-- (void)testAsynchronousOperation
-{
-    // Call prepare to setup the asynchronous action.
-    // This helps in cases where the action is synchronous and the
-    // action occurs before the wait is actually called.
-    [self prepare];
-    
-    [RemoteDataService doNiftyStuffRemotelyWithCompletedBlock:^(id result){
-        if (!result)
-        {
-            GHTestLog(@&quot;result from remote service was unexpectedly nil.&quot;);
-            [self notify:kGHUnitWaitStatusFailure forSelector:_cmd];
-            return;
-        }
-        GHTestLog(@&quot;We got back: %@&quot;, result);
-        [self notify:kGHUnitWaitStatusSuccess forSelector:_cmd];
-    } errorBlock:^(NSError *error){
-        GHTestLog(@&quot;Error while doing nifty stuff: %@&quot;, [error localizedDescription]);
-        [self notify:kGHUnitWaitStatusFailure forSelector:_cmd];
-    }];
-    
-    // Wait until notify called for timeout (seconds); If notify is not called with kGHUnitWaitStatusSuccess then
-    // we will throw an error.
-    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:30.0];
-}</code></pre></noscript></div>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -816,6 +888,8 @@ There were two reasons for this:</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/360idev-2015/">360iDev 2015</a>
+    
     <a class="list-group-item " href="/blog/the-size-of-our-sun/">The Size of Our Sun</a>
     
     <a class="list-group-item " href="/blog/grkimagecrop/">GRKImageCrop</a>
@@ -823,8 +897,6 @@ There were two reasons for this:</p>
     <a class="list-group-item " href="/blog/createtextfilehere/">CreateTextFileHere</a>
     
     <a class="list-group-item " href="/blog/tools/">Tools</a>
-    
-    <a class="list-group-item " href="/blog/frustrations-with-xcode-bots/">Frustrations With Xcode Bots</a>
     
   </div>
 </section>
