@@ -32,8 +32,8 @@ These are sessions I attended which are worth watching. I've filtered out the se
 	> Have you ever had to repeatedly decide how you might implement an API design? How you’d implement a network layer? K&R braces? tabs or spaces? withCompletionBlock: or just completionBlock:? Each of these decisions especially when made over and over can take away from the much more important decisions along the lines of “What is the ultimate goal of what we’re building?” or “Why are we implementing this?”
 
 * [Switching Your Brain to Swift](http://360idev.com/sessions/200-switching-your-brain-to-swift/)  
-[[video]](http://vimeopro.com/360conferences/360idev-2015/video/137530879)  
-[Greg Heo (@gregheo)](https://twitter.com/gregheo) gives a compelling and well presented talk which primed me to get more into Swift.
+[Greg Heo (@gregheo)](https://twitter.com/gregheo) gives a compelling and well presented talk which primed me to get more into Swift.  
+[[video]](http://vimeopro.com/360conferences/360idev-2015/video/137530879) [[blog]](http://gregheo.com/blog/switching-your-brain-to-swift/)  
 	> We’re now a year into Swift. For those coming from Objective-C who are still testing the Swift waters, what do you need to do to switch your brain over to the new Swift way of thinking? What’s new, what’s the same, and what’s completely different when programming for the same platform in a new language?
 	> Big-picture outline:
 	> – focus on safety
@@ -47,13 +47,14 @@ These are sessions I attended which are worth watching. I've filtered out the se
 	> Join us as we explore tips and tricks for introducing Swift source into Objective-C projects. We’ll cover where in the networking-model-UI stack to begin writing Swift, how to maximize the benefits of using Swift without re-writing your apps, and how to avoid some of the common pitfalls getting Swift and Objective-C working harmoniously together.
 
 * [iOS Testing: Beyond the Model](http://360idev.com/sessions/300-ios-testing-beyond-the-model/)  
-[Cate Huston (@catehstn)](https://twitter.com/catehstn) gave an inspired session about how to better implement testing in a MVC structured GUI app. She's written up a [blog post](http://www.catehuston.com/blog/2015/04/15/launching-ios-unit-testing-beyond-the-model/) on this topic too.
-
+[Cate Huston (@catehstn)](https://twitter.com/catehstn) gave an inspired session about how to better implement testing in a MVC structured GUI app.  
+[[video]](https://vimeopro.com/360conferences/360idev-2015/video/138025340) [[blog]](http://www.catehuston.com/blog/2015/04/15/launching-ios-unit-testing-beyond-the-model/)  
 	> Unit testing on iOS has always been a challenge, mainly because the ViewController creates a mix of UI and non-UI code. But, it’s totally possible to achieve good levels of coverage on view code for iOS, and this talk will cover some strategies for doing so, focusing on a real app (no contrived examples here!) Including: splitting up a ViewController to make a seam, verifying button actions, dealing with [self navigationController], handling asynchronous code, and how we can compare UIImages.
 
 
 * [Good Intentions II: Enemy of the State](http://360idev.com/sessions/200-good-intentions-ii-enemy-of-the-state/)  
-[Jay Thrash (@jaythrash)](https://twitter.com/jaythrash) gives a very interesting proposal about using a state machine to organize app flow and to clean up View Controllers.
+[Jay Thrash (@jaythrash)](https://twitter.com/jaythrash) gives a very interesting proposal about using a state machine to organize app flow and to clean up View Controllers.  
+[[video]](https://vimeopro.com/360conferences/360idev-2015/video/138034525)  
 
 	> In a world where ViewControllers shoulder the burden of managing ever-changing vagarities of application state logic and complex navigation stacks, one design pattern emerges from the past to lead us toward a better, brighter, and lighter future of app development.
 	> 
@@ -121,3 +122,6 @@ The 360iDev conference has always been about the people and the community. This 
 Cheers,
 
 Levi
+
+---
+Updated September 3, 2015 with additional video and blog links. 
