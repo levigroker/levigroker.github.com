@@ -4,7 +4,7 @@
   <title><![CDATA[grokin.gs]]></title>
   <link href="http://levigroker.github.com/atom.xml" rel="self"/>
   <link href="http://levigroker.github.com/"/>
-  <updated>2015-09-03T10:14:26-06:00</updated>
+  <updated>2015-09-03T10:38:10-06:00</updated>
   <id>http://levigroker.github.com/</id>
   <author>
     <name><![CDATA[Levi Brown]]></name>
@@ -230,7 +230,7 @@ project.</p>
 <p>Then you can use the category to create a cropped image from a given image:</p>
 
 <pre><code>[image cropImageBelowAlphaThreshold:0.0f completion:^(UIImage *croppedImage, NSError *error) {
-    if (image)
+    if (croppedImage)
     {
         //Use croppedImage
     }
