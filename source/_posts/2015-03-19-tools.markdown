@@ -89,7 +89,7 @@ The best, but not perfect, email client I have tried since giving up on Mail.app
 [Backblaze](https://secure.backblaze.com/r/00mdf8) (referral link)  
 Offsite painless backup solution.
 
-[Bartender](http://www.macbartender.com)  
+[Bartender 2](http://www.macbartender.com)  
 De-clutter your menu bar. This manages all the little menubar warts that seem to show up with various tools. Keeps things nicely tucked away, but accessable.
 
 [BetterTouchTool](http://www.bettertouchtool.net)  
